@@ -8,6 +8,7 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
+import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.ROOT_STACK
 import ru.sangel.app.data.map.MapKitRepository
 import ru.sangel.data.auth.AuthRepository
@@ -21,14 +22,15 @@ import ru.sangel.presentation.components.main.MainComponent
 
 class DefaultRootComponent(
     componentContext: ComponentContext,
-    private val authRepository: AuthRepository,
-    private val appPrefs: AppPrefs,
-    private val usersRepository: UsersRepository,
-    private val mapKitRepository: MapKitRepository,
-    private val deviceRepository: DeviceRepository,
     private val startScreen: TopConfig,
 ) : RootComponent, ComponentContext by componentContext {
     private val navigation = StackNavigation<TopConfig>()
+
+    private val authRepository: AuthRepository by inject(AuthRepository::class.java)
+    private val appPrefs: AppPrefs by inject(AuthRepository::class.java)
+    private val usersRepository: UsersRepository by inject(UsersRepository::class.java)
+    private val mapKitRepository: MapKitRepository by inject(MapKitRepository::class.java)
+    private val deviceRepository: DeviceRepository by inject(DeviceRepository::class.java)
 
     override val stack: Value<ChildStack<*, RootComponent.Child>> =
         childStack(

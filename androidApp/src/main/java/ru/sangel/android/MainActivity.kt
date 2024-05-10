@@ -42,11 +42,6 @@ class MainActivity : FragmentActivity(), LocationListener {
             val rootComponent =
                 DefaultRootComponent(
                     defaultComponentContext(),
-                    get(),
-                    get(),
-                    get(),
-                    get(),
-                    get(),
                     defferedStartScreen.await(),
                 )
             enableEdgeToEdge()
