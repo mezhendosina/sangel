@@ -5,22 +5,38 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
+import ru.sangel.ROOT_STACK
+import ru.sangel.app.data.map.MapKitRepository
+import ru.sangel.data.auth.AuthRepository
+import ru.sangel.data.device.DeviceRepository
+import ru.sangel.data.settings.AppPrefs
+import ru.sangel.data.users.UsersRepository
 import ru.sangel.presentation.components.login.DefaultLoginComponent
 import ru.sangel.presentation.components.login.LoginComponent
+import ru.sangel.presentation.components.main.DefaultMainComponent
+import ru.sangel.presentation.components.main.MainComponent
 
 class DefaultRootComponent(
     componentContext: ComponentContext,
+    private val authRepository: AuthRepository,
+    private val appPrefs: AppPrefs,
+    private val usersRepository: UsersRepository,
+    private val mapKitRepository: MapKitRepository,
+    private val deviceRepository: DeviceRepository,
+    private val startScreen: TopConfig,
 ) : RootComponent, ComponentContext by componentContext {
-    private val navigation = StackNavigation<Config>()
+    private val navigation = StackNavigation<TopConfig>()
 
     override val stack: Value<ChildStack<*, RootComponent.Child>> =
         childStack(
             source = navigation,
-            serializer = Config.serializer(),
-            initialConfiguration = Config.Login,
-            handleBackButton = true,
+            key = ROOT_STACK,
+            serializer = TopConfig.serializer(),
+            initialConfiguration = startScreen,
+            handleBackButton = false,
             childFactory = ::child,
         )
 
@@ -29,18 +45,33 @@ class DefaultRootComponent(
     }
 
     private fun child(
-        config: Config,
+        topConfig: TopConfig,
         componentContext: ComponentContext,
     ): RootComponent.Child =
-        when (config) {
-            is Config.Login -> RootComponent.Child.LoginChild(loginComponent())
+        when (topConfig) {
+            is TopConfig.Login -> RootComponent.Child.LoginChild(loginComponent(componentContext))
+            is TopConfig.Main -> RootComponent.Child.MainChild(mainComponent(componentContext))
         }
 
-    private fun loginComponent(): LoginComponent = DefaultLoginComponent()
+    private fun loginComponent(componentContext: ComponentContext): LoginComponent =
+        DefaultLoginComponent(authRepository, appPrefs = appPrefs, componentContext) {
+            navigation.push(TopConfig.Main)
+        }
+
+    private fun mainComponent(componentContext: ComponentContext): MainComponent =
+        DefaultMainComponent(
+            componentContext,
+            usersRepository,
+            mapKitRepository,
+            deviceRepository,
+        )
 
     @Serializable
-    private sealed interface Config {
+    sealed interface TopConfig {
         @Serializable
-        data object Login : Config
+        data object Login : TopConfig
+
+        @Serializable
+        data object Main : TopConfig
     }
 }

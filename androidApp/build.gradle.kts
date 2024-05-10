@@ -1,7 +1,8 @@
-
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    kotlin("plugin.serialization")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -17,6 +18,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
@@ -47,4 +49,18 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.decompose)
+    implementation("com.arkivanov.decompose:extensions-compose:3.0.0")
+    implementation("com.airbnb.android:lottie-compose:6.4.0")
+
+    implementation("io.insert-koin:koin-core:3.5.6")
+    implementation("io.insert-koin:koin-android:3.5.6")
+    implementation("io.insert-koin:koin-androidx-compose:3.5.6")
+    implementation("io.insert-koin:koin-logger-slf4j:3.5.6")
+    implementation("androidx.compose.ui:ui-viewbinding:1.6.7")
+
+    implementation("com.yandex.android:maps.mobile:4.5.1-lite")
+
+    implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
 }
