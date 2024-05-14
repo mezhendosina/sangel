@@ -10,5 +10,7 @@ interface UsersSource {
         latitude: Double,
     )
 
+    suspend fun setStatus(statusId: Int)
+
     suspend fun getMine(): UserEntity
 }

@@ -3,7 +3,7 @@ package ru.sangel.presentation.components.main.device.connect
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
-import com.juul.kable.AndroidAdvertisement
+import com.juul.kable.Advertisement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -41,16 +41,16 @@ class DefaultConnectDeviceComponent(
         }
     }
 
-    private suspend fun addToList(advertisement: AndroidAdvertisement) {
-        if (deviceRepository.getDeviceFromDb(advertisement.address) != null) return
+    private suspend fun addToList(advertisement: Advertisement) {
+        if (deviceRepository.getDeviceFromDb(advertisement.identifier) != null) return
 
-        if (model.value.list.find { it.id == advertisement.address } == null) {
+        if (model.value.list.find { it.id == advertisement.identifier } == null) {
             withContext(Dispatchers.Main) {
                 _model.update {
                     ConnectDeviceComponent.Model(
                         it.list.plus(
                             ConnectDeviceEntity(
-                                advertisement.address,
+                                advertisement.identifier,
                                 advertisement.name ?: "",
                             ),
                         ),

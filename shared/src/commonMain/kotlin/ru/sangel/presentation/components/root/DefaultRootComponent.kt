@@ -27,7 +27,7 @@ class DefaultRootComponent(
     private val navigation = StackNavigation<TopConfig>()
 
     private val authRepository: AuthRepository by inject(AuthRepository::class.java)
-    private val appPrefs: AppPrefs by inject(AuthRepository::class.java)
+    private val appPrefs: AppPrefs by inject(AppPrefs::class.java)
     private val usersRepository: UsersRepository by inject(UsersRepository::class.java)
     private val mapKitRepository: MapKitRepository by inject(MapKitRepository::class.java)
     private val deviceRepository: DeviceRepository by inject(DeviceRepository::class.java)

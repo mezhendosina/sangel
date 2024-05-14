@@ -11,15 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import ru.sangel.presentation.components.main.device.connect.ConnectDeviceComponent
 import ru.sangel.presentation.entities.ConnectDeviceEntity
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun ConnectDeviceScreen(
     paddingValues: PaddingValues,
     component: ConnectDeviceComponent,
 ) {
     val model by component.model.subscribeAsState()
+
     LazyColumn(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
         items(model.list.toList()) {
             ConnectDeviceItem(connectDeviceEntity = it, component::connect)

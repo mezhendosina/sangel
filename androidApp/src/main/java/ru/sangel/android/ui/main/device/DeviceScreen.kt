@@ -1,4 +1,4 @@
-package ru.sangel.android.ui.main
+package ru.sangel.android.ui.main.device
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

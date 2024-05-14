@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -70,12 +69,15 @@ fun MapScreen(
                 )
             }
         }
-        Column(modifier = Modifier.align(Alignment.CenterStart)) {
-            Button(onClick = component::plusZoom) {
-//
+        Column(modifier = Modifier.align(Alignment.CenterEnd)) {
+            IconButton(onClick = component::plusZoom) {
+                Image(painter = painterResource(id = R.drawable.ic_plus), contentDescription = null)
             }
-            Button(onClick = component::minusZoom) {
-//
+            IconButton(onClick = component::minusZoom) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_minus),
+                    contentDescription = null,
+                )
             }
         }
         Row(
@@ -85,21 +87,21 @@ fun MapScreen(
                     .align(Alignment.BottomStart)
                     .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.End,
         ) {
-            IconButton(onClick = {}) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_avatar),
-                    contentDescription = stringResource(R.string.profile),
-                    modifier = Modifier.size(24.dp),
-                )
-            }
+//            IconButton(onClick = {}) {
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_avatar),
+//                    contentDescription = stringResource(R.string.profile),
+//                    modifier = Modifier.size(24.dp),
+//                )
+//            }
 
             IconButton(onClick = component::cameraToUser) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_question),
+                    painter = painterResource(id = R.drawable.ic_find_me),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp),
+//                    modifier = Modifier.size(24.dp),
                 )
             }
         }

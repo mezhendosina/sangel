@@ -23,6 +23,7 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import ru.sangel.android.R
 import ru.sangel.android.ui.main.device.ConnectDeviceScreen
+import ru.sangel.android.ui.main.device.DeviceScreen
 import ru.sangel.android.ui.main.map.MapScreen
 import ru.sangel.android.ui.settings.SettingsContainer
 import ru.sangel.presentation.components.main.MainComponent

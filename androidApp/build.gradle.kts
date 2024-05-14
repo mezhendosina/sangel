@@ -63,4 +63,6 @@ dependencies {
     implementation("com.yandex.android:maps.mobile:4.5.1-lite")
 
     implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
+
+    implementation("com.juul.kable:core:0.31.1")
 }

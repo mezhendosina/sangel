@@ -8,6 +8,7 @@ import de.jensklingenberg.ktorfit.http.Path
 import ru.sangel.API_VERSION
 import ru.sangel.data.map.entities.LocationEntity
 import ru.sangel.data.users.entities.UserEntity
+import ru.sangel.data.users.entities.UserStatusRequestEntity
 
 interface UsersApi {
     @GET("api/$API_VERSION/users/")
@@ -20,6 +21,11 @@ interface UsersApi {
     suspend fun getUser(
         @Path("userId") id: Int,
     )
+
+    @PATCH("api/$API_VERSION/users/user_status")
+    suspend fun setUserStatus(
+        @Body userStatusRequestEntity: UserStatusRequestEntity,
+    ): String
 
     @PATCH("api/v1/users/update_coordinates/")
     suspend fun updateCoordinates(
