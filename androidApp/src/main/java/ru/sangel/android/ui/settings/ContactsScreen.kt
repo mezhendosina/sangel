@@ -115,14 +115,14 @@ private fun PreviewContactsScreen() {
                             ContactsComponent.Model(
                                 "",
                                 listOf(
-                                    ContactEntity(0, "123", true),
-                                    ContactEntity(0, "123", true),
-                                    ContactEntity(0, "123", true),
+                                    ContactEntity(0, "123","", true),
+                                    ContactEntity(0, "123","", true),
+                                    ContactEntity(0, "123","", true),
                                 ),
                                 listOf(
-                                    ContactEntity(0, "123", true),
-                                    ContactEntity(0, "123", true),
-                                    ContactEntity(0, "123", true),
+                                    ContactEntity(0, "123","", true),
+                                    ContactEntity(0, "123","", true),
+                                    ContactEntity(0, "123","", true),
                                 ),
                             ),
                         )

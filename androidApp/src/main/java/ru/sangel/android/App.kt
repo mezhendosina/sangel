@@ -1,7 +1,6 @@
 package ru.sangel.android
 
 import android.app.Application
-import android.content.Intent
 import com.yandex.mapkit.MapKitFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -38,6 +37,6 @@ class App : Application() {
                 ),
             )
         }
-        startForegroundService(Intent(this, DeviceService::class.java))
+//        startForegroundService(Intent(this, DeviceService::class.java))
     }
 }

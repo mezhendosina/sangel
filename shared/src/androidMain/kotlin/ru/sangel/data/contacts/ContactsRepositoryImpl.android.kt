@@ -14,7 +14,7 @@ actual class ContactsRepositoryImpl(
             ContactsContract.CommonDataKinds.Phone.NUMBER,
         )
 
-    actual override suspend fun getContacts(): List<ContactEntity> {
+    override suspend fun getContacts(): List<ContactEntity> {
         val cr = context.contentResolver
         val out = mutableListOf<ContactEntity>()
         val cursor =
@@ -33,6 +33,7 @@ actual class ContactsRepositoryImpl(
                     ContactEntity(
                         -1,
                         cursor.getString(nameIndex),
+                        "",
                         false,
                     ),
                 )
@@ -40,5 +41,9 @@ actual class ContactsRepositoryImpl(
             cursor.close()
         }
         return out
+    }
+
+    override suspend fun getFavorites(): List<ContactEntity> {
+        TODO("Not yet implemented")
     }
 }

@@ -62,7 +62,17 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
             implementation(libs.koin.test.junit5)
+            implementation("io.insert-koin:koin-test:3.5.6")
+            implementation("io.insert-koin:koin-test-junit4:3.5.6")
+        }
+        androidNativeTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+            implementation(libs.koin.test.junit5)
+            implementation("io.insert-koin:koin-test:3.5.6")
+            implementation("io.insert-koin:koin-test-junit4:3.5.6")
         }
     }
 }

@@ -11,6 +11,8 @@ import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.contacts.ContactsRepositoryImpl
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.device.DeviceRepositoryImpl
+import ru.sangel.data.messages.DefaultMessagesSource
+import ru.sangel.data.messages.MessagesSource
 import ru.sangel.data.users.KtorfitUsersSource
 import ru.sangel.data.users.UsersRepository
 import ru.sangel.data.users.UsersRepositoryImpl
@@ -28,4 +30,5 @@ val sourceModule =
     module {
         singleOf(::KtorfitAuthSource) bind AuthSource::class
         singleOf(::KtorfitUsersSource) bind UsersSource::class
+        singleOf(::DefaultMessagesSource) bind MessagesSource::class
     }

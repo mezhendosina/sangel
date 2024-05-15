@@ -50,7 +50,7 @@ class DeviceService : Service() {
             100,
             notification,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
             } else {
                 0
             },
