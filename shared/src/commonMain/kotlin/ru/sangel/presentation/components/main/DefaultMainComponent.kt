@@ -87,7 +87,6 @@ class DefaultMainComponent(
     private fun deviceComponent(componentContext: ComponentContext) =
         DefaultDeviceComponent(
             componentContext,
-            usersRepository,
             deviceRepository,
         ) {
             navigation.pushToFront(MainConfig.AddDevice)

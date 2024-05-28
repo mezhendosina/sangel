@@ -8,16 +8,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.users.UsersRepository
 
 class DefaultDeviceComponent(
     private val componentContext: ComponentContext,
-    private val usersRepository: UsersRepository,
     private val deviceRepository: DeviceRepository,
     private val toAddDevice: () -> Unit,
 ) : DeviceComponent, ComponentContext by componentContext {
     private val _model = MutableValue(DeviceComponent.Model("", emptyList()))
+
+    private val usersRepository: UsersRepository by inject(UsersRepository::class.java)
 
     override val model: Value<DeviceComponent.Model> = _model
 
@@ -38,11 +40,11 @@ class DefaultDeviceComponent(
 
     override fun getUser() {
         CoroutineScope(Dispatchers.IO).launch {
-            val user = usersRepository.getMine()
+//            val user = usersRepository.getMine()
             withContext(Dispatchers.Main) {
-                _model.update {
-                    DeviceComponent.Model(user.email, it.devices)
-                }
+//                _model.update {
+//                    DeviceComponent.Model(user.email, it.devices)
+//                }
             }
         }
     }

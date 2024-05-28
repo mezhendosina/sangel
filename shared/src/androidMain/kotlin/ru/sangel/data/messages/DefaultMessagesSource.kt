@@ -22,6 +22,5 @@ class DefaultMessagesSource(
     }
 
     override suspend fun sendNotification() {
-        TODO("Not yet implemented")
     }
 }

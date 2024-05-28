@@ -32,10 +32,9 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
 
     private val setupUserLocationLayer =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it)
-                {
-                    setupUserLocationLayer()
-                }
+            if (it) {
+                setupUserLocationLayer()
+            }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -124,6 +123,7 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
             val locationPermission = viewModel.checkPermission(requireContext())
             if (!locationPermission) {
                 setupUserLocationLayer.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                return
             }
 
             val mapKit = MapKitFactory.getInstance()
