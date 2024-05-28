@@ -9,11 +9,15 @@ interface ContactsComponent {
 
     fun editQuery(query: String)
 
+    fun addContact(contact: ContactUiEntity)
+
+    fun deleteContact(contact: ContactUiEntity)
+
     fun sendContactsList()
 
     data class Model(
         val query: String,
-        val favContacts: List<ContactEntity>,
-        val contacts: List<ContactEntity>,
+        val favContacts: List<ContactUiEntity>,
+        val contacts: List<ContactUiEntity>,
     )
 }

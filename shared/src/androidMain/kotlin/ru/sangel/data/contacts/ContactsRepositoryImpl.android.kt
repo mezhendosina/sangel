@@ -2,21 +2,33 @@ package ru.sangel.data.contacts
 
 import android.content.Context
 import android.provider.ContactsContract
-import ru.sangel.presentation.components.main.settings.contacts.ContactEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import ru.sangel.data.AppDatabase
+import ru.sangel.presentation.components.main.settings.contacts.ContactUiEntity
 
 actual class ContactsRepositoryImpl(
     private val context: Context,
+    private val database: AppDatabase,
 ) : ContactsRepository {
+    val contactsDao: ContactsDao by lazy {
+        database.getContactsDao()
+    }
+
     private val projection =
         arrayOf(
             ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
             ContactsContract.Contacts.DISPLAY_NAME,
             ContactsContract.CommonDataKinds.Phone.NUMBER,
         )
+    override val favorites: Flow<List<ContactUiEntity>> =
+        contactsDao.getFavContacts().map {
+            it.map { contactEntity -> contactEntity.toUiEntity() }
+        }
 
-    override suspend fun getContacts(): List<ContactEntity> {
+    override suspend fun getContacts(): List<ContactUiEntity> {
         val cr = context.contentResolver
-        val out = mutableListOf<ContactEntity>()
+        val out = mutableListOf<ContactUiEntity>()
         val cursor =
             cr.query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -28,12 +40,13 @@ actual class ContactsRepositoryImpl(
         cursor?.let {
             val nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
             val phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val id = cursor.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID)
             while (cursor.moveToNext()) {
                 out.add(
-                    ContactEntity(
-                        -1,
+                    ContactUiEntity(
+                        cursor.getInt(id),
                         cursor.getString(nameIndex),
-                        "",
+                        cursor.getString(phoneIndex),
                         false,
                     ),
                 )
@@ -43,7 +56,11 @@ actual class ContactsRepositoryImpl(
         return out
     }
 
-    override suspend fun getFavorites(): List<ContactEntity> {
-        TODO("Not yet implemented")
+    override suspend fun addFavContact(contactUiEntity: ContactUiEntity) {
+        contactsDao.addFavContact(contactUiEntity.toDbEntity())
+    }
+
+    override suspend fun deleteFavContact(contactUiEntity: ContactUiEntity) {
+        contactsDao.deleteFavContact(contactUiEntity.toDbEntity())
     }
 }

@@ -62,7 +62,7 @@ class DefaultSettingsComponent(
             contactsRepository,
         )
 
-    private fun privacyComponent(componentContext: ComponentContext) = DefaultPrivacyComponent(componentContext)
+    private fun privacyComponent(componentContext: ComponentContext) = DefaultPrivacyComponent(componentContext, contactsRepository)
 
     private fun settingsRootComponent(componentContext: ComponentContext) =
         DefaultSettingsRootComponent(

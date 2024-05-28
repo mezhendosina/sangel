@@ -1,7 +1,6 @@
 package ru.sangel.android.ui.settings
 
 import android.content.pm.PackageManager
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,7 +32,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import ru.sangel.android.R
 import ru.sangel.android.ui.components.ContactCard
 import ru.sangel.android.ui.theme.SangelTheme
-import ru.sangel.presentation.components.main.settings.contacts.ContactEntity
+import ru.sangel.presentation.components.main.settings.contacts.ContactUiEntity
 import ru.sangel.presentation.components.main.settings.contacts.ContactsComponent
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -60,7 +59,7 @@ fun ContactsScreen(component: ContactsComponent) {
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 16.dp, vertical = 20.dp),
+                    .padding(horizontal = 16.dp),
         ) {
             OutlinedTextField(
                 value = model.query,
@@ -72,16 +71,37 @@ fun ContactsScreen(component: ContactsComponent) {
                 },
             )
             Spacer(modifier = Modifier.size(32.dp))
-            if (model.favContacts.isNotEmpty()) {
-                ContactsColumn(
-                    title = stringResource(R.string.fav_contacts),
-                    items = model.favContacts,
-                ) {
+            LazyColumn {
+                item {
+                    if (model.favContacts.isNotEmpty()) {
+                        ContactsTitle(
+                            title = stringResource(R.string.fav_contacts),
+                        )
+                    }
                 }
-            }
-            Spacer(modifier = Modifier.size(32.dp))
-            if (model.contacts.isNotEmpty()) {
-                ContactsColumn(stringResource(R.string.all_contacts), model.contacts) {
+                items(model.favContacts) {
+                    ContactCard(
+                        name = it.name,
+                        checked = it.favorite,
+                        onClick = { component.deleteContact(it) },
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.size(32.dp))
+                }
+                if (model.contacts.isNotEmpty()) {
+                    item {
+                        ContactsTitle(
+                            title = stringResource(R.string.all_contacts),
+                        )
+                    }
+                    items(model.contacts) {
+                        ContactCard(
+                            name = it.name,
+                            checked = it.favorite,
+                            onClick = { component.addContact(it) },
+                        )
+                    }
                 }
             }
         }
@@ -89,18 +109,9 @@ fun ContactsScreen(component: ContactsComponent) {
 }
 
 @Composable
-private fun ContactsColumn(
-    title: String,
-    items: List<ContactEntity>,
-    onClick: () -> Unit,
-) {
+private fun ContactsTitle(title: String) {
     Text(title, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
     Spacer(modifier = Modifier.size(8.dp))
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        items(items) {
-            ContactCard(name = it.name, checked = it.favorite, onClick = onClick)
-        }
-    }
 }
 
 @Preview(showBackground = true)
@@ -115,14 +126,14 @@ private fun PreviewContactsScreen() {
                             ContactsComponent.Model(
                                 "",
                                 listOf(
-                                    ContactEntity(0, "123","", true),
-                                    ContactEntity(0, "123","", true),
-                                    ContactEntity(0, "123","", true),
+                                    ContactUiEntity(0, "123", "", true),
+                                    ContactUiEntity(0, "123", "", true),
+                                    ContactUiEntity(0, "123", "", true),
                                 ),
                                 listOf(
-                                    ContactEntity(0, "123","", true),
-                                    ContactEntity(0, "123","", true),
-                                    ContactEntity(0, "123","", true),
+                                    ContactUiEntity(0, "123", "", true),
+                                    ContactUiEntity(0, "123", "", true),
+                                    ContactUiEntity(0, "123", "", true),
                                 ),
                             ),
                         )
@@ -132,6 +143,14 @@ private fun PreviewContactsScreen() {
                 }
 
                 override fun editQuery(query: String) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun addContact(contact: ContactUiEntity) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun deleteContact(contact: ContactUiEntity) {
                     TODO("Not yet implemented")
                 }
 

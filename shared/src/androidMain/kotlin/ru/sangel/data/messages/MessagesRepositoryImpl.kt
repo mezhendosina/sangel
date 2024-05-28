@@ -1,6 +1,7 @@
 package ru.sangel.data.messages
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.data.contacts.ContactsRepository
@@ -10,7 +11,7 @@ actual class MessagesRepositoryImpl() : MessagesRepository {
     private val contactsRepository: ContactsRepository by inject(ContactsRepository::class.java)
 
     override suspend fun sendMessageToFavorites() {
-        val favs = contactsRepository.getFavorites()
+        val favs = contactsRepository.favorites.first()
         favs.forEach {
             withContext(Dispatchers.IO) {
                 messagesSource.sendSms(

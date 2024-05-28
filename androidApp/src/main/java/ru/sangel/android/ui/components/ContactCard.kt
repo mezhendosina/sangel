@@ -36,6 +36,7 @@ fun ContactCard(
                 containerColor = MaterialTheme.colorScheme.background,
             ),
         onClick = onClick,
+        modifier = Modifier.padding(vertical = 8.dp),
     ) {
         Row(
             modifier =

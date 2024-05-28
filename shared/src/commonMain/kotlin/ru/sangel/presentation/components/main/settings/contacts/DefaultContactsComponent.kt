@@ -28,16 +28,28 @@ class DefaultContactsComponent(
     override fun initContacts() {
         CoroutineScope(Dispatchers.IO).launch {
             val allContacts = contactsRepository.getContacts()
-            val favContacts = allContacts.filter { it.favorite }
-            val contacts = allContacts.filter { !it.favorite }
 
             withContext(Dispatchers.Main) {
                 _model.update {
                     ContactsComponent.Model(
                         it.query,
-                        favContacts,
-                        contacts,
+                        it.favContacts,
+                        allContacts,
                     )
+                }
+            }
+            contactsRepository.favorites.collect { contacts ->
+                val filteredContacts =
+                    allContacts.filter { !contacts.contains(it) }.sortedBy { it.name }
+                val sortedFavs = contacts.sortedBy { it.name }
+                withContext(Dispatchers.Main) {
+                    _model.update {
+                        ContactsComponent.Model(
+                            it.query,
+                            sortedFavs,
+                            filteredContacts,
+                        )
+                    }
                 }
             }
         }
@@ -50,6 +62,18 @@ class DefaultContactsComponent(
                 it.favContacts,
                 it.contacts,
             )
+        }
+    }
+
+    override fun addContact(contact: ContactUiEntity) {
+        CoroutineScope(Dispatchers.IO).launch {
+            contactsRepository.addFavContact(contact)
+        }
+    }
+
+    override fun deleteContact(contact: ContactUiEntity) {
+        CoroutineScope(Dispatchers.IO).launch {
+            contactsRepository.deleteFavContact(contact)
         }
     }
 

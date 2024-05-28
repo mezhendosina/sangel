@@ -1,9 +1,14 @@
 package ru.sangel.data.contacts
 
-import ru.sangel.presentation.components.main.settings.contacts.ContactEntity
+import kotlinx.coroutines.flow.Flow
+import ru.sangel.presentation.components.main.settings.contacts.ContactUiEntity
 
 interface ContactsRepository {
-    suspend fun getContacts(): List<ContactEntity>
+    val favorites: Flow<List<ContactUiEntity>>
 
-    suspend fun getFavorites(): List<ContactEntity>
+    suspend fun getContacts(): List<ContactUiEntity>
+
+    suspend fun addFavContact(contactUiEntity: ContactUiEntity)
+
+    suspend fun deleteFavContact(contactUiEntity: ContactUiEntity)
 }
