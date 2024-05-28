@@ -14,11 +14,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 
 private val lightScheme =
@@ -295,12 +291,21 @@ fun SangelTheme(
     }
     val typography =
         Typography(
-            bodyMedium =
-                TextStyle(
-                    fontFamily = FontFamily.Default,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
-                ),
+            bodyMedium = MaterialTheme.typography.bodyMedium.merge(fontFamily = sangelFontFamily),
+            titleSmall = MaterialTheme.typography.titleSmall.merge(fontFamily = sangelFontFamily),
+            labelSmall = MaterialTheme.typography.labelSmall.merge(fontFamily = sangelFontFamily),
+            titleLarge = MaterialTheme.typography.titleLarge.merge(fontFamily = sangelFontFamily),
+            labelLarge = MaterialTheme.typography.labelLarge.merge(fontFamily = sangelFontFamily),
+            titleMedium = MaterialTheme.typography.titleMedium.merge(fontFamily = sangelFontFamily),
+            displayLarge = MaterialTheme.typography.displayLarge.merge(fontFamily = sangelFontFamily),
+            displayMedium = MaterialTheme.typography.displayMedium.merge(fontFamily = sangelFontFamily),
+            displaySmall = MaterialTheme.typography.displaySmall.merge(fontFamily = sangelFontFamily),
+            headlineSmall = MaterialTheme.typography.headlineSmall.merge(fontFamily = sangelFontFamily),
+            headlineMedium = MaterialTheme.typography.headlineMedium.merge(fontFamily = sangelFontFamily),
+            headlineLarge = MaterialTheme.typography.headlineLarge.merge(fontFamily = sangelFontFamily),
+            bodyLarge = MaterialTheme.typography.bodyLarge.merge(fontFamily = sangelFontFamily),
+            bodySmall = MaterialTheme.typography.bodySmall.merge(fontFamily = sangelFontFamily),
+            labelMedium = MaterialTheme.typography.labelMedium.merge(fontFamily = sangelFontFamily),
         )
     val shapes =
         Shapes(
