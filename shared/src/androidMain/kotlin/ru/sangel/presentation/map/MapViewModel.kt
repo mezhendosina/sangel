@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yandex.mapkit.map.CameraPosition
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.sangel.app.data.map.MapKitRepository
@@ -30,6 +31,12 @@ class MapViewModel(
 
     fun setZoom(zoom: Float) {
         mapKitRepository.setZoom(zoom)
+    }
+
+    fun getCameraPosition(): CameraPosition? = mapKitRepository.cameraPosition.value
+
+    fun updateCamera(cameraPosition: CameraPosition) {
+        mapKitRepository.updateCameraPosition(cameraPosition)
     }
 
     fun checkPermission(context: Context): Boolean {

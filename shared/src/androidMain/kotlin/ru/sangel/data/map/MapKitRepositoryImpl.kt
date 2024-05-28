@@ -6,6 +6,7 @@ import com.yandex.mapkit.location.FilteringMode
 import com.yandex.mapkit.location.Location
 import com.yandex.mapkit.location.LocationListener
 import com.yandex.mapkit.location.LocationStatus
+import com.yandex.mapkit.map.CameraPosition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,6 +49,9 @@ class MapKitRepositoryImpl(
     private val _zoom = MutableStateFlow<Float>(0f)
     override val zoom: StateFlow<Float> = _zoom
 
+    private val _cameraPosition = MutableStateFlow<CameraPosition?>(null)
+    override val cameraPosition: StateFlow<CameraPosition?> = _cameraPosition
+
     override fun plusZoom() {
         CoroutineScope(Dispatchers.IO).launch {
             _zoom.emit(_zoom.value + 1f)
@@ -58,6 +62,10 @@ class MapKitRepositoryImpl(
         CoroutineScope(Dispatchers.IO).launch {
             _zoom.emit(_zoom.value - 1f)
         }
+    }
+
+    override fun updateCameraPosition(cameraPosition: CameraPosition) {
+        _cameraPosition.value = cameraPosition
     }
 
     override fun setZoom(zoom: Float) {

@@ -55,6 +55,11 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
         binding = FragmentMapBinding.bind(view)
         mapView = binding!!.root
 
+        val currCameraPosition = viewModel.getCameraPosition()
+        if (currCameraPosition != null) {
+            mapView!!.mapWindow.map.move(currCameraPosition)
+        }
+
         setupUserLocationLayer()
         observeMapPoints()
         observeMapZoom()
@@ -89,10 +94,11 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
     }
 
     private fun observeMapCameraPosition() {
-        mapView?.mapWindow?.map?.addCameraListener { map, cameraPosition, cameraUpdateReason, b ->
+        mapView?.mapWindow?.map?.addCameraListener { _, cameraPosition, cameraUpdateReason, _ ->
             if (cameraUpdateReason == CameraUpdateReason.GESTURES) {
                 viewModel.setZoom(cameraPosition.zoom)
             }
+            viewModel.updateCamera(cameraPosition)
         }
     }
 
@@ -110,7 +116,7 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
                         )
                     mapView.mapWindow.map.move(
                         newCameraPosition,
-                        Animation(Animation.Type.SMOOTH, 1f),
+                        Animation(Animation.Type.LINEAR, 1f),
                         null,
                     )
                 }
@@ -125,7 +131,6 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
                 setupUserLocationLayer.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 return
             }
-
             val mapKit = MapKitFactory.getInstance()
             val userLocation = mapKit.createUserLocationLayer(mapView.mapWindow)
             userLocation.isVisible = true
