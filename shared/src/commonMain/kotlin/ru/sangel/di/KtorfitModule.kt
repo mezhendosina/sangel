@@ -2,6 +2,8 @@ package ru.sangel.di
 
 import de.jensklingenberg.ktorfit.Ktorfit
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
@@ -38,12 +40,14 @@ val ktorfitModule =
                         logger = Logger.SIMPLE
                         level = LogLevel.ALL
                     }
+
                     install(Auth) {
                         bearer {
                             loadTokens {
                                 val appPrefs = get() as AppPrefs
                                 val token =
-                                    appPrefs.getValue(AppPrefs.TOKEN).first() ?: return@loadTokens null
+                                    appPrefs.getValue(AppPrefs.TOKEN).first()
+                                        ?: return@loadTokens null
 
                                 BearerTokens(token, "")
                             }
@@ -63,9 +67,19 @@ val ktorfitModule =
                             }
                         }
                     }
+                    install(HttpRequestRetry) {
+                        retryOnException(2)
+                        retryOnServerErrors(maxRetries = 5)
+                        exponentialDelay()
+                    }
+                    HttpResponseValidator {
+                        handleResponseExceptionWithRequest { exception, request ->
+                        }
+                    }
                     defaultRequest {
                         contentType(ContentType.Application.Json)
                     }
+                    expectSuccess = true
                     followRedirects = true
                 }
             Ktorfit.Builder()

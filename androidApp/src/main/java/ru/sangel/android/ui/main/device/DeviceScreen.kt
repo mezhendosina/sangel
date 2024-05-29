@@ -10,7 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,9 +25,6 @@ import ru.sangel.presentation.components.main.device.DeviceComponent
 @Composable
 fun DeviceScreen(component: DeviceComponent) {
     val model by component.model.subscribeAsState()
-    LaunchedEffect(Unit) {
-        component.getUser()
-    }
 
     Scaffold(
         topBar = {

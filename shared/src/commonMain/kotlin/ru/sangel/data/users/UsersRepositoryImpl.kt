@@ -32,5 +32,7 @@ class UsersRepositoryImpl(
         usersSource.setStatus(statusCode)
     }
 
-    override suspend fun getMine(): UserEntity = usersSource.getMine()
+    override suspend fun getMine(): UserEntity {
+        return usersSource.getMine()
+    }
 }

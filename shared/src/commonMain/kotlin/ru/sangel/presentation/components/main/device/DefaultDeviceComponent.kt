@@ -25,6 +25,7 @@ class DefaultDeviceComponent(
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
+            getUser()
             deviceRepository.connectedDevices.collect { deviceUiEntities ->
                 withContext(Dispatchers.Main) {
                     _model.update { oldModel ->
@@ -40,11 +41,11 @@ class DefaultDeviceComponent(
 
     override fun getUser() {
         CoroutineScope(Dispatchers.IO).launch {
-//            val user = usersRepository.getMine()
+            val user = usersRepository.getMine()
             withContext(Dispatchers.Main) {
-//                _model.update {
-//                    DeviceComponent.Model(user.email, it.devices)
-//                }
+                _model.update {
+                    DeviceComponent.Model(user.email, it.devices)
+                }
             }
         }
     }
