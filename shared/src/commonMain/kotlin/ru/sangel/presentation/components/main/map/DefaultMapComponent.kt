@@ -14,7 +14,6 @@ class DefaultMapComponent(
     }
 
     override fun cameraToUser() {
-//        TODO("Not yet implemented")
     }
 
     override fun plusZoom() = mapKitRepository.plusZoom()

@@ -16,7 +16,7 @@ actual class MessagesRepositoryImpl() : MessagesRepository {
             withContext(Dispatchers.IO) {
                 messagesSource.sendSms(
                     phoneNumber = it.phoneNumber,
-                    "",
+                    "test", // TODO
                 )
             }
         }

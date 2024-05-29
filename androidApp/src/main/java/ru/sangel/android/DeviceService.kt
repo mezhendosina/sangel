@@ -17,11 +17,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import ru.sangel.data.device.DeviceRepository
-import ru.sangel.data.users.UsersRepository
+import ru.sangel.data.messages.MessagesRepository
 
 class DeviceService : Service() {
     private val deviceRepository by inject<DeviceRepository>()
-    private val usersRepository by inject<UsersRepository>()
+    private val messagesRepository by inject<MessagesRepository>()
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -37,7 +37,7 @@ class DeviceService : Service() {
                     deviceRepository.connectedDevices.first()
                         .find { it.macAddress == advertisement.identifier }
                 if (findDevice != null) {
-//                    usersRepository.sendStatus(2)
+                    messagesRepository.sendMessageToFavorites()
                 }
             }
         }
