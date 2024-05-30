@@ -69,8 +69,8 @@ class DeviceRepositoryImpl(
                     deviceDao.addDevice(
                         DeviceEntity(
                             address,
-                            "Name", // TODO
-                            100.0, // TODO
+                            address,
+                            100.0,
                             getTimeMillis(),
                         ),
                     )

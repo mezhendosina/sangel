@@ -6,6 +6,7 @@ import androidx.test.rule.GrantPermissionRule
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.data.messages.DefaultMessagesSource
@@ -17,16 +18,17 @@ class MessagesSourceTest {
     val runtimePermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(Manifest.permission.SEND_SMS)
 
-    val messagesRepo: DefaultMessagesSource by inject(MessagesSource::class.java)
+    private val messagesRepo: DefaultMessagesSource by inject(MessagesSource::class.java)
 
     @Test
     fun testSendSms() {
         runBlocking {
-            messagesRepo.sendSms(
-                "",
-                "test",
-            )
-            assert(true)
+            assertDoesNotThrow {
+                messagesRepo.sendSms(
+                    "+79120398681",
+                    "test",
+                )
+            }
         }
     }
 }
