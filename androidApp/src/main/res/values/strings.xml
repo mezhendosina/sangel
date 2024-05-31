@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start">НАЧАТЬ</string>
+    <string name="login">Войдите в свой аккаунт</string>
+    <string name="enter_code">Введите код из письма</string>
+    <string name="my_devices">Мои устройства</string>
+    <string name="braclet_s">Браслет S</string>
+    <string name="account">Аккаунт</string>
+    <string name="send_code">ОТПРАВИТЬ КОД</string>
+    <string name="back">Назад</string>
+    <string name="favorites">Избранные контакты</string>
+    <string name="settings">Настройки</string>
+    <string name="about_app">О приложении</string>
+    <string name="privacy">Приватность</string>
+    <string name="contacts">Контакты</string>
+    <string name="all_around">Все поблизости</string>
+    <string name="all_around_caption">Все пользователи смогу увидеть вашу геолокацию</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="name">Имя</string>
+    <string name="your_name">Ваше имя...</string>
+    <string name="_7_952_812_751_82">+7 (952) 812 75–12</string>
+    <string name="your_mail">mail@example.ru</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="e_mail">E-mail</string>
+    <string name="next">Продолжить</string>
+    <string name="fav_contacts">Избранные контакты</string>
+    <string name="all_contacts">Все контакты</string>
+    <string name="find_contact">Найти нужный контакт</string>
+    <string name="profile">Профиль</string>
+</resources>

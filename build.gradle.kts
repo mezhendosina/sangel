@@ -7,6 +7,9 @@ plugins {
     kotlin("plugin.serialization") version "1.9.23" apply false
     id("com.google.devtools.ksp") version "1.9.23-1.0.20" apply false
     id("de.jensklingenberg.ktorfit") version "1.13.0" apply false
+    alias(libs.plugins.room).apply(false)
+
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 }
 
 buildscript {
