@@ -24,7 +24,7 @@ fun PrivacyScreen(component: PrivacyComponent) {
     val model by component.model.subscribeAsState()
     LazyColumn {
         item {
-            Text("Кто может видеть вашу геопозицию?")
+            Text("Кто может видеть вашу геопозицию?", modifier = Modifier.padding(start = 16.dp))
             PrivacyRadioButton(
                 model.selectedShowLocationTo == ShowLocationTo.FAVORITES,
                 { component.changeShowLocationTo(ShowLocationTo.FAVORITES) },
@@ -50,7 +50,11 @@ private fun PrivacyRadioButton(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(16.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(16.dp),
     ) {
         RadioButton(
             selected = selected,
