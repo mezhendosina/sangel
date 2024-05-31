@@ -1,8 +1,13 @@
 package ru.sangel.unit
 
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import ru.sangel.data.auth.AuthApi
 
-class AuthApiTest {
+class AuthApiTest : KoinTest {
+    val authApi: AuthApi by inject()
+
     @Test
     fun testSignUp() {
         TODO()
