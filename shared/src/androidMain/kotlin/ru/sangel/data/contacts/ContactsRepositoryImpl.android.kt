@@ -1,15 +1,16 @@
 package ru.sangel.data.contacts
 
-import android.content.Context
+import android.app.Application
 import android.provider.ContactsContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.koin.core.context.GlobalContext.get
 import ru.sangel.data.AppDatabase
 import ru.sangel.presentation.components.main.settings.contacts.ContactUiEntity
 
 actual class ContactsRepositoryImpl(
-    private val context: Context,
     private val database: AppDatabase,
+    private val context: Application,
 ) : ContactsRepository {
     val contactsDao: ContactsDao by lazy {
         database.getContactsDao()
@@ -27,7 +28,7 @@ actual class ContactsRepositoryImpl(
         }
 
     override suspend fun getContacts(): List<ContactUiEntity> {
-        val cr = context.contentResolver
+        val cr = (get() as Application).contentResolver
         val out = mutableListOf<ContactUiEntity>()
         val cursor =
             cr.query(

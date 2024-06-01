@@ -1,6 +1,5 @@
 package ru.sangel.app.data.map
 
-import android.content.Context
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.location.FilteringMode
 import com.yandex.mapkit.location.Location
@@ -17,7 +16,6 @@ import ru.sangel.data.map.entities.LocationEntity
 import ru.sangel.data.users.UsersRepository
 
 class MapKitRepositoryImpl(
-    private val context: Context,
     private val usersRepository: UsersRepository,
 ) : MapKitRepository {
     override val currentPosition =

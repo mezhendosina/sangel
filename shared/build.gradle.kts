@@ -38,16 +38,17 @@ kotlin {
             implementation(libs.maps.mobile)
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
             implementation(libs.firebase.analytics)
+            implementation("io.insert-koin:koin-android:3.5.6")
         }
         commonMain.dependencies {
             implementation(libs.decompose)
 
             implementation(libs.androidx.datastore.preferences.core)
 
-            implementation(libs.ktorfit.lib)
-
             implementation(libs.koin.core)
+            implementation("io.insert-koin:koin-logger-slf4j:3.5.6")
 
+            implementation(libs.ktorfit.lib)
             implementation("io.ktor:ktor-client-logging:2.3.10")
             implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
             implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
@@ -80,7 +81,6 @@ kotlin {
 }
 
 android {
-
     namespace = "ru.sangel"
     compileSdk = 34
     defaultConfig {

@@ -62,9 +62,7 @@ android {
         implementation("com.airbnb.android:lottie-compose:6.4.0")
 
         implementation("io.insert-koin:koin-core:3.5.6")
-        implementation("io.insert-koin:koin-android:3.5.6")
         implementation("io.insert-koin:koin-androidx-compose:3.5.6")
-        implementation("io.insert-koin:koin-logger-slf4j:3.5.6")
         implementation("androidx.compose.ui:ui-viewbinding:1.6.7")
 
         implementation("com.yandex.android:maps.mobile:4.5.1-lite")

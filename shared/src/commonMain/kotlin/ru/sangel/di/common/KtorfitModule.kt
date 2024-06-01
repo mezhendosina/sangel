@@ -1,4 +1,4 @@
-package ru.sangel.di
+package ru.sangel.di.common
 
 import de.jensklingenberg.ktorfit.Ktorfit
 import io.ktor.client.HttpClient

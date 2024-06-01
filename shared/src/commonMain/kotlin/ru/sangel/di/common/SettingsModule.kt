@@ -1,4 +1,4 @@
-package ru.sangel.di
+package ru.sangel.di.common
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -6,10 +6,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.plus
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import org.koin.dsl.single
 import ru.sangel.data.dataStorePreferences
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.data.settings.AppPrefsImpl
@@ -19,7 +19,7 @@ val settingsModule =
     module {
         single {
             dataStorePreferences(
-                get(),
+                androidContext(),
                 corruptionHandler = null,
                 coroutineScope =
                     CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate) + Dispatchers.IO,

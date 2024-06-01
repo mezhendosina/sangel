@@ -1,4 +1,4 @@
-package ru.sangel.di
+package ru.sangel.di.common
 
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -11,6 +11,8 @@ import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.contacts.ContactsRepositoryImpl
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.device.DeviceRepositoryImpl
+import ru.sangel.data.firebase.FirebaseRepository
+import ru.sangel.data.firebase.FirebaseRepositoryImpl
 import ru.sangel.data.messages.DefaultMessagesSource
 import ru.sangel.data.messages.MessagesSource
 import ru.sangel.data.users.KtorfitUsersSource
@@ -24,6 +26,7 @@ val repoModule =
         singleOf(::UsersRepositoryImpl) bind UsersRepository::class
         singleOf(::ContactsRepositoryImpl) bind ContactsRepository::class
         singleOf(::DeviceRepositoryImpl) bind DeviceRepository::class
+        singleOf(::FirebaseRepositoryImpl) bind FirebaseRepository::class
     }
 
 val sourceModule =
