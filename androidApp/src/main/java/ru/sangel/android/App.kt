@@ -1,6 +1,8 @@
 package ru.sangel.android
 
 import android.app.Application
+import com.google.firebase.Firebase
+import com.google.firebase.initialize
 import com.yandex.mapkit.MapKitFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -19,6 +21,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         MapKitFactory.setApiKey("4cdc7740-5bcc-43cd-ad9a-517bf2143366")
+        Firebase.initialize(this)
 
         startKoin {
             androidContext(this@App)

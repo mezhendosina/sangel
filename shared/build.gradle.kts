@@ -9,6 +9,7 @@ plugins {
     id("de.jensklingenberg.ktorfit")
 
     alias(libs.plugins.room)
+    alias(libs.plugins.googleGmsGoogleServices)
 }
 kotlin {
     androidTarget {
@@ -36,6 +37,7 @@ kotlin {
             api(libs.androidx.startup)
             implementation(libs.maps.mobile)
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+            implementation(libs.firebase.analytics)
         }
         commonMain.dependencies {
             implementation(libs.decompose)
@@ -94,6 +96,7 @@ android {
 val ktorfitVersion = "1.13.0"
 
 dependencies {
+    implementation(libs.firebase.messaging)
     add("kspCommonMainMetadata", "de.jensklingenberg.ktorfit:ktorfit-ksp:1.13.0")
     add("kspAndroid", "de.jensklingenberg.ktorfit:ktorfit-ksp:1.13.0")
 

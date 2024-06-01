@@ -10,6 +10,9 @@ plugins {
     alias(libs.plugins.room).apply(false)
 
     id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
+    alias(libs.plugins.googleGmsGoogleServices) apply false
+    alias(libs.plugins.googleFirebaseCrashlytics) apply false
+    alias(libs.plugins.googleFirebaseFirebasePerf) apply false
 }
 
 buildscript {

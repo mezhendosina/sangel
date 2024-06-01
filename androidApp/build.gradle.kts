@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp")
+    alias(libs.plugins.googleGmsGoogleServices)
+    alias(libs.plugins.googleFirebaseCrashlytics)
+    alias(libs.plugins.googleFirebaseFirebasePerf)
 }
 
 android {
@@ -84,4 +87,6 @@ android {
 dependencies {
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.rules)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.perf)
 }

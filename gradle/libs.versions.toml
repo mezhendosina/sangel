@@ -20,6 +20,13 @@ androidxRoom = "2.7.0-alpha01"
 sqlite = "2.5.0-alpha01"
 junitKtx = "1.1.5"
 rules = "1.5.0"
+googleGmsGoogleServices = "4.4.2"
+firebaseAnalytics = "22.0.1"
+firebaseCrashlytics = "19.0.1"
+googleFirebaseCrashlytics = "3.0.1"
+firebaseMessaging = "24.0.0"
+firebasePerf = "21.0.1"
+googleFirebaseFirebasePerf = "1.4.2"
 
 
 [libraries]
@@ -47,6 +54,10 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
+firebase-perf = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerf" }
 
 
 [plugins]
@@ -56,3 +67,6 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "androidxRoom" }
+googleGmsGoogleServices = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+googleFirebaseCrashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
+googleFirebaseFirebasePerf = { id = "com.google.firebase.firebase-perf", version.ref = "googleFirebaseFirebasePerf" }
