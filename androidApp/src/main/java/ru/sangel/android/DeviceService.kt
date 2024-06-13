@@ -27,7 +27,7 @@ class DeviceService : Service() {
         CoroutineScope(Dispatchers.IO).launch {
             deviceRepository.emergency.collect {
                 if (it) {
-                    println(it)
+                    messagesRepository.sendMessageToFavorites()
                 }
             }
         }
