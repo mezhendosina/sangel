@@ -21,10 +21,10 @@ class DefaultConnectDeviceComponent(
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            deviceRepository.devicesList.collect(::addToList)
+            deviceRepository.avaliableDevice.collect(::addToList)
         }
         CoroutineScope(Dispatchers.IO).launch {
-            deviceRepository.connectedDevices.distinctUntilChanged { old, new -> old == new }
+            deviceRepository.pairedDevices.distinctUntilChanged { old, new -> old == new }
                 .collect {
                     if (it.isNotEmpty()) {
                         withContext(Dispatchers.Main) {

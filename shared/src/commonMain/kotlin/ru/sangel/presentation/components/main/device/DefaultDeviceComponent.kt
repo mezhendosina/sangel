@@ -26,7 +26,7 @@ class DefaultDeviceComponent(
     init {
         CoroutineScope(Dispatchers.IO).launch {
             getUser()
-            deviceRepository.connectedDevices.collect { deviceUiEntities ->
+            deviceRepository.pairedDevices.collect { deviceUiEntities ->
                 withContext(Dispatchers.Main) {
                     _model.update { oldModel ->
                         DeviceComponent.Model(

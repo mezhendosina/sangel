@@ -1,3 +1,5 @@
 package ru.sangel.data.messages
 
-expect class MessagesRepositoryImpl : MessagesRepository
+import org.koin.core.component.KoinComponent
+
+expect class MessagesRepositoryImpl : MessagesRepository, KoinComponent

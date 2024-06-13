@@ -13,8 +13,12 @@ import io.ktor.util.date.getTimeMillis
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import ru.sangel.data.AppDatabase
 import ru.sangel.data.device.db.DeviceDao
 import ru.sangel.data.device.db.DeviceEntity
@@ -26,16 +30,15 @@ class DeviceRepositoryImpl(
     val deviceDao: DeviceDao by lazy {
         database.getDeviceDao()
     }
-
-    override val devicesList: Flow<AndroidAdvertisement> =
+    override val avaliableDevice: Flow<AndroidAdvertisement> =
         Scanner {
             filters =
                 listOf(
                     Filter.Name("MyESP32"),
                 )
-        }.advertisements
+        }.advertisements.catch { if (it !is SecurityException) throw it }
 
-    override val connectedDevices: Flow<List<DeviceUiEntity>> =
+    override val pairedDevices: Flow<List<DeviceUiEntity>> =
         deviceDao.getAll().map { deviceEntities ->
             deviceEntities.map {
                 DeviceUiEntity(
@@ -44,12 +47,25 @@ class DeviceRepositoryImpl(
                 )
             }
         }
+    private val _emergency = MutableSharedFlow<Boolean>()
+    override val emergency: SharedFlow<Boolean> = _emergency
+
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            avaliableDevice.collect {
+                _emergency.emit(
+                    it.address in
+                        pairedDevices.first().map(DeviceUiEntity::macAddress),
+                )
+            }
+        }
+    }
 
     override suspend fun getDeviceFromDb(address: String): DeviceEntity? = deviceDao.getDevice(address)
 
     @OptIn(ObsoleteKableApi::class)
     override suspend fun connect(address: String) {
-        val findDevice = devicesList.first { it.address == address }
+        val findDevice = avaliableDevice.first { it.address == address }
         CoroutineScope(Dispatchers.IO).peripheral(findDevice) {
             logging {
                 engine = SystemLogEngine
@@ -65,6 +81,7 @@ class DeviceRepositoryImpl(
                             "BEB5483E-36E1-4688-B7F5-EA07361B26A8",
                         ),
                     )
+
                 if (readResult.isNotEmpty()) {
                     deviceDao.addDevice(
                         DeviceEntity(
