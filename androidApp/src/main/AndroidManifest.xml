@@ -38,6 +38,7 @@
         android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/sangel"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
