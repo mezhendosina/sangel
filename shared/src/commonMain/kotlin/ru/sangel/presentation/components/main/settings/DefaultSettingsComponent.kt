@@ -9,18 +9,22 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext.get
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.SETTINGS_STACK
 import ru.sangel.data.contacts.ContactsRepository
+import ru.sangel.data.settings.AppPrefs
 import ru.sangel.presentation.components.main.settings.contacts.DefaultContactsComponent
 import ru.sangel.presentation.components.main.settings.privacy.DefaultPrivacyComponent
 import ru.sangel.presentation.components.main.settings.root.DefaultSettingsRootComponent
 
 class DefaultSettingsComponent(
     private val componentContext: ComponentContext,
-) : SettingsComponent, ComponentContext by componentContext {
-    private val contactsRepository: ContactsRepository by inject(ContactsRepository::class.java)
+) : SettingsComponent, ComponentContext by componentContext, KoinComponent {
+    private val contactsRepository: ContactsRepository by inject()
+    private val appPrefs: AppPrefs by inject()
 
     private val context: Context by inject(Context::class.java)
 
@@ -62,7 +66,8 @@ class DefaultSettingsComponent(
             contactsRepository,
         )
 
-    private fun privacyComponent(componentContext: ComponentContext) = DefaultPrivacyComponent(componentContext, contactsRepository)
+    private fun privacyComponent(componentContext: ComponentContext) =
+        DefaultPrivacyComponent(componentContext, contactsRepository, appPrefs)
 
     private fun settingsRootComponent(componentContext: ComponentContext) =
         DefaultSettingsRootComponent(

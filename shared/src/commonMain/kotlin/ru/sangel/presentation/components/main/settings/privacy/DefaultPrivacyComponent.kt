@@ -11,10 +11,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.sangel.ShowLocationTo
 import ru.sangel.data.contacts.ContactsRepository
+import ru.sangel.data.settings.AppPrefs
 
 class DefaultPrivacyComponent(
     private val componentContext: ComponentContext,
     private val contactsRepository: ContactsRepository,
+    private val appPrefs: AppPrefs,
 ) : PrivacyComponent, ComponentContext by componentContext {
     private val _model =
         MutableValue(
@@ -34,6 +36,9 @@ class DefaultPrivacyComponent(
                 it.contactsPreview,
             )
         }
+        CoroutineScope(Dispatchers.IO).launch {
+            appPrefs.setValue(AppPrefs.SHOW_LOCATION_TO, value.name)
+        }
     }
 
     private fun getContactsPreview() {
@@ -50,10 +55,11 @@ class DefaultPrivacyComponent(
             if (favs.size >= 3) {
                 outStr += "и еще ${favs.size - 3}"
             }
+            val showLocationTo = appPrefs.getValue(AppPrefs.SHOW_LOCATION_TO, "").first() ?: ""
 
             withContext(Dispatchers.Main) {
                 _model.update {
-                    PrivacyComponent.Model(it.selectedShowLocationTo, outStr)
+                    PrivacyComponent.Model(ShowLocationTo.valueOf(showLocationTo), outStr)
                 }
             }
         }

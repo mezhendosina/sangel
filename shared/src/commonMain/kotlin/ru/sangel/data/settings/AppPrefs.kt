@@ -22,5 +22,6 @@ interface AppPrefs {
         val TOKEN = stringPreferencesKey("token")
         val EMAIL = stringPreferencesKey("email")
         val PASSWORD = stringSetPreferencesKey("password")
+        val SHOW_LOCATION_TO = stringPreferencesKey("show_location_to")
     }
 }
