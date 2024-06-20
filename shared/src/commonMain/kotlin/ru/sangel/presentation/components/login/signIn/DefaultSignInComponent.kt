@@ -7,10 +7,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.sangel.data.auth.AuthRepository
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.presentation.entities.States
+import ru.sangel.presentation.utils.coroutineExceptionHandler
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DefaultSignInComponent(
@@ -18,8 +18,9 @@ class DefaultSignInComponent(
     private val appPrefs: AppPrefs,
     private val componentContext: ComponentContext,
     private val toCheckCode: () -> Unit,
-    private val toSignIn: (email: String) -> Unit,
-) : SignInComponent, ComponentContext by componentContext {
+    private val toSignUp: (email: String) -> Unit,
+) : SignInComponent,
+    ComponentContext by componentContext {
     private val _model =
         MutableValue<SignInComponent.Model>(
             SignInComponent.Model(
@@ -44,19 +45,13 @@ class DefaultSignInComponent(
     }
 
     override fun signIn() {
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch(coroutineExceptionHandler) {
             authRepository.signIn(_model.value.email)
             toCheckCode.invoke()
-
-            try {
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    println(e.stackTraceToString())
-                    toSignIn.invoke(model.value.email)
-                }
-            }
         }
     }
+
+    override fun toSignUp() = toSignUp(model.value.email)
 
     override fun toCheckCode() {
         toCheckCode.invoke()

@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -93,6 +94,9 @@ fun SignInScreen(component: SignInComponent) {
                     placeholder = { Text("mail@example.ru") },
                     modifier = Modifier.fillMaxWidth(),
                 )
+                TextButton(onClick = component::toSignUp) {
+                    Text(stringResource(R.string.or_sign_up))
+                }
                 Spacer(modifier = Modifier.size(64.dp))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -127,6 +131,10 @@ private fun SignInPreview() {
                 }
 
                 override fun signIn() {
+                    TODO("Not yet implemented")
+                }
+
+                override fun toSignUp() {
                     TODO("Not yet implemented")
                 }
 

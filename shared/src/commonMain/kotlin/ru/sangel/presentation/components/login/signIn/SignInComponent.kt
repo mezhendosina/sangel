@@ -10,6 +10,8 @@ interface SignInComponent {
 
     fun signIn()
 
+    fun toSignUp()
+
     fun toCheckCode()
 
     data class Model(
