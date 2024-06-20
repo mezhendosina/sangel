@@ -27,6 +27,7 @@ import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -50,7 +51,7 @@ fun SignInScreen(component: SignInComponent) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxHeight(0.35f).fillMaxWidth(),
             ) {
                 LottieAnimation(
                     composition = animation,
@@ -58,7 +59,7 @@ fun SignInScreen(component: SignInComponent) {
                     reverseOnRepeat = true,
                     modifier =
                         Modifier
-                            .fillMaxHeight(0.5f)
+                            .fillMaxSize()
                             .clip(
                                 RoundedCornerShape(bottomStart = 52.dp, bottomEnd = 52.dp),
                             ),
@@ -97,13 +98,12 @@ fun SignInScreen(component: SignInComponent) {
                 TextButton(onClick = component::toSignUp) {
                     Text(stringResource(R.string.or_sign_up))
                 }
-                Spacer(modifier = Modifier.size(64.dp))
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     LoginButton(onClick = component::signIn) {
-                        Text(text = stringResource(R.string.send_code))
+                        Text(text = stringResource(R.string.send_code), fontSize = 12.sp)
                     }
                 }
             }
@@ -111,7 +111,11 @@ fun SignInScreen(component: SignInComponent) {
     }
 }
 
-@Preview
+@Preview(device = "id:Nexus One")
+@Preview(device = "id:Galaxy Nexus")
+@Preview(device = "id:Nexus 4")
+@Preview(device = "id:pixel_3a")
+@Preview(device = "id:pixel_fold")
 @Composable
 private fun SignInPreview() {
     SangelTheme {
@@ -144,4 +148,8 @@ private fun SignInPreview() {
             },
         )
     }
+}
+
+@Composable
+private fun Preview() {
 }

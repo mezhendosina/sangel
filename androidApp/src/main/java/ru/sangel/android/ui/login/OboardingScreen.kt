@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,10 +34,11 @@ fun OnboardingScreen(component: OnboardingComponent) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(
-                Modifier.background(
-                    Color(0xFFF1C064),
-                    shape = RoundedCornerShape(bottomEnd = 52.dp, bottomStart = 52.dp),
-                ),
+                Modifier
+                    .background(
+                        Color(0xFFF1C064),
+                        shape = RoundedCornerShape(bottomEnd = 52.dp, bottomStart = 52.dp),
+                    ).fillMaxHeight(0.7f),
             ) {
                 Image(
                     painterResource(id = R.drawable.ic_first_onboarding),
@@ -44,7 +46,7 @@ fun OnboardingScreen(component: OnboardingComponent) {
                     modifier =
                         Modifier
                             .safeDrawingPadding()
-                            .padding(40.dp)
+                            .padding(28.dp)
                             .fillMaxWidth(),
                 )
             }
@@ -69,7 +71,63 @@ fun OnboardingScreen(component: OnboardingComponent) {
     }
 }
 
-@Preview
+@Preview(device = "id:Nexus One")
+@Composable
+private fun PreviewOboardingScreenSmall() {
+    SangelTheme {
+        OnboardingScreen(
+            object : OnboardingComponent {
+                override fun toSignIn() {
+                    TODO("Not yet implemented")
+                }
+            },
+        )
+    }
+}
+
+@Preview(device = "id:Galaxy Nexus")
+@Composable
+private fun PreviewOboardingScreenGalaxyNexus() {
+    SangelTheme {
+        OnboardingScreen(
+            object : OnboardingComponent {
+                override fun toSignIn() {
+                    TODO("Not yet implemented")
+                }
+            },
+        )
+    }
+}
+
+@Preview(device = "id:Nexus 4")
+@Composable
+private fun PreviewOboardingScreenNexus4() {
+    SangelTheme {
+        OnboardingScreen(
+            object : OnboardingComponent {
+                override fun toSignIn() {
+                    TODO("Not yet implemented")
+                }
+            },
+        )
+    }
+}
+
+@Preview(device = "id:pixel_3a")
+@Composable
+private fun PreviewOboardingScreenPixel3a() {
+    SangelTheme {
+        OnboardingScreen(
+            object : OnboardingComponent {
+                override fun toSignIn() {
+                    TODO("Not yet implemented")
+                }
+            },
+        )
+    }
+}
+
+@Preview(device = "id:pixel_fold")
 @Composable
 private fun PreviewOboardingScreen() {
     SangelTheme {
