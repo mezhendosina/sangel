@@ -7,9 +7,12 @@ import ru.sangel.data.device.db.DeviceEntity
 import ru.sangel.presentation.entities.DeviceUiEntity
 
 interface DeviceRepository {
-    val avaliableDevice: Flow<Advertisement>
     val pairedDevices: Flow<List<DeviceUiEntity>>
     val emergency: SharedFlow<Boolean>
+
+    suspend fun setEmergency(value: Boolean)
+
+    suspend fun getAvaliableDevices(): Flow<Advertisement>
 
     suspend fun getDeviceFromDb(address: String): DeviceEntity?
 

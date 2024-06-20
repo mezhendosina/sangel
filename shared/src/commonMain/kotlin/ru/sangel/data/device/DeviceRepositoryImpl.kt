@@ -1,6 +1,7 @@
 package ru.sangel.data.device
 
-import com.juul.kable.AndroidAdvertisement
+import android.bluetooth.le.ScanSettings
+import com.juul.kable.Advertisement
 import com.juul.kable.BluetoothDisabledException
 import com.juul.kable.Filter
 import com.juul.kable.ObsoleteKableApi
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import ru.sangel.data.AppDatabase
 import ru.sangel.data.device.db.DeviceDao
 import ru.sangel.data.device.db.DeviceEntity
@@ -31,13 +31,21 @@ class DeviceRepositoryImpl(
     val deviceDao: DeviceDao by lazy {
         database.getDeviceDao()
     }
-    override val avaliableDevice: Flow<AndroidAdvertisement> =
+
+    @OptIn(ObsoleteKableApi::class)
+    private val scanner by lazy {
         Scanner {
+            scanSettings =
+                ScanSettings
+                    .Builder()
+                    .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER)
+                    .build()
             filters =
                 listOf(
                     Filter.Name("MyESP32"),
                 )
-        }.advertisements.catch { if (it !is SecurityException || it !is BluetoothDisabledException) throw it }
+        }
+    }
 
     override val pairedDevices: Flow<List<DeviceUiEntity>> =
         deviceDao.getAll().map { deviceEntities ->
@@ -51,22 +59,17 @@ class DeviceRepositoryImpl(
     private val _emergency = MutableSharedFlow<Boolean>()
     override val emergency: SharedFlow<Boolean> = _emergency
 
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            avaliableDevice.collect {
-                _emergency.emit(
-                    it.address in
-                        pairedDevices.first().map(DeviceUiEntity::macAddress),
-                )
-            }
-        }
-    }
+    override suspend fun setEmergency(value: Boolean) = _emergency.emit(value)
+
+    @OptIn(ObsoleteKableApi::class)
+    override suspend fun getAvaliableDevices(): Flow<Advertisement> =
+        scanner.advertisements.catch { if (it !is SecurityException || it !is BluetoothDisabledException) throw it }
 
     override suspend fun getDeviceFromDb(address: String): DeviceEntity? = deviceDao.getDevice(address)
 
     @OptIn(ObsoleteKableApi::class)
     override suspend fun connect(address: String) {
-        val findDevice = avaliableDevice.first { it.address == address }
+        val findDevice = getAvaliableDevices().first { it.identifier == address }
         CoroutineScope(Dispatchers.IO)
             .peripheral(findDevice) {
                 logging {

@@ -24,6 +24,7 @@ class App : Application() {
         }
         MapKitFactory.setApiKey("4cdc7740-5bcc-43cd-ad9a-517bf2143366")
         Firebase.initialize(this)
+
         startForegroundService(Intent(this, DeviceService::class.java))
     }
 }

@@ -34,8 +34,14 @@ fun ConnectDeviceScreen(
             if (!bluetoothPermission.status.isGranted) {
                 bluetoothPermission.launchPermissionRequest()
             }
+            component.observeForDevices()
+        }
+    } else {
+        LaunchedEffect(Unit) {
+            component.observeForDevices()
         }
     }
+
     LazyColumn(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
         items(model.list.toList()) {
             ConnectDeviceItem(connectDeviceEntity = it, component::connect)

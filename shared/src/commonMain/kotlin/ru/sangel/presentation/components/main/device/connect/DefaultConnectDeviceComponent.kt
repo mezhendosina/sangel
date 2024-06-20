@@ -1,5 +1,6 @@
 package ru.sangel.presentation.components.main.device.connect
 
+import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
@@ -13,18 +14,22 @@ import ru.sangel.data.device.DeviceRepository
 import ru.sangel.presentation.entities.ConnectDeviceEntity
 
 class DefaultConnectDeviceComponent(
+    private val componentContext: ComponentContext,
     private val deviceRepository: DeviceRepository,
     private val onConnected: () -> Unit,
-) : ConnectDeviceComponent {
+) : ConnectDeviceComponent,
+    ComponentContext by componentContext {
     private val _model = MutableValue(ConnectDeviceComponent.Model(listOf()))
     override val model: Value<ConnectDeviceComponent.Model> = _model
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            deviceRepository.avaliableDevice.collect(::addToList)
+    override fun observeForDevices() {
+        coroutineScope.launch {
+            deviceRepository.getAvaliableDevices().collect(::addToList)
         }
-        CoroutineScope(Dispatchers.IO).launch {
-            deviceRepository.pairedDevices.distinctUntilChanged { old, new -> old == new }
+        coroutineScope.launch {
+            deviceRepository.pairedDevices
+                .distinctUntilChanged { old, new -> old == new }
                 .collect {
                     if (it.isNotEmpty()) {
                         withContext(Dispatchers.Main) {

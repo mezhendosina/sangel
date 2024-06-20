@@ -6,6 +6,8 @@ import ru.sangel.presentation.entities.ConnectDeviceEntity
 interface ConnectDeviceComponent {
     val model: Value<Model>
 
+    fun observeForDevices()
+
     fun connect(id: String)
 
     data class Model(

@@ -7,30 +7,34 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import com.juul.kable.AndroidAdvertisement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.messages.MessagesRepository
+import ru.sangel.presentation.entities.DeviceUiEntity
+import ru.sangel.utils.waitUntilBluetoothIsAvailable
 
 class DeviceService : Service() {
     private val deviceRepository by inject<DeviceRepository>()
     private val messagesRepository by inject<MessagesRepository>()
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onCreate() {
         super.onCreate()
         startForeground()
-        CoroutineScope(Dispatchers.IO).launch {
-            deviceRepository.emergency.collect {
-                if (it) {
-                    messagesRepository.sendMessageToFavorites()
-                }
-            }
-        }
+        observeAvaliableDevices()
+        observeEmergency()
     }
 
     private fun startForeground() {
@@ -56,5 +60,32 @@ class DeviceService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        coroutineScope.cancel()
+    }
+
+    private fun observeEmergency() {
+        coroutineScope.launch {
+            deviceRepository.emergency.collect {
+                if (it) {
+                    messagesRepository.sendMessageToFavorites()
+                }
+            }
+        }
+    }
+
+    private fun observeAvaliableDevices() {
+        coroutineScope.launch {
+            waitUntilBluetoothIsAvailable(this@DeviceService)
+            deviceRepository.getAvaliableDevices().collect {
+                if (!isActive) return@collect
+                val androidAdvertisement = it as AndroidAdvertisement
+                deviceRepository.setEmergency(
+                    androidAdvertisement.address in
+                        deviceRepository.pairedDevices
+                            .first()
+                            .map(DeviceUiEntity::macAddress),
+                )
+            }
+        }
     }
 }

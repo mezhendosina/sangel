@@ -23,7 +23,8 @@ class DefaultMainComponent(
     private val usersRepository: UsersRepository,
     private val mapKitRepository: MapKitRepository,
     private val deviceRepository: DeviceRepository,
-) : MainComponent, ComponentContext by componentContext {
+) : MainComponent,
+    ComponentContext by componentContext {
     private val navigation = StackNavigation<MainConfig>()
     override val stack: Value<ChildStack<*, MainComponent.Child>> =
         childStack(
@@ -78,7 +79,7 @@ class DefaultMainComponent(
         }
 
     private fun connectDeviceComponent() =
-        DefaultConnectDeviceComponent(deviceRepository) {
+        DefaultConnectDeviceComponent(componentContext, deviceRepository) {
             navigation.pushToFront(MainConfig.Device)
         }
 
