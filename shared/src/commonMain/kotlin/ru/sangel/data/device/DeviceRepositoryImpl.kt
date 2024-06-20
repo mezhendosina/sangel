@@ -68,7 +68,10 @@ class DeviceRepositoryImpl(
     override suspend fun getDeviceFromDb(address: String): DeviceEntity? = deviceDao.getDevice(address)
 
     @OptIn(ObsoleteKableApi::class)
-    override suspend fun connect(address: String) {
+    override suspend fun connect(
+        address: String,
+        onConnected: () -> Unit,
+    ) {
         val findDevice = getAvaliableDevices().first { it.identifier == address }
         CoroutineScope(Dispatchers.IO)
             .peripheral(findDevice) {
@@ -96,6 +99,7 @@ class DeviceRepositoryImpl(
                                 getTimeMillis(),
                             ),
                         )
+                        onConnected()
                     }
                 }
             }.connect()

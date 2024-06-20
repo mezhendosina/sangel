@@ -16,5 +16,8 @@ interface DeviceRepository {
 
     suspend fun getDeviceFromDb(address: String): DeviceEntity?
 
-    suspend fun connect(address: String)
+    suspend fun connect(
+        address: String,
+        onConnected: () -> Unit,
+    )
 }

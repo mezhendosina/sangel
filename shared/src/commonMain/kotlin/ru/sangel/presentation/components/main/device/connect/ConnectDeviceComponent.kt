@@ -8,7 +8,10 @@ interface ConnectDeviceComponent {
 
     fun observeForDevices()
 
-    fun connect(id: String)
+    fun connect(
+        id: String,
+        onConnected: () -> Unit,
+    )
 
     data class Model(
         val list: List<ConnectDeviceEntity>,

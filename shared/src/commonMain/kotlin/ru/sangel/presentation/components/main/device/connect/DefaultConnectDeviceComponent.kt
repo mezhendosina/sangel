@@ -40,9 +40,12 @@ class DefaultConnectDeviceComponent(
         }
     }
 
-    override fun connect(id: String) {
+    override fun connect(
+        id: String,
+        onConnected: () -> Unit,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
-            deviceRepository.connect(id)
+            deviceRepository.connect(id, onConnected)
         }
     }
 
