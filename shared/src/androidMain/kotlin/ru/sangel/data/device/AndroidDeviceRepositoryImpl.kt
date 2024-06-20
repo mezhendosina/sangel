@@ -1,6 +1,7 @@
 package ru.sangel.data.device
 
 import com.juul.kable.AndroidAdvertisement
+import com.juul.kable.BluetoothDisabledException
 import com.juul.kable.Filter
 import com.juul.kable.ObsoleteKableApi
 import com.juul.kable.Scanner
@@ -36,7 +37,7 @@ class DeviceRepositoryImpl(
                 listOf(
                     Filter.Name("MyESP32"),
                 )
-        }.advertisements.catch { if (it !is SecurityException) throw it }
+        }.advertisements.catch { if (it !is SecurityException || it !is BluetoothDisabledException) throw it }
 
     override val pairedDevices: Flow<List<DeviceUiEntity>> =
         deviceDao.getAll().map { deviceEntities ->
@@ -66,33 +67,34 @@ class DeviceRepositoryImpl(
     @OptIn(ObsoleteKableApi::class)
     override suspend fun connect(address: String) {
         val findDevice = avaliableDevice.first { it.address == address }
-        CoroutineScope(Dispatchers.IO).peripheral(findDevice) {
-            logging {
-                engine = SystemLogEngine
-                level = Logging.Level.Data
-                data = Hex
-            }
-
-            onServicesDiscovered {
-                val readResult =
-                    read(
-                        characteristicOf(
-                            "4FAFC201-1FB5-459E-8FCC-C5C9C331914B",
-                            "BEB5483E-36E1-4688-B7F5-EA07361B26A8",
-                        ),
-                    )
-
-                if (readResult.isNotEmpty()) {
-                    deviceDao.addDevice(
-                        DeviceEntity(
-                            address,
-                            address,
-                            100.0,
-                            getTimeMillis(),
-                        ),
-                    )
+        CoroutineScope(Dispatchers.IO)
+            .peripheral(findDevice) {
+                logging {
+                    engine = SystemLogEngine
+                    level = Logging.Level.Data
+                    data = Hex
                 }
-            }
-        }.connect()
+
+                onServicesDiscovered {
+                    val readResult =
+                        read(
+                            characteristicOf(
+                                "4FAFC201-1FB5-459E-8FCC-C5C9C331914B",
+                                "BEB5483E-36E1-4688-B7F5-EA07361B26A8",
+                            ),
+                        )
+
+                    if (readResult.isNotEmpty()) {
+                        deviceDao.addDevice(
+                            DeviceEntity(
+                                address,
+                                address,
+                                100.0,
+                                getTimeMillis(),
+                            ),
+                        )
+                    }
+                }
+            }.connect()
     }
 }

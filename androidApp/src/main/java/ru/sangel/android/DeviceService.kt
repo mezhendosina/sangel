@@ -48,7 +48,8 @@ class DeviceService : Service() {
         channel.description = "test"
         val notificationManager = getSystemService(NotificationManager::class.java)
         notificationManager.createNotificationChannel(channel)
-        return NotificationCompat.Builder(this, "CHANNEL_ID")
+        return NotificationCompat
+            .Builder(this, "CHANNEL_ID")
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
     }
