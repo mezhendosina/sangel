@@ -84,7 +84,7 @@ android {
     namespace = "ru.sangel"
     compileSdk = 34
     defaultConfig {
-        minSdk = 29
+        minSdk = 26
     }
 
     compileOptions {

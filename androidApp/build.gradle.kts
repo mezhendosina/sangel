@@ -13,7 +13,7 @@ android {
     compileSdk = 34
     defaultConfig {
         applicationId = "ru.sangel.android"
-        minSdk = 29
+        minSdk = 26
         targetSdk = 34
         versionCode = 2
         versionName = "0.1.1"
@@ -25,7 +25,9 @@ android {
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+        kotlinCompilerExtensionVersion =
+            libs.versions.compose.compiler
+                .get()
     }
     packaging {
         resources {
@@ -35,9 +37,9 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
 
-            isShrinkResources = true
+            isShrinkResources = false
 
             proguardFiles("proguard-rules.pro")
         }
