@@ -16,17 +16,18 @@ import ru.sangel.android.ui.theme.SangelTheme
 @Composable
 fun LoginButton(
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     content: @Composable (RowScope) -> Unit,
 ) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(horizontal = 78.dp, vertical = 16.dp),
-        modifier = Modifier.padding(bottom = 64.dp),
         content = content,
+        modifier = modifier,
         colors =
-            ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
+        ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+        ),
     )
 }
 

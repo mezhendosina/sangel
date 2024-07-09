@@ -44,6 +44,7 @@ class DefaultSignInComponent(
 
     override fun signIn() {
         CoroutineScope(Dispatchers.Main).launch(exceptionHandler) {
+            _model.update { it.copy(state = States.Loading) }
             authRepository.signIn(_model.value.email)
             toCheckCode.invoke()
         }

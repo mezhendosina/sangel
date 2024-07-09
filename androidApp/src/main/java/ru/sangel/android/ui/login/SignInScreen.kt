@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -57,68 +58,72 @@ fun SignInScreen(component: SignInComponent) {
     ) {
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(it),
+            Modifier
+                .fillMaxSize()
+                .padding(bottom = it.calculateBottomPadding()),
         ) {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier =
-                    Modifier
-                        .fillMaxHeight(0.35f)
-                        .fillMaxWidth(),
+                Modifier
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth(),
             ) {
-                LottieAnimation(
-                    composition = animation,
-                    speed = 0.1f,
-                    reverseOnRepeat = true,
-                    modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .clip(
-                                RoundedCornerShape(bottomStart = 52.dp, bottomEnd = 52.dp),
-                            ),
-                    iterations = LottieConstants.IterateForever,
-                    contentScale = ContentScale.FillBounds,
-                )
+
                 Image(
-                    painter = painterResource(id = R.drawable.ic_logo),
+                    painter = painterResource(id = R.drawable.ic_login_background),
                     null,
-                    modifier = Modifier.size(40.dp),
-                )
-            }
-            Column(
-                modifier =
-                    Modifier
+                    modifier = Modifier
                         .fillMaxSize()
-                        .padding(
-                            horizontal = 32.dp,
-                            vertical = 28.dp,
+                        .clip(
+                            RoundedCornerShape(bottomStart = 52.dp, bottomEnd = 52.dp),
                         ),
+                    contentScale = ContentScale.Crop,
+
+                    )
+            }
+            LazyColumn(
+                modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = 32.dp,
+                        vertical = 28.dp,
+                    ),
             ) {
-                Text(
-                    stringResource(R.string.login),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                )
-                Spacer(modifier = Modifier.size(8.dp))
-                OutlinedTextField(
-                    value = model.email,
-                    onValueChange = component::onEmailChange,
-                    shape = RoundedCornerShape(32.dp),
-                    singleLine = true,
-                    placeholder = { Text("mail@example.ru") },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                TextButton(onClick = component::toSignUp) {
-                    Text(stringResource(R.string.or_sign_up))
+                item {
+                    Text(
+                        stringResource(R.string.login),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                    )
                 }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    LoginButton(onClick = component::signIn) {
-                        Text(text = stringResource(R.string.send_code), fontSize = 12.sp)
+                item {
+                    Spacer(modifier = Modifier.size(8.dp))
+                }
+                item {
+                    OutlinedTextField(
+                        value = model.email,
+                        onValueChange = component::onEmailChange,
+                        shape = RoundedCornerShape(32.dp),
+                        singleLine = true,
+                        placeholder = { Text("mail@example.ru") },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+                item {
+                    TextButton(onClick = component::toSignUp) {
+                        Text(stringResource(R.string.or_sign_up))
+                    }
+                }
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        LoginButton(onClick = component::signIn) {
+                            Text(text = stringResource(R.string.send_code), fontSize = 12.sp)
+                        }
                     }
                 }
             }

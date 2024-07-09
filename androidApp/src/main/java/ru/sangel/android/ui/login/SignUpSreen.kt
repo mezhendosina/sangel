@@ -37,6 +37,7 @@ import ru.sangel.android.ui.components.ErrorState
 import ru.sangel.android.ui.components.LoginButton
 import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.components.login.signUp.SignUpComponent
+import ru.sangel.presentation.entities.States
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -149,7 +150,7 @@ private fun PreviewSignUpScreen() {
         SignUpScreen(
             object : SignUpComponent {
                 override val model: Value<SignUpComponent.Model>
-                    get() = MutableValue(SignUpComponent.Model("", "", ""))
+                    get() = MutableValue(SignUpComponent.Model("", "", "", States.Loaded))
 
                 override fun changeName(name: String) {
                     TODO("Not yet implemented")

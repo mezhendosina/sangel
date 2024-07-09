@@ -57,6 +57,7 @@ fun OnboardingScreen(component: OnboardingComponent) {
             ) {
                 LoginButton(
                     onClick = component::toSignIn,
+                    modifier = Modifier.padding(bottom = 16.dp),
                 ) {
                     Text(stringResource(R.string.start))
                     Spacer(modifier = Modifier.size(16.dp))
