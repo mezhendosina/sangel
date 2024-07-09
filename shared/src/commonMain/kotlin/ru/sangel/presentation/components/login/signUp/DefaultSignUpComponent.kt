@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.sangel.data.auth.AuthRepository
+import ru.sangel.presentation.entities.States
 
 class DefaultSignUpComponent(
     private val email: String,
@@ -20,6 +21,7 @@ class DefaultSignUpComponent(
             SignUpComponent.Model(
                 name = "",
                 phone = "",
+                state = States.Loaded,
                 email = email,
             ),
         )
@@ -31,6 +33,7 @@ class DefaultSignUpComponent(
             SignUpComponent.Model(
                 name = name,
                 phone = it.phone,
+                state = it.state,
                 email = it.email,
             )
         }
@@ -42,6 +45,7 @@ class DefaultSignUpComponent(
                 name = it.name,
                 phone = phone,
                 email = it.email,
+                state = it.state,
             )
         }
     }
@@ -52,12 +56,13 @@ class DefaultSignUpComponent(
                 name = it.name,
                 phone = it.phone,
                 email = mail,
+                state = it.state,
             )
         }
     }
 
     override fun singUp() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch() {
             with(model.value) {
                 if (email.isValidEmail()) {
                     authRepository.signUp(

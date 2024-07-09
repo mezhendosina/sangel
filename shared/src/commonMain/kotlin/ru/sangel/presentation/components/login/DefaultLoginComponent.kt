@@ -21,7 +21,8 @@ class DefaultLoginComponent(
     private val appPrefs: AppPrefs,
     private val componentContext: ComponentContext,
     private val toMain: () -> Unit,
-) : LoginComponent, ComponentContext by componentContext {
+) : LoginComponent,
+    ComponentContext by componentContext {
     private val navigation = StackNavigation<LoginConfig>()
 
     override val stack: Value<ChildStack<*, LoginComponent.Child>> =
@@ -41,8 +42,8 @@ class DefaultLoginComponent(
     private fun child(
         config: LoginConfig,
         componentContext: ComponentContext,
-    ): LoginComponent.Child {
-        return when (config) {
+    ): LoginComponent.Child =
+        when (config) {
             is LoginConfig.Onboarding ->
                 LoginComponent.Child.Onboarding(onboardingComponent(componentContext))
 
@@ -56,7 +57,6 @@ class DefaultLoginComponent(
 
             is LoginConfig.SignUp -> LoginComponent.Child.SignUp(signUpComponent(config.withMail))
         }
-    }
 
     private fun signUpComponent(email: String) =
         DefaultSignUpComponent(email, authRepository, { navigation.pop() }) {
@@ -71,7 +71,6 @@ class DefaultLoginComponent(
     private fun signInComponent(componentContext: ComponentContext) =
         DefaultSignInComponent(
             authRepository = authRepository,
-            appPrefs = appPrefs,
             componentContext = componentContext,
             toCheckCode = {
                 toMain.invoke()
@@ -92,7 +91,9 @@ class DefaultLoginComponent(
         data object SignIn : LoginConfig
 
         @Serializable
-        data class SignUp(val withMail: String) : LoginConfig
+        data class SignUp(
+            val withMail: String,
+        ) : LoginConfig
 
         @Serializable
         data object ConfirmCode : LoginConfig

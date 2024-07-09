@@ -2,6 +2,7 @@ package ru.sangel.presentation.utils
 
 import kotlinx.coroutines.CoroutineExceptionHandler
 
-val coroutineExceptionHandler =
+fun coroutineExceptionHandler(messageError: (String?) -> Unit) =
     CoroutineExceptionHandler { coroutineContext, throwable ->
+        messageError(throwable.localizedMessage)
     }
