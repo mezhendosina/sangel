@@ -12,18 +12,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,22 +38,35 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import ru.sangel.android.R
+import ru.sangel.android.ui.components.ErrorState
 import ru.sangel.android.ui.components.LoginButton
 import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.components.login.signIn.SignInComponent
 import ru.sangel.presentation.entities.States
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun SignInScreen(component: SignInComponent) {
     val model by component.model.subscribeAsState()
     val animation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.anim_sign_in))
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize()) {
+    ErrorState(model.state, snackbarHostState)
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+    ) {
+        Column(
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(it),
+        ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxHeight(0.35f).fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxHeight(0.35f)
+                        .fillMaxWidth(),
             ) {
                 LottieAnimation(
                     composition = animation,
@@ -126,7 +141,7 @@ private fun SignInPreview() {
                         MutableValue(
                             SignInComponent.Model(
                                 "",
-                                States.LOADED,
+                                States.Loaded,
                             ),
                         )
 

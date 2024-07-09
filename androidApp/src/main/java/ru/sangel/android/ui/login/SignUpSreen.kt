@@ -16,10 +16,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +33,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import ru.sangel.android.R
+import ru.sangel.android.ui.components.ErrorState
 import ru.sangel.android.ui.components.LoginButton
 import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.components.login.signUp.SignUpComponent
@@ -38,6 +42,9 @@ import ru.sangel.presentation.components.login.signUp.SignUpComponent
 @Composable
 fun SignUpScreen(component: SignUpComponent) {
     val model by component.model.subscribeAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    ErrorState(model.state, snackbarHostState)
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -71,6 +78,7 @@ fun SignUpScreen(component: SignUpComponent) {
                 Text(stringResource(R.string.next))
             }
         },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButtonPosition = FabPosition.Center,
     ) {
         LazyColumn(

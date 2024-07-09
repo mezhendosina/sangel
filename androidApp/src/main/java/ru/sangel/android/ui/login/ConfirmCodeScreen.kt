@@ -9,23 +9,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.UrlAnnotation
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withAnnotation
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,16 +31,24 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import ru.sangel.android.R
 import ru.sangel.android.ui.components.CodeField
+import ru.sangel.android.ui.components.ErrorState
 import ru.sangel.android.ui.components.LoginButton
 import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.components.login.checkCode.ConfirmCodeComponent
+import ru.sangel.presentation.entities.States
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun ConfirmCodeScreen(component: ConfirmCodeComponent) {
     val model by component.model.subscribeAsState()
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize()) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    ErrorState(model.state, snackbarHostState)
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+    ) {
+        Column(modifier = Modifier.fillMaxSize().padding(it)) {
             Image(
                 painterResource(id = R.drawable.ic_login_background),
                 null,
@@ -107,7 +112,7 @@ private fun SignInPreview() {
                 override val model: Value<ConfirmCodeComponent.Model>
                     get() =
                         MutableValue(
-                            ConfirmCodeComponent.Model("", 0),
+                            ConfirmCodeComponent.Model("", 0, States.Loaded),
                         )
 
                 override fun onCodeChanges(code: String) {

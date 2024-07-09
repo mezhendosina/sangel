@@ -1,7 +1,11 @@
 package ru.sangel.presentation.entities
 
-enum class States {
-    LOADING,
-    LOADED,
-    ERROR,
+sealed class States {
+    object Loading : States()
+
+    object Loaded : States()
+
+    class Error(
+        val message: String,
+    ) : States()
 }
