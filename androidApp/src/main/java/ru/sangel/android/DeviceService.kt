@@ -12,7 +12,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -20,7 +19,8 @@ import org.koin.android.ext.android.inject
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.messages.MessagesRepository
 import ru.sangel.presentation.entities.DeviceUiEntity
-import ru.sangel.utils.waitUntilBluetoothIsAvailable
+import ru.sangel.utils.waitUntilBluetoothIsOn
+import ru.sangel.utils.waitUntilPermissionGranted
 
 class DeviceService : Service() {
     private val deviceRepository by inject<DeviceRepository>()
@@ -75,7 +75,8 @@ class DeviceService : Service() {
 
     private fun observeAvaliableDevices() {
         coroutineScope.launch {
-            waitUntilBluetoothIsAvailable(this@DeviceService)
+            waitUntilPermissionGranted(this@DeviceService)
+            waitUntilBluetoothIsOn(this@DeviceService)
             deviceRepository.getAvaliableDevices().collect {
                 if (!isActive) return@collect
                 val androidAdvertisement = it as AndroidAdvertisement

@@ -50,6 +50,7 @@ class MainActivity : FragmentActivity(), LocationListener {
                     RootScreen(component = rootComponent)
                 }
             }
+            startForegroundService(Intent(this@MainActivity, DeviceService::class.java))
         }
     }
 
