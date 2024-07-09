@@ -114,7 +114,7 @@ private fun ContactsTitle(title: String) {
     Spacer(modifier = Modifier.size(8.dp))
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun PreviewContactsScreen() {
     SangelTheme {

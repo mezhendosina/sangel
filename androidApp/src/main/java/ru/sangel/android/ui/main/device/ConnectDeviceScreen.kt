@@ -13,7 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.value.Value
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -67,4 +70,34 @@ fun ConnectDeviceItem(
         Text(connectDeviceEntity.name)
         Text(connectDeviceEntity.id)
     }
+}
+
+@Preview(device = "id:Nexus One")
+@Preview(device = "id:Galaxy Nexus")
+@Preview(device = "id:Nexus 4")
+@Preview(device = "id:pixel_3a")
+@Preview(device = "id:pixel_fold")
+@Composable
+private fun PreviewConnectDeviceScreen() {
+    ConnectDeviceScreen(
+        paddingValues = PaddingValues(),
+        component =
+            object : ConnectDeviceComponent {
+                override val model: Value<ConnectDeviceComponent.Model> =
+                    MutableValue(
+                        ConnectDeviceComponent.Model(emptyList()),
+                    )
+
+                override fun observeForDevices() {
+                    TODO("Not yet implemented")
+                }
+
+                override fun connect(
+                    id: String,
+                    onConnected: () -> Unit,
+                ) {
+                    TODO("Not yet implemented")
+                }
+            },
+    )
 }

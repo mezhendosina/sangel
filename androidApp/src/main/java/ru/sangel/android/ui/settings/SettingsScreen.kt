@@ -28,7 +28,11 @@ fun SettingsScreen(component: SettingsRootComponent) {
     }
 }
 
-@Preview
+@Preview(device = "id:Nexus One")
+@Preview(device = "id:Galaxy Nexus")
+@Preview(device = "id:Nexus 4")
+@Preview(device = "id:pixel_3a")
+@Preview(device = "id:pixel_fold")
 @Composable
 private fun PrevSettingsScreen() {
     SangelTheme {

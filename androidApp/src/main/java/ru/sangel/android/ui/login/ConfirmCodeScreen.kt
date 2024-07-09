@@ -70,19 +70,19 @@ fun ConfirmCodeScreen(component: ConfirmCodeComponent) {
                 )
                 Spacer(modifier = Modifier.size(8.dp))
                 CodeField(value = model.code, length = 6, onValueChange = component::onCodeChanges)
-                Text(
-                    buildAnnotatedString {
-                        append("Выслать новый код можно через ")
-                        withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
-                            withAnnotation(UrlAnnotation("sangel://signIn")) {
-                                append(model.timer.toTimer())
-                            }
-                        }
-                    },
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
+//                Text(
+//                    buildAnnotatedString {
+//                        append("Выслать новый код можно через ")
+//                        withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
+//                            withAnnotation(UrlAnnotation("sangel://signIn")) {
+//                                append(model.timer.toTimer())
+//                            }
+//                        }
+//                    },
+//                    style = MaterialTheme.typography.labelLarge,
+//                    fontWeight = FontWeight.Medium,
+//                    color = MaterialTheme.colorScheme.onBackground,
+//                )
                 Spacer(modifier = Modifier.size(64.dp))
                 Column(
                     modifier = Modifier.fillMaxWidth(),

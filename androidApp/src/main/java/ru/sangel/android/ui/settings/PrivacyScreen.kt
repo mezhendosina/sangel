@@ -13,10 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.value.Value
 import ru.sangel.ShowLocationTo
 import ru.sangel.android.R
+import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.components.main.settings.privacy.PrivacyComponent
 
 @Composable
@@ -64,5 +68,30 @@ private fun PrivacyRadioButton(
             Text(title)
             Text(text = caption)
         }
+    }
+}
+
+@Preview(device = "id:Nexus One")
+@Preview(device = "id:Galaxy Nexus")
+@Preview(device = "id:Nexus 4")
+@Preview(device = "id:pixel_3a")
+@Preview(device = "id:pixel_fold")
+@Composable
+private fun a() {
+    SangelTheme {
+        PrivacyScreen(
+            component =
+                object : PrivacyComponent {
+                    //
+                    override val model: Value<PrivacyComponent.Model> =
+                        MutableValue(
+                            PrivacyComponent.Model(ShowLocationTo.ALL, "123"),
+                        )
+
+                    override fun changeShowLocationTo(value: ShowLocationTo) {
+                        TODO("Not yet implemented")
+                    }
+                },
+        )
     }
 }
