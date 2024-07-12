@@ -20,9 +20,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.GlobalContext.get
 import ru.sangel.android.R
 import ru.sangel.android.databinding.FragmentMapBinding
+import ru.sangel.data.map.MapPoints
+import ru.sangel.data.map.MapPointsImpl
 import ru.sangel.presentation.map.MapViewModel
 
 class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener {
@@ -36,10 +40,6 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
                 setupUserLocationLayer()
             }
         }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onStart() {
         super.onStart()
@@ -75,20 +75,20 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
 
     private fun observeMapPoints() {
         val map = mapView!!.mapWindow.map
+        val mapPoints: MapPoints = get()
         CoroutineScope(Dispatchers.Main).launch {
             viewModel.mapPoints.collect { points ->
-//                points.forEach { point ->
-//                    val placemark = map.mapObjects.addPlacemark()
-//                    placemark.userData = point
-//                    placemark.geometry = point.location
-//                    placemark.setText(point.name)
-//                    placemark.setIcon(
-//                        ImageProvider.fromResource(
-//                            requireContext(),
-//                            R.drawable.ic_map_avatar,
-//                        ),
-//                    )
-//                }
+                points.forEach {
+                    if (!mapPoints.isPointExist(it.userId)) {
+                        mapPoints.addPoint(
+                            it.userId,
+                            map.mapObjects.addPlacemark()
+                                .setupNearUser(requireContext(), it.location, null, it.name)
+                        )
+                    } else {
+                        mapPoints.updatePoint(it.userId, it.location)
+                    }
+                }
             }
         }
     }

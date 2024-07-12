@@ -16,8 +16,7 @@ class MapViewModel(
     private val mapKitRepository: MapKitRepository,
 ) : ViewModel() {
     val mapPoints =
-        mapUseCase.mapPoints.map {
-        }
+        mapUseCase.mapPoints
     val zoom = mapKitRepository.zoom
 
     fun updateLocation(

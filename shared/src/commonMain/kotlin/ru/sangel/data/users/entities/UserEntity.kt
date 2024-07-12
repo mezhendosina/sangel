@@ -46,5 +46,19 @@ data class UserEntity(
                 emptyList(),
                 Status(null, 0, StatusText(0, ""), 0, 0),
             )
+
+        fun stub(): UserEntity = UserEntity(
+            0,
+            "mezhendosina",
+            emptyList(),
+            1,
+            null,
+            null,
+            null,
+            emptyList(),
+            emptyList(),
+            emptyList(),
+            Status(null, 0, StatusText(1, ""), 0, 0)
+        )
     }
 }

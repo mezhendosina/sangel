@@ -1,6 +1,7 @@
-package ru.sangel.app.data.map
+package ru.sangel.data.map
 
 import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.location.FilteringMode
 import com.yandex.mapkit.location.Location
 import com.yandex.mapkit.location.LocationListener
@@ -12,12 +13,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import ru.sangel.app.data.map.MapKitRepository
 import ru.sangel.data.map.entities.LocationEntity
 import ru.sangel.data.users.UsersRepository
 
 class MapKitRepositoryImpl(
     private val usersRepository: UsersRepository,
 ) : MapKitRepository {
+
     override val currentPosition =
         flow {
             val mapKit = MapKitFactory.getInstance()
@@ -44,7 +47,7 @@ class MapKitRepositoryImpl(
             )
         }
 
-    private val _zoom = MutableStateFlow<Float>(0f)
+    private val _zoom = MutableStateFlow(0f)
     override val zoom: StateFlow<Float> = _zoom
 
     private val _cameraPosition = MutableStateFlow<CameraPosition?>(null)
