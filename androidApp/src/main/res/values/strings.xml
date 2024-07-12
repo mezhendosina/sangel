@@ -31,4 +31,5 @@
     <string name="or_sign_up">Или зарегистрируйте новый</string>
     <string name="sangel_its">SANGEL - это...</string>
     <string name="go_home_without_stress">Дойти до дома\nбез нервов и стресса</string>
+    <string name="bluetooth_is_not_available">Bluetooth недоступен на Вашем устройстве</string>
 </resources>

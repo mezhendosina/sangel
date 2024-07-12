@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -47,9 +48,9 @@ fun MapScreen(
 
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = padding.calculateTopPadding()),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = padding.calculateTopPadding()),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -57,7 +58,7 @@ fun MapScreen(
                 Image(
                     painter = painterResource(id = R.drawable.ic_avatar),
                     contentDescription = stringResource(R.string.profile),
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(32.dp),
                 )
             }
 
@@ -82,10 +83,10 @@ fun MapScreen(
         }
         Row(
             modifier =
-                Modifier
-                    .padding(horizontal = 16.dp)
-                    .align(Alignment.BottomStart)
-                    .fillMaxWidth(),
+            Modifier
+                .padding(horizontal = 16.dp)
+                .align(Alignment.BottomStart)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End,
         ) {
@@ -101,7 +102,8 @@ fun MapScreen(
                 Image(
                     painter = painterResource(id = R.drawable.ic_find_me),
                     contentDescription = null,
-//                    modifier = Modifier.size(24.dp),
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.size(48.dp),
                 )
             }
         }

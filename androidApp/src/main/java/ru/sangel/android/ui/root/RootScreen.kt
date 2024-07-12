@@ -10,7 +10,7 @@ import ru.sangel.presentation.components.root.RootComponent
 
 @Composable
 fun RootScreen(component: RootComponent) {
-    Children(stack = component.stack, modifier = Modifier.navigationBarsPadding()) {
+    Children(stack = component.stack) {
         when (val config = it.instance) {
             is RootComponent.Child.LoginChild -> LoginContainer(config.component)
             is RootComponent.Child.MainChild -> MainContainer(config.component)

@@ -12,7 +12,7 @@ class AppPrefsImpl(
     override suspend fun <T> getValue(
         key: Preferences.Key<T>,
         defaultValue: T?,
-    ): Flow<T?> = dataStore.data.map { it[key] }
+    ): Flow<T?> = dataStore.data.map { it[key] ?: defaultValue }
 
     override suspend fun <T> setValue(
         key: Preferences.Key<T>,

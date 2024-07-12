@@ -17,7 +17,7 @@ class DefaultDeviceComponent(
     private val deviceRepository: DeviceRepository,
     private val toAddDevice: () -> Unit,
 ) : DeviceComponent, ComponentContext by componentContext {
-    private val _model = MutableValue(DeviceComponent.Model("", emptyList()))
+    private val _model = MutableValue(DeviceComponent.Model("", true, emptyList()))
 
     private val usersRepository: UsersRepository by inject(UsersRepository::class.java)
 
@@ -28,11 +28,8 @@ class DefaultDeviceComponent(
             getUser()
             deviceRepository.pairedDevices.collect { deviceUiEntities ->
                 withContext(Dispatchers.Main) {
-                    _model.update { oldModel ->
-                        DeviceComponent.Model(
-                            oldModel.name,
-                            deviceUiEntities,
-                        )
+                    _model.update {
+                        it.copy(devices = deviceUiEntities)
                     }
                 }
             }
@@ -44,13 +41,19 @@ class DefaultDeviceComponent(
             val user = usersRepository.getMine()
             withContext(Dispatchers.Main) {
                 _model.update {
-                    DeviceComponent.Model(user.email, it.devices)
+                    it.copy(name = user.email)
                 }
             }
         }
     }
 
     override fun onDeviceClick(address: String) {
+    }
+
+    override fun setBluetoothAvailability(boolean: Boolean) {
+        _model.update {
+            it.copy(bluetoothAvailable = boolean)
+        }
     }
 
     override fun toAddDevice() = toAddDevice.invoke()

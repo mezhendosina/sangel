@@ -10,10 +10,13 @@ interface DeviceComponent {
 
     fun onDeviceClick(address: String)
 
+    fun setBluetoothAvailability(boolean: Boolean)
+
     fun toAddDevice()
 
     data class Model(
         val name: String,
+        val bluetoothAvailable: Boolean,
         val devices: List<DeviceUiEntity>,
     )
 }

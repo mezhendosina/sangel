@@ -2,6 +2,7 @@ package ru.sangel.android.ui.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -67,7 +68,9 @@ private fun MainNavigationBar(
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.background,
         modifier =
-            Modifier.clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)),
+        Modifier
+            .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
+            .navigationBarsPadding(),
     ) {
         NavigationItem(
             painterResource(id = R.drawable.ic_logo),
@@ -107,24 +110,24 @@ private fun <T : MainComponent.Child> RowScope.NavigationItem(
         selected = activeChild::class == targetChild,
         onClick = onClick,
         colors =
-            NavigationBarItemDefaults.colors(
-                selectedIconColor = MaterialTheme.colorScheme.primary,
-                unselectedIconColor = MaterialTheme.colorScheme.onBackground,
-                indicatorColor = Color.Transparent,
-            ),
+        NavigationBarItemDefaults.colors(
+            selectedIconColor = MaterialTheme.colorScheme.primary,
+            unselectedIconColor = MaterialTheme.colorScheme.onBackground,
+            indicatorColor = Color.Transparent,
+        ),
         icon = {
             Image(
                 painter,
                 null,
                 modifier = Modifier.size(24.dp),
                 colorFilter =
-                    ColorFilter.tint(
-                        if (activeChild::class == targetChild) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onBackground
-                        },
-                    ),
+                ColorFilter.tint(
+                    if (activeChild::class == targetChild) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onBackground
+                    },
+                ),
             )
         },
     )

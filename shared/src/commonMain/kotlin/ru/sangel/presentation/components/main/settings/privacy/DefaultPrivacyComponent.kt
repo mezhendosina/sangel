@@ -55,7 +55,8 @@ class DefaultPrivacyComponent(
             if (favs.size >= 3) {
                 outStr += "и еще ${favs.size - 3}"
             }
-            val showLocationTo = appPrefs.getValue(AppPrefs.SHOW_LOCATION_TO, "").first() ?: ""
+            val showLocationTo =
+                appPrefs.getValue(AppPrefs.SHOW_LOCATION_TO, "FAVORITES").first() ?: "FAVORITES"
 
             withContext(Dispatchers.Main) {
                 _model.update {
