@@ -11,9 +11,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
-suspend inline fun CoroutineScope.waitUntilBluetoothIsOn(context: Context) {
+suspend fun CoroutineScope.waitUntilBluetoothIsOn(context: Context) {
     val bluetoothAdapter = context.getSystemService(BluetoothManager::class.java)
-    while (isActive && bluetoothAdapter.adapter.state == BluetoothAdapter.STATE_OFF) {
+    while (isActive && bluetoothAdapter.adapter.state != BluetoothAdapter.STATE_ON) {
         delay(10)
     }
 }
@@ -32,3 +32,5 @@ fun Context.checkBluetoothPermissions(): Boolean {
         )
     return bluetoothPermission == PackageManager.PERMISSION_GRANTED
 }
+
+

@@ -19,6 +19,7 @@ import org.koin.android.ext.android.inject
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.messages.MessagesRepository
 import ru.sangel.presentation.entities.DeviceUiEntity
+import ru.sangel.utils.isBluetoothAvailable
 import ru.sangel.utils.waitUntilBluetoothIsOn
 import ru.sangel.utils.waitUntilPermissionGranted
 
@@ -33,7 +34,7 @@ class DeviceService : Service() {
     override fun onCreate() {
         super.onCreate()
         startForeground()
-        observeAvaliableDevices()
+        observeAvailableDevices()
         observeEmergency()
     }
 
@@ -73,7 +74,9 @@ class DeviceService : Service() {
         }
     }
 
-    private fun observeAvaliableDevices() {
+    private fun observeAvailableDevices() {
+        if (!isBluetoothAvailable()) return
+
         coroutineScope.launch {
             waitUntilPermissionGranted(this@DeviceService)
             waitUntilBluetoothIsOn(this@DeviceService)
@@ -82,9 +85,9 @@ class DeviceService : Service() {
                 val androidAdvertisement = it as AndroidAdvertisement
                 deviceRepository.setEmergency(
                     androidAdvertisement.address in
-                        deviceRepository.pairedDevices
-                            .first()
-                            .map(DeviceUiEntity::macAddress),
+                            deviceRepository.pairedDevices
+                                .first()
+                                .map(DeviceUiEntity::macAddress),
                 )
             }
         }
