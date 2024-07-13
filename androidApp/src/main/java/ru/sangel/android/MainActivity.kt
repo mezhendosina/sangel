@@ -16,7 +16,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.sangel.android.ui.root.RootScreen
 import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.MainViewModel
@@ -24,6 +26,8 @@ import ru.sangel.presentation.components.root.DefaultRootComponent
 
 class MainActivity : FragmentActivity(), LocationListener {
     private val viewModel by viewModel<MainViewModel>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,17 +42,13 @@ class MainActivity : FragmentActivity(), LocationListener {
                 this@MainActivity,
             )
         CoroutineScope(Dispatchers.Main).launch {
-            val defferedStartScreen = get() as Deferred<DefaultRootComponent.TopConfig>
+            val startScreen = (get() as Deferred<DefaultRootComponent.TopConfig>).await()
 
-            val rootComponent =
-                DefaultRootComponent(
-                    defaultComponentContext(),
-                    defferedStartScreen.await(),
-                )
+            val rootComponent = getKoin().inject<DefaultRootComponent>{ parametersOf(defaultComponentContext(), startScreen) }
             enableEdgeToEdge()
             setContent {
                 SangelTheme {
-                    RootScreen(component = rootComponent)
+                    RootScreen(component = rootComponent.value)
                 }
             }
             startForegroundService(Intent(this@MainActivity, DeviceService::class.java))
