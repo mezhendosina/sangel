@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
@@ -38,16 +39,17 @@ fun OnboardingScreen(component: OnboardingComponent) {
                     .background(
                         Color(0xFFF1C064),
                         shape = RoundedCornerShape(bottomEnd = 52.dp, bottomStart = 52.dp),
-                    ).fillMaxHeight(0.7f),
+                    )
+                    .fillMaxHeight(0.7f),
             ) {
                 Image(
                     painterResource(id = R.drawable.ic_first_onboarding),
                     null,
                     modifier =
-                        Modifier
-                            .safeDrawingPadding()
-                            .padding(28.dp)
-                            .fillMaxWidth(),
+                    Modifier
+                        .safeDrawingPadding()
+                        .padding(28.dp)
+                        .fillMaxWidth(),
                 )
             }
             Column(
@@ -57,7 +59,9 @@ fun OnboardingScreen(component: OnboardingComponent) {
             ) {
                 LoginButton(
                     onClick = component::toSignIn,
-                    modifier = Modifier.padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(bottom = 16.dp),
                 ) {
                     Text(stringResource(R.string.start))
                     Spacer(modifier = Modifier.size(16.dp))

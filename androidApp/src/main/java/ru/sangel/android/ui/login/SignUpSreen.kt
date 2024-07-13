@@ -1,8 +1,10 @@
 package ru.sangel.android.ui.login
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,9 +52,9 @@ fun SignUpScreen(component: SignUpComponent) {
         topBar = {
             CenterAlignedTopAppBar(
                 colors =
-                    TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.background,
-                    ),
+                TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                ),
                 title = { Text(text = stringResource(R.string.sign_up)) },
                 navigationIcon = {
                     IconButton(onClick = component::onBack) {
@@ -67,15 +69,15 @@ fun SignUpScreen(component: SignUpComponent) {
                         painterResource(id = R.drawable.ic_logo),
                         null,
                         modifier =
-                            Modifier
-                                .padding(end = 16.dp)
-                                .size(24.dp),
+                        Modifier
+                            .padding(end = 16.dp)
+                            .size(24.dp),
                     )
                 },
             )
         },
         floatingActionButton = {
-            LoginButton(onClick = component::singUp) {
+            LoginButton(onClick = component::singUp, modifier = Modifier.navigationBarsPadding()) {
                 Text(stringResource(R.string.next))
             }
         },
@@ -84,10 +86,11 @@ fun SignUpScreen(component: SignUpComponent) {
     ) {
         LazyColumn(
             modifier =
-                Modifier
-                    .padding(top = it.calculateTopPadding())
-                    .fillMaxWidth()
-                    .padding(32.dp),
+            Modifier
+                .padding(top = it.calculateTopPadding())
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(32.dp),
             verticalArrangement = Arrangement.spacedBy(26.dp),
         ) {
             item {
@@ -139,7 +142,7 @@ private fun SignInTextField(
     )
 }
 
-@Preview(device = "id:Nexus One")
+@Preview(device = "id:Nexus One", showSystemUi = true)
 @Preview(device = "id:Galaxy Nexus")
 @Preview(device = "id:Nexus 4")
 @Preview(device = "id:pixel_3a")

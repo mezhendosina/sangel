@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +38,6 @@ import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.components.login.checkCode.ConfirmCodeComponent
 import ru.sangel.presentation.entities.States
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun ConfirmCodeScreen(component: ConfirmCodeComponent) {
     val model by component.model.subscribeAsState()
@@ -45,23 +45,30 @@ fun ConfirmCodeScreen(component: ConfirmCodeComponent) {
     ErrorState(model.state, snackbarHostState)
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .navigationBarsPadding(),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) {
-        Column(modifier = Modifier.fillMaxSize().padding(it)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)) {
             Image(
                 painterResource(id = R.drawable.ic_login_background),
                 null,
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.4f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.4f),
                 contentScale = ContentScale.FillWidth,
             )
             Column(
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(
-                            horizontal = 32.dp,
-                        ).padding(top = 16.dp),
+                Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = 16.dp,
+                    )
+                    .padding(top = 16.dp),
             ) {
                 Text(
                     stringResource(R.string.enter_code),
