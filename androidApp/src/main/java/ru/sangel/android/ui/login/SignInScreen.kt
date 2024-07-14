@@ -52,86 +52,53 @@ fun SignInScreen(component: SignInComponent) {
     val animation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.anim_sign_in))
     val snackbarHostState = remember { SnackbarHostState() }
 
-    ErrorState(model.state, snackbarHostState)
-    Scaffold(
-        modifier = Modifier
+    LazyColumn(
+        modifier =
+        Modifier
             .fillMaxSize()
-            .navigationBarsPadding(),
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+            .padding(
+                horizontal = 32.dp,
+                vertical = 28.dp,
+            ),
     ) {
-        Column(
-            modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(bottom = it.calculateBottomPadding()),
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier =
-                Modifier
-                    .fillMaxHeight(0.5f)
-                    .fillMaxWidth(),
-            ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.ic_login_background),
-                    null,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(
-                            RoundedCornerShape(bottomStart = 52.dp, bottomEnd = 52.dp),
-                        ),
-                    contentScale = ContentScale.Crop,
-
-                    )
+        item {
+            Text(
+                stringResource(R.string.login),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        item {
+            Spacer(modifier = Modifier.size(8.dp))
+        }
+        item {
+            OutlinedTextField(
+                value = model.email,
+                onValueChange = component::onEmailChange,
+                shape = RoundedCornerShape(32.dp),
+                singleLine = true,
+                placeholder = { Text("mail@example.ru") },
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+        item {
+            TextButton(onClick = component::toSignUp) {
+                Text(stringResource(R.string.or_sign_up))
             }
-            LazyColumn(
-                modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(
-                        horizontal = 32.dp,
-                        vertical = 28.dp,
-                    ),
+        }
+        item {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                item {
-                    Text(
-                        stringResource(R.string.login),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-                item {
-                    Spacer(modifier = Modifier.size(8.dp))
-                }
-                item {
-                    OutlinedTextField(
-                        value = model.email,
-                        onValueChange = component::onEmailChange,
-                        shape = RoundedCornerShape(32.dp),
-                        singleLine = true,
-                        placeholder = { Text("mail@example.ru") },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                item {
-                    TextButton(onClick = component::toSignUp) {
-                        Text(stringResource(R.string.or_sign_up))
-                    }
-                }
-                item {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        LoginButton(onClick = component::signIn) {
-                            Text(text = stringResource(R.string.send_code), fontSize = 12.sp)
-                        }
-                    }
+                LoginButton(onClick = component::signIn) {
+                    Text(text = stringResource(R.string.send_code), fontSize = 12.sp)
                 }
             }
         }
     }
+    ErrorState(model.state, snackbarHostState)
+
 }
 
 @Preview(device = "id:Nexus One")

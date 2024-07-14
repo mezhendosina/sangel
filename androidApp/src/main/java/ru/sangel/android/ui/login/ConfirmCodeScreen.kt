@@ -50,33 +50,19 @@ fun ConfirmCodeScreen(component: ConfirmCodeComponent) {
             .navigationBarsPadding(),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)) {
-            Image(
-                painterResource(id = R.drawable.ic_login_background),
-                null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.4f),
-                contentScale = ContentScale.FillWidth,
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .padding(horizontal = 32.dp)
+        ) {
+            Text(
+                stringResource(R.string.enter_code),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
             )
-            Column(
-                modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(
-                        horizontal = 16.dp,
-                    )
-                    .padding(top = 16.dp),
-            ) {
-                Text(
-                    stringResource(R.string.enter_code),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                )
-                Spacer(modifier = Modifier.size(8.dp))
-                CodeField(value = model.code, length = 6, onValueChange = component::onCodeChanges)
+            Spacer(modifier = Modifier.size(8.dp))
+            CodeField(value = model.code, length = 6, onValueChange = component::onCodeChanges)
 //                Text(
 //                    buildAnnotatedString {
 //                        append("Выслать новый код можно через ")
@@ -90,14 +76,13 @@ fun ConfirmCodeScreen(component: ConfirmCodeComponent) {
 //                    fontWeight = FontWeight.Medium,
 //                    color = MaterialTheme.colorScheme.onBackground,
 //                )
-                Spacer(modifier = Modifier.size(64.dp))
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    LoginButton(onClick = component::toMain) {
-                        Text(text = "ОТПРАВИТЬ КОД", fontSize = 12.sp)
-                    }
+            Spacer(modifier = Modifier.size(64.dp))
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                LoginButton(onClick = component::toMain) {
+                    Text(text = "ОТПРАВИТЬ КОД", fontSize = 12.sp)
                 }
             }
         }

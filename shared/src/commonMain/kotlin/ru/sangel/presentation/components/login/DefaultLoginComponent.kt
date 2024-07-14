@@ -36,7 +36,7 @@ class DefaultLoginComponent(
         )
 
     override fun onBack() {
-        TODO("Not yet implemented")
+        navigation.pop()
     }
 
     private fun child(

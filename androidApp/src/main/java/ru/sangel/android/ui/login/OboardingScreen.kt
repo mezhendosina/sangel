@@ -34,24 +34,7 @@ import ru.sangel.presentation.components.login.onboarding.OnboardingComponent
 fun OnboardingScreen(component: OnboardingComponent) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            Box(
-                Modifier
-                    .background(
-                        Color(0xFFF1C064),
-                        shape = RoundedCornerShape(bottomEnd = 52.dp, bottomStart = 52.dp),
-                    )
-                    .fillMaxHeight(0.7f),
-            ) {
-                Image(
-                    painterResource(id = R.drawable.ic_first_onboarding),
-                    null,
-                    modifier =
-                    Modifier
-                        .safeDrawingPadding()
-                        .padding(28.dp)
-                        .fillMaxWidth(),
-                )
-            }
+
             Column(
                 Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
