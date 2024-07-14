@@ -1,7 +1,7 @@
 package ru.sangel.data.auth
 
 interface AuthRepository {
-    suspend fun signIn(email: String)
+    suspend fun signIn(email: String, password: String)
 
     suspend fun signUp(
         email: String,

@@ -16,7 +16,7 @@ interface AuthSource {
      * Авторизовывает
      * @return Токен авторизации
      */
-    suspend fun signIn(email: String): String
+    suspend fun signIn(email: String, password: String): String
 
     /**
      * Проверяет код подверждения

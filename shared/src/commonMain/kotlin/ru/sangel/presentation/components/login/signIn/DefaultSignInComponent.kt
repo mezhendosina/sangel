@@ -22,6 +22,7 @@ class DefaultSignInComponent(
         MutableValue<SignInComponent.Model>(
             SignInComponent.Model(
                 "",
+                "",
                 States.Loaded,
             ),
         )
@@ -39,13 +40,17 @@ class DefaultSignInComponent(
     override val model: Value<SignInComponent.Model> = _model
 
     override fun onEmailChange(email: String) {
-        _model.value = SignInComponent.Model(email, States.Loaded)
+        _model.update { it.copy(email = email) }
+    }
+
+    override fun onPasswordChange(password: String) {
+        _model.update { it.copy(password = password) }
     }
 
     override fun signIn() {
         CoroutineScope(Dispatchers.Main).launch(exceptionHandler) {
             _model.update { it.copy(state = States.Loading) }
-            authRepository.signIn(_model.value.email)
+            authRepository.signIn(_model.value.email, _model.value.password)
             toCheckCode.invoke()
         }
     }

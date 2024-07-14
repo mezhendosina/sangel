@@ -20,11 +20,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -70,7 +73,6 @@ fun LoginContainer(loginComponent: LoginComponent) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding(),
     ) { paddingValues ->
         Column(
             modifier =
@@ -101,9 +103,7 @@ fun LoginContainer(loginComponent: LoginComponent) {
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.background),
                 animation = stackAnimation { child ->
-                    if (child.instance !is LoginComponent.Child.SignUp && !showBottomSheet) {
-                        fade(animationSpec = tween(delayMillis = 100))
-                    } else null
+                    fade(animationSpec = tween(delayMillis = 100))
                 }
             ) { stack ->
 
@@ -111,10 +111,15 @@ fun LoginContainer(loginComponent: LoginComponent) {
                     is LoginComponent.Child.Onboarding -> OnboardingScreen(component = config.onboardingComponent)
                     is LoginComponent.Child.SignIn -> SignInScreen(component = config.signInComponent)
                     is LoginComponent.Child.ConfirmCode -> ConfirmCodeScreen(component = config.confirmCodeComponent)
-                    is LoginComponent.Child.SignUp -> ModalBottomSheet(onDismissRequest = {
-                        loginComponent.onBack()
-                        showBottomSheet = false
-                    }, sheetState = sheetState, dragHandle = {}) {
+                    is LoginComponent.Child.SignUp -> ModalBottomSheet(
+                        onDismissRequest = {
+                            loginComponent.onBack()
+                            showBottomSheet = false
+                        },
+                        sheetState = sheetState,
+                        dragHandle = {},
+                        windowInsets = WindowInsets(top = 0.dp)
+                    ) {
                         SignUpScreen(component = config.signUpComponent)
                     }
                 }

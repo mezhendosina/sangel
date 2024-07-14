@@ -1,6 +1,5 @@
 package ru.sangel.presentation.components.login.signUp
 
-import android.content.Context
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
@@ -8,8 +7,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
-import org.koin.core.context.GlobalContext.get
 import ru.sangel.data.auth.AuthRepository
 import ru.sangel.presentation.entities.States
 import ru.sangel.presentation.utils.coroutineExceptionHandler
@@ -25,8 +22,9 @@ class DefaultSignUpComponent(
             SignUpComponent.Model(
                 name = "",
                 phone = "",
-                state = States.Loaded,
                 email = email,
+                password = "",
+                state = States.Loaded,
             ),
         )
     private val exceptionHandler =
@@ -47,6 +45,8 @@ class DefaultSignUpComponent(
 
     override fun changeMail(mail: String) = _model.update { it.copy(email = mail) }
 
+    override fun changePassword(password: String) = _model.update { it.copy(password = password) }
+
     override fun singUp() {
         CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
             with(model.value) {
@@ -56,7 +56,7 @@ class DefaultSignUpComponent(
                 if (email.isValidEmail()) {
                     authRepository.signUp(
                         email = email,
-                        password = "Deprecated",
+                        password = password,
                         name = name,
                         surname = "Deprecated",
                     )

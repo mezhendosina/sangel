@@ -26,10 +26,10 @@ class KtorfitAuthSource(private val ktorfit: Ktorfit) : BaseKtorfitSource(), Aut
             ).id
         }
 
-    override suspend fun signIn(email: String): String =
+    override suspend fun signIn(email: String, password: String): String =
         wrapKtorfitExceptions {
             return@wrapKtorfitExceptions authApi.signIn(
-                SignInRequestEntity(email, password = "ya"),
+                SignInRequestEntity(email, password = password),
             ).accessToken
         }
 

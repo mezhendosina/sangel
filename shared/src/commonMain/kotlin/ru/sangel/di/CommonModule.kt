@@ -13,7 +13,7 @@ fun commonModule() =
         includes(
             settingsModule,
             ktorfitModule,
-            stubSourceModule,
+            sourceModule,
             repoModule,
             componentModule
         )

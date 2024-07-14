@@ -8,6 +8,8 @@ interface SignInComponent {
 
     fun onEmailChange(email: String)
 
+    fun onPasswordChange(password: String)
+
     fun signIn()
 
     fun toSignUp()
@@ -16,6 +18,7 @@ interface SignInComponent {
 
     data class Model(
         val email: String,
+        val password: String,
         val state: States,
     )
 }

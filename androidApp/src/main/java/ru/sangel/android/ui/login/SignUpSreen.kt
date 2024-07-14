@@ -1,6 +1,5 @@
 package ru.sangel.android.ui.login
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -94,7 +93,7 @@ fun SignUpScreen(component: SignUpComponent) {
             verticalArrangement = Arrangement.spacedBy(26.dp),
         ) {
             item {
-                SignInTextField(
+                SignUpTextField(
                     title = stringResource(R.string.name),
                     value = model.name,
                     onValueChange = component::changeName,
@@ -102,7 +101,7 @@ fun SignUpScreen(component: SignUpComponent) {
                 )
             }
             item {
-                SignInTextField(
+                SignUpTextField(
                     title = stringResource(R.string.phone_number),
                     value = model.phone,
                     onValueChange = component::changePhone,
@@ -110,11 +109,19 @@ fun SignUpScreen(component: SignUpComponent) {
                 )
             }
             item {
-                SignInTextField(
+                SignUpTextField(
                     title = stringResource(R.string.e_mail),
                     value = model.email,
                     onValueChange = component::changeMail,
                     placeholder = stringResource(R.string.your_mail),
+                )
+            }
+            item {
+                SignUpTextField(
+                    title = stringResource(R.string.password),
+                    value = model.password,
+                    onValueChange = component::changePassword,
+                    placeholder = stringResource(R.string.password),
                 )
             }
         }
@@ -122,7 +129,7 @@ fun SignUpScreen(component: SignUpComponent) {
 }
 
 @Composable
-private fun SignInTextField(
+private fun SignUpTextField(
     title: String,
     value: String,
     onValueChange: (String) -> Unit,
@@ -153,7 +160,7 @@ private fun PreviewSignUpScreen() {
         SignUpScreen(
             object : SignUpComponent {
                 override val model: Value<SignUpComponent.Model>
-                    get() = MutableValue(SignUpComponent.Model("", "", "", States.Loaded))
+                    get() = MutableValue(SignUpComponent.Model("", "", "", "", States.Loaded))
 
                 override fun changeName(name: String) {
                     TODO("Not yet implemented")
@@ -164,6 +171,10 @@ private fun PreviewSignUpScreen() {
                 }
 
                 override fun changeMail(mail: String) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun changePassword(password: String) {
                     TODO("Not yet implemented")
                 }
 

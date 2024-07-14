@@ -55,8 +55,8 @@ val ktorfitModule =
                                 val authRepository = get() as AuthRepository
                                 val appPrefs = get() as AppPrefs
                                 authRepository.signIn(
-                                    appPrefs.getValue(AppPrefs.EMAIL).first()
-                                        ?: return@refreshTokens null,
+                                    appPrefs.getValue(AppPrefs.EMAIL).first()?: return@refreshTokens null,
+                                    appPrefs.getValue(AppPrefs.PASSWORD).first()?: return@refreshTokens null,
                                 )
 
                                 BearerTokens(

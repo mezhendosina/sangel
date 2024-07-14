@@ -11,6 +11,7 @@ interface SignUpComponent {
     fun changePhone(phone: String)
 
     fun changeMail(mail: String)
+    fun changePassword(password: String)
 
     fun singUp()
 
@@ -20,6 +21,7 @@ interface SignUpComponent {
         val name: String,
         val phone: String,
         val email: String,
+        val password: String,
         val state: States,
     )
 }

@@ -8,9 +8,9 @@ class AuthRepositoryImpl(
     private val authSource: AuthSource,
     private val appPrefs: AppPrefs,
 ) : AuthRepository {
-    override suspend fun signIn(email: String) {
-        val token = authSource.signIn(email)
-        saveLoginData(token, email, "")
+    override suspend fun signIn(email: String, password: String) {
+        val token = authSource.signIn(email, password)
+        saveLoginData(token, email, password)
     }
 
     override suspend fun signUp(
@@ -33,9 +33,10 @@ class AuthRepositoryImpl(
     private suspend fun saveLoginData(
         token: String,
         email: String,
-        passowrd: String,
+        password: String,
     ) {
         appPrefs.setValue(AppPrefs.TOKEN, token)
+        appPrefs.setValue(AppPrefs.PASSWORD, password)
         appPrefs.setValue(AppPrefs.EMAIL, email)
     }
 }
