@@ -18,7 +18,7 @@ suspend fun CoroutineScope.waitUntilBluetoothIsOn(context: Context) {
     }
 }
 
-suspend fun CoroutineScope.waitUntilPermissionGranted(context: Context) {
+suspend fun CoroutineScope.waitUntilBluetoothPermissionGranted(context: Context) {
     while (isActive && !context.checkBluetoothPermissions()) {
         delay(10)
     }
@@ -28,9 +28,13 @@ fun Context.checkBluetoothPermissions(): Boolean {
     val bluetoothPermission =
         ContextCompat.checkSelfPermission(
             this,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Manifest.permission.BLUETOOTH_SCAN else Manifest.permission.ACCESS_FINE_LOCATION
+            if (Build.VERSION.SDK_INT >=
+                Build.VERSION_CODES.S
+            ) {
+                Manifest.permission.BLUETOOTH_SCAN
+            } else {
+                Manifest.permission.ACCESS_FINE_LOCATION
+            },
         )
     return bluetoothPermission == PackageManager.PERMISSION_GRANTED
 }
-
-

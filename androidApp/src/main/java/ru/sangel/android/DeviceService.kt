@@ -21,7 +21,7 @@ import ru.sangel.data.messages.MessagesRepository
 import ru.sangel.presentation.entities.DeviceUiEntity
 import ru.sangel.utils.isBluetoothAvailable
 import ru.sangel.utils.waitUntilBluetoothIsOn
-import ru.sangel.utils.waitUntilPermissionGranted
+import ru.sangel.utils.waitUntilBluetoothPermissionGranted
 
 class DeviceService : Service() {
     private val deviceRepository by inject<DeviceRepository>()
@@ -78,16 +78,16 @@ class DeviceService : Service() {
         if (!isBluetoothAvailable()) return
 
         coroutineScope.launch {
-            waitUntilPermissionGranted(this@DeviceService)
+            waitUntilBluetoothPermissionGranted(this@DeviceService)
             waitUntilBluetoothIsOn(this@DeviceService)
             deviceRepository.getAvaliableDevices().collect {
                 if (!isActive) return@collect
                 val androidAdvertisement = it as AndroidAdvertisement
                 deviceRepository.setEmergency(
                     androidAdvertisement.address in
-                            deviceRepository.pairedDevices
-                                .first()
-                                .map(DeviceUiEntity::macAddress),
+                        deviceRepository.pairedDevices
+                            .first()
+                            .map(DeviceUiEntity::macAddress),
                 )
             }
         }
