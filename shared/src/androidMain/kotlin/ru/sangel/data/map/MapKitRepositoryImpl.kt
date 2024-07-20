@@ -1,51 +1,27 @@
 package ru.sangel.data.map
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.location.FilteringMode
-import com.yandex.mapkit.location.Location
-import com.yandex.mapkit.location.LocationListener
-import com.yandex.mapkit.location.LocationStatus
 import com.yandex.mapkit.map.CameraPosition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import ru.sangel.app.data.map.MapKitRepository
 import ru.sangel.data.map.entities.LocationEntity
 import ru.sangel.data.users.UsersRepository
 
 class MapKitRepositoryImpl(
     private val usersRepository: UsersRepository,
-) : MapKitRepository {
-
-    override val currentPosition =
-        flow {
-            val mapKit = MapKitFactory.getInstance()
-            val locationManager = mapKit.createLocationManager()
-
-            locationManager.subscribeForLocationUpdates(
-                0.0,
-                0,
-                0.0,
-                true,
-                FilteringMode.ON,
-                object : LocationListener {
-                    override fun onLocationUpdated(p0: Location) {
-                        CoroutineScope(Dispatchers.Main).launch {
-                            emit(
-                                LocationEntity(p0.position.latitude, p0.position.longitude),
-                            )
-                        }
-                    }
-
-                    override fun onLocationStatusUpdated(p0: LocationStatus) {
-                    }
-                },
-            )
-        }
+) : MapKitRepository,
+    KoinComponent {
+    val mapKit = MapKitFactory.getInstance()
+    val locationManager = mapKit.createLocationManager()
 
     private val _zoom = MutableStateFlow(0f)
     override val zoom: StateFlow<Float> = _zoom
@@ -76,6 +52,35 @@ class MapKitRepositoryImpl(
     }
 
     override fun initMap() {
+    }
+
+    /**
+     * Единоразово отдает местоположение, используя внутренний LocationManager Android
+     */
+    override fun getLocation(): LocationEntity? {
+        val context = get<Context>()
+        val locationManager =
+            context.getSystemService(android.location.LocationManager::class.java)
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            val gpsLocation =
+                locationManager.getLastKnownLocation(android.location.LocationManager.GPS_PROVIDER)
+            val cellurarLocation =
+                locationManager.getLastKnownLocation(android.location.LocationManager.NETWORK_PROVIDER)
+            val location =
+                if (gpsLocation?.accuracy != null && cellurarLocation?.accuracy != null) {
+                    if (gpsLocation.accuracy < cellurarLocation.accuracy) gpsLocation else cellurarLocation
+                } else if (gpsLocation?.accuracy != null) {
+                    gpsLocation
+                } else {
+                    cellurarLocation
+                }
+            if (location == null) {
+                return null
+            }
+            return LocationEntity(location.latitude, location.longitude)
+        } else {
+            return null
+        }
     }
 
     override suspend fun updateLocation(

@@ -10,6 +10,7 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.location.FilteringMode
 import com.yandex.mapkit.location.Location
 import com.yandex.mapkit.location.LocationListener
+import com.yandex.mapkit.location.LocationManager
 import com.yandex.mapkit.location.LocationStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -24,27 +25,24 @@ import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.MainViewModel
 import ru.sangel.presentation.components.root.DefaultRootComponent
 
-class MainActivity : FragmentActivity(), LocationListener {
+class MainActivity :
+    FragmentActivity(),
+    LocationListener {
     private val viewModel by viewModel<MainViewModel>()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.initialize(this)
-        MapKitFactory.getInstance().createLocationManager()
-            .subscribeForLocationUpdates(
-                0.0,
-                100L,
-                2.0.toDouble(),
-                true,
-                FilteringMode.ON,
-                this@MainActivity,
-            )
+        initMap()
         CoroutineScope(Dispatchers.Main).launch {
             val startScreen = (get() as Deferred<DefaultRootComponent.TopConfig>).await()
 
-            val rootComponent = getKoin().inject<DefaultRootComponent>{ parametersOf(defaultComponentContext(), startScreen) }
+            val rootComponent =
+                getKoin().inject<DefaultRootComponent> {
+                    parametersOf(
+                        defaultComponentContext(),
+                        startScreen,
+                    )
+                }
             enableEdgeToEdge()
             setContent {
                 SangelTheme {
@@ -53,6 +51,18 @@ class MainActivity : FragmentActivity(), LocationListener {
             }
             startForegroundService(Intent(this@MainActivity, DeviceService::class.java))
         }
+    }
+
+    private fun initMap() {
+        MapKitFactory.initialize(this)
+        get<LocationManager>().subscribeForLocationUpdates(
+            0.0,
+            100L,
+            2.0.toDouble(),
+            true,
+            FilteringMode.ON,
+            this@MainActivity,
+        )
     }
 
     override fun onLocationUpdated(p0: Location) {

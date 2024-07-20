@@ -1,12 +1,10 @@
 package ru.sangel.app.data.map
 
 import com.yandex.mapkit.map.CameraPosition
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import ru.sangel.data.map.entities.LocationEntity
 
 interface MapKitRepository {
-    val currentPosition: Flow<LocationEntity>
     val zoom: StateFlow<Float>
 
     val cameraPosition: StateFlow<CameraPosition?>
@@ -20,6 +18,11 @@ interface MapKitRepository {
     fun setZoom(zoom: Float)
 
     fun initMap()
+
+    /**
+     * Единоразово отдает местоположение, используя внутренний LocationManager Android
+     */
+    fun getLocation(): LocationEntity?
 
     suspend fun updateLocation(
         latitude: Double,
