@@ -5,7 +5,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.component.inject
 import ru.sangel.app.data.map.MapKitRepository
 import ru.sangel.data.messages.MessagesSource
@@ -31,22 +30,24 @@ class AndroidEmergencyChat :
     }
 
     override suspend fun sendClaryfingMessage(vararg type: EmergencyChat.Companion.MessageType) {
-//        val message =
-//            type.map {
-//                when (it.subtype) {
-//                    EmergencyChat.Companion.MessageSubtype.LOCATION -> {
-//                        when (it) {
-//                        }
-//                    }
-//                }
-//            }
-//        messageSource.sendSms("112", message)
+        val message =
+            type.map {
+                when (it.subtype) {
+                    EmergencyChat.Companion.MessageSubtype.LOCATION -> {
+                        when (it) {
+                            else -> {}
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+        messageSource.sendSms(EMERGENCY_NUMBMER, "")
     }
 
     private fun getLocation(): Deferred<String?> =
         coroutineScope.async {
-            val location = mapKitRepository.getLocation() ?: return@async null
-            return@async "lat: ${location.latitude} long: ${location.longitude}"
+            return@async mapKitRepository.getLinkLocation()
         }
 
     private fun getName(): Deferred<String> = coroutineScope.async { "TODO" }

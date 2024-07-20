@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import org.koin.core.context.GlobalContext.get
+import org.koin.core.component.inject
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.R
 import ru.sangel.app.data.map.MapKitRepository
@@ -19,16 +19,17 @@ actual class MessagesRepositoryImpl :
     private val messagesSource: MessagesSource by inject(MessagesSource::class.java)
     private val contactsRepository: ContactsRepository by inject(ContactsRepository::class.java)
     private val appPrefs: AppPrefs by inject(AppPrefs::class.java)
+    private val mapKitRepository by inject<MapKitRepository>()
 
     override suspend fun sendMessageToFavorites() {
         val favs = contactsRepository.favorites.first()
         val context = get<Context>()
-
+        val location = mapKitRepository.getLinkLocation() ?: return
         favs.forEach {
             withContext(Dispatchers.IO) {
                 messagesSource.sendSms(
                     phoneNumber = it.phoneNumber,
-                    context.getString(R.string.sms_message, getLocation()),
+                    message = context.getString(R.string.sms_message, location),
                 )
             }
         }
@@ -38,15 +39,5 @@ actual class MessagesRepositoryImpl :
     }
 
     override suspend fun sendMessagesToNearUsers() {
-    }
-
-    private fun getLocation(): String? {
-        val mapKitRepository = get<MapKitRepository>()
-        val location = mapKitRepository.getLocation()
-        return if (location != null) {
-            "https://yandex.ru/maps/?ll=${location.longitude},${location.latitude}&z=13&l=map"
-        } else {
-            null
-        }
     }
 }

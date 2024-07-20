@@ -2,7 +2,6 @@ package ru.sangel.app.data.map
 
 import com.yandex.mapkit.map.CameraPosition
 import kotlinx.coroutines.flow.StateFlow
-import ru.sangel.data.map.entities.LocationEntity
 
 interface MapKitRepository {
     val zoom: StateFlow<Float>
@@ -21,8 +20,9 @@ interface MapKitRepository {
 
     /**
      * Единоразово отдает местоположение, используя внутренний LocationManager Android
+     * и представляет его ссылкой на Яндекс Карты
      */
-    fun getLocation(): LocationEntity?
+    fun getLinkLocation(): String?
 
     suspend fun updateLocation(
         latitude: Double,

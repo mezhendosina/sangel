@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import ru.sangel.app.data.map.MapKitRepository
-import ru.sangel.data.map.entities.LocationEntity
 import ru.sangel.data.users.UsersRepository
 
 class MapKitRepositoryImpl(
@@ -54,10 +53,7 @@ class MapKitRepositoryImpl(
     override fun initMap() {
     }
 
-    /**
-     * Единоразово отдает местоположение, используя внутренний LocationManager Android
-     */
-    override fun getLocation(): LocationEntity? {
+    override fun getLinkLocation(): String? {
         val context = get<Context>()
         val locationManager =
             context.getSystemService(android.location.LocationManager::class.java)
@@ -77,7 +73,7 @@ class MapKitRepositoryImpl(
             if (location == null) {
                 return null
             }
-            return LocationEntity(location.latitude, location.longitude)
+            return "https://yandex.ru/maps/?ll=${location.longitude},${location.latitude}&z=13&l=map"
         } else {
             return null
         }
