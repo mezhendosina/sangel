@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -5,7 +8,7 @@ plugins {
     id("kotlin-parcelize")
     id("kotlinx-serialization")
 
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.ksp)
     id("de.jensklingenberg.ktorfit")
 
     alias(libs.plugins.room)
@@ -36,46 +39,53 @@ kotlin {
             implementation(libs.koin.android)
             api(libs.androidx.startup)
             implementation(libs.maps.mobile)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+            implementation(libs.jetbrains.kotlinx.coroutines.android)
             implementation(libs.firebase.analytics)
-            implementation("io.insert-koin:koin-android:3.5.6")
+            implementation(libs.koin.android)
         }
-        commonMain.dependencies {
-            implementation(libs.decompose)
 
-            implementation(libs.androidx.datastore.preferences.core)
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.decompose)
 
-            implementation(libs.koin.core)
-            implementation("io.insert-koin:koin-logger-slf4j:3.5.6")
+                implementation(libs.androidx.datastore.preferences.core)
 
-            implementation(libs.ktorfit.lib)
-            implementation("io.ktor:ktor-client-logging:2.3.10")
-            implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
-            implementation("io.ktor:ktor-client-auth:2.3.10")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-            implementation("ch.qos.logback:logback-core:1.5.6")
-            api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+                implementation(libs.koin.core)
+                implementation(libs.koin.logger.slf4j)
 
-            implementation("com.juul.kable:core:0.31.1")
+                implementation(libs.ktorfit.lib)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.ktor.client.auth)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.logback.core)
+                api(libs.kotlinx.coroutines.core)
 
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.sqlite.bundled)
-            implementation(libs.sqlite)
+                implementation(libs.kable.core)
+
+                implementation(libs.androidx.room.runtime)
+                implementation(libs.sqlite.bundled)
+                implementation(libs.sqlite)
+
+            }
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
-            implementation(libs.koin.test.junit5)
-            implementation("io.insert-koin:koin-test:3.5.6")
-            implementation("io.insert-koin:koin-test-junit4:3.5.6")
+
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.koin.test.junit5)
+                implementation(libs.koin.test)
+                implementation(libs.koin.test.junit4)
+            }
         }
         androidNativeTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+            implementation(libs.kotlinx.coroutines.test)
             implementation(libs.koin.test.junit5)
-            implementation("io.insert-koin:koin-test:3.5.6")
-            implementation("io.insert-koin:koin-test-junit4:3.5.6")
+            implementation(libs.koin.test)
+            implementation(libs.koin.test.junit4)
         }
     }
 }
@@ -93,7 +103,6 @@ android {
     }
 }
 
-val ktorfitVersion = "1.13.0"
 
 dependencies {
     implementation(libs.firebase.messaging)

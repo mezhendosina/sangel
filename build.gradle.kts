@@ -1,15 +1,15 @@
 plugins {
     // trick: for the same plugin versions in all sub-modules
-    alias(libs.plugins.androidApplication).apply(false)
-    alias(libs.plugins.androidLibrary).apply(false)
-    alias(libs.plugins.kotlinAndroid).apply(false)
-    alias(libs.plugins.kotlinMultiplatform).apply(false)
-    kotlin("plugin.serialization") version "1.9.23" apply false
-    id("com.google.devtools.ksp") version "1.9.23-1.0.20" apply false
-    id("de.jensklingenberg.ktorfit") version "1.13.0" apply false
-    alias(libs.plugins.room).apply(false)
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.kotlinx.serialization) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.ktorfit) apply false
+    alias(libs.plugins.room) apply false
 
-    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
+    alias(libs.plugins.ktlint) apply true
     alias(libs.plugins.googleGmsGoogleServices) apply false
     alias(libs.plugins.googleFirebaseCrashlytics) apply false
     alias(libs.plugins.googleFirebaseFirebasePerf) apply false
