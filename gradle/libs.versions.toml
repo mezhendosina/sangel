@@ -40,6 +40,7 @@ googleFirebaseFirebasePerf = "1.4.2"
 firebaseAuth = "23.0.0"
 ktlint = "12.1.0"
 ksp = "1.9.23-1.0.20"
+junitKtxVersion = "1.2.1"
 
 
 [libraries]
@@ -87,7 +88,6 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
-androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }

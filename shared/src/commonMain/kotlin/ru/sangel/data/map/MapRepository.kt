@@ -3,7 +3,7 @@ package ru.sangel.app.data.map
 import com.yandex.mapkit.map.CameraPosition
 import kotlinx.coroutines.flow.StateFlow
 
-interface MapKitRepository {
+interface MapRepository {
     val zoom: StateFlow<Float>
 
     val cameraPosition: StateFlow<CameraPosition?>
@@ -19,10 +19,9 @@ interface MapKitRepository {
     fun initMap()
 
     /**
-     * Единоразово отдает местоположение, используя внутренний LocationManager Android
-     * и представляет его ссылкой на Яндекс Карты
+     * Единоразово отдает местоположение и представляет его ссылкой на Яндекс Карты
      */
-    fun getLinkLocation(): String?
+    suspend fun getLinkLocation(): String?
 
     suspend fun updateLocation(
         latitude: Double,

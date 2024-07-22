@@ -6,36 +6,35 @@ import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yandex.mapkit.map.CameraPosition
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ru.sangel.app.data.map.MapKitRepository
+import ru.sangel.app.data.map.MapRepository
 import ru.sangel.app.domain.MapUseCase
 
 class MapViewModel(
     private val mapUseCase: MapUseCase,
-    private val mapKitRepository: MapKitRepository,
+    private val mapRepository: MapRepository,
 ) : ViewModel() {
     val mapPoints =
         mapUseCase.mapPoints
-    val zoom = mapKitRepository.zoom
+    val zoom = mapRepository.zoom
 
     fun updateLocation(
         latitude: Double,
         longitude: Double,
     ) {
         viewModelScope.launch {
-            mapKitRepository.updateLocation(latitude, longitude)
+            mapRepository.updateLocation(latitude, longitude)
         }
     }
 
     fun setZoom(zoom: Float) {
-        mapKitRepository.setZoom(zoom)
+        mapRepository.setZoom(zoom)
     }
 
-    fun getCameraPosition(): CameraPosition? = mapKitRepository.cameraPosition.value
+    fun getCameraPosition(): CameraPosition? = mapRepository.cameraPosition.value
 
     fun updateCamera(cameraPosition: CameraPosition) {
-        mapKitRepository.updateCameraPosition(cameraPosition)
+        mapRepository.updateCameraPosition(cameraPosition)
     }
 
     fun checkPermission(context: Context): Boolean {

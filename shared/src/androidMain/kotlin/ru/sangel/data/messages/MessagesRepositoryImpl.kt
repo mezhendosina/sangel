@@ -9,7 +9,7 @@ import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.R
-import ru.sangel.app.data.map.MapKitRepository
+import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.settings.AppPrefs
 
@@ -19,12 +19,12 @@ actual class MessagesRepositoryImpl :
     private val messagesSource: MessagesSource by inject(MessagesSource::class.java)
     private val contactsRepository: ContactsRepository by inject(ContactsRepository::class.java)
     private val appPrefs: AppPrefs by inject(AppPrefs::class.java)
-    private val mapKitRepository by inject<MapKitRepository>()
+    private val mapRepository by inject<MapRepository>()
 
     override suspend fun sendMessageToFavorites() {
         val favs = contactsRepository.favorites.first()
         val context = get<Context>()
-        val location = mapKitRepository.getLinkLocation() ?: return
+        val location = mapRepository.getLinkLocation() ?: return
         favs.forEach {
             withContext(Dispatchers.IO) {
                 messagesSource.sendSms(

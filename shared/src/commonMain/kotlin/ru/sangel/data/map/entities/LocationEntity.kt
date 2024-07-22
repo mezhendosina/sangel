@@ -9,4 +9,8 @@ data class LocationEntity(
     val latitude: Double,
     @SerialName("longitude")
     val longitude: Double,
-)
+) {
+    companion object {
+        fun initValue(): LocationEntity = LocationEntity(-91.0, -180.0)
+    }
+}

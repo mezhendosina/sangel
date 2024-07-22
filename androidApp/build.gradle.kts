@@ -89,7 +89,7 @@ android {
     }
 }
 dependencies {
-    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.junit)
     implementation(libs.androidx.rules)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.perf)

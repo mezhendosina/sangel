@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -67,7 +64,6 @@ kotlin {
                 implementation(libs.androidx.room.runtime)
                 implementation(libs.sqlite.bundled)
                 implementation(libs.sqlite)
-
             }
         }
 
@@ -102,7 +98,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
-
 
 dependencies {
     implementation(libs.firebase.messaging)

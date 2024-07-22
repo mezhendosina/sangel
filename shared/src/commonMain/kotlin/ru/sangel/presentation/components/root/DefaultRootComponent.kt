@@ -10,7 +10,7 @@ import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.ROOT_STACK
-import ru.sangel.app.data.map.MapKitRepository
+import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.auth.AuthRepository
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.settings.AppPrefs
@@ -23,13 +23,14 @@ import ru.sangel.presentation.components.main.MainComponent
 class DefaultRootComponent(
     componentContext: ComponentContext,
     private val startScreen: TopConfig,
-) : RootComponent, ComponentContext by componentContext {
+) : RootComponent,
+    ComponentContext by componentContext {
     private val navigation = StackNavigation<TopConfig>()
 
     private val authRepository: AuthRepository by inject(AuthRepository::class.java)
     private val appPrefs: AppPrefs by inject(AppPrefs::class.java)
     private val usersRepository: UsersRepository by inject(UsersRepository::class.java)
-    private val mapKitRepository: MapKitRepository by inject(MapKitRepository::class.java)
+    private val mapRepository: MapRepository by inject(MapRepository::class.java)
     private val deviceRepository: DeviceRepository by inject(DeviceRepository::class.java)
 
     override val stack: Value<ChildStack<*, RootComponent.Child>> =
@@ -64,7 +65,7 @@ class DefaultRootComponent(
         DefaultMainComponent(
             componentContext,
             usersRepository,
-            mapKitRepository,
+            mapRepository,
             deviceRepository,
         )
 

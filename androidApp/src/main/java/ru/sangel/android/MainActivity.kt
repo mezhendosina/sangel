@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.fragment.app.FragmentActivity
 import com.arkivanov.decompose.defaultComponentContext
-import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.location.FilteringMode
 import com.yandex.mapkit.location.Location
 import com.yandex.mapkit.location.LocationListener
@@ -22,6 +21,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.sangel.android.ui.root.RootScreen
 import ru.sangel.android.ui.theme.SangelTheme
+import ru.sangel.app.domain.MapUseCase
+import ru.sangel.data.messages.emergencyChat.EmergencyChat
 import ru.sangel.presentation.MainViewModel
 import ru.sangel.presentation.components.root.DefaultRootComponent
 
@@ -34,6 +35,7 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         initMap()
         CoroutineScope(Dispatchers.Main).launch {
+            get<EmergencyChat>().sendInitMessage()
             val startScreen = (get() as Deferred<DefaultRootComponent.TopConfig>).await()
 
             val rootComponent =
@@ -54,7 +56,7 @@ class MainActivity :
     }
 
     private fun initMap() {
-        MapKitFactory.initialize(this)
+        get<MapUseCase>().initMap(this)
         get<LocationManager>().subscribeForLocationUpdates(
             0.0,
             100L,

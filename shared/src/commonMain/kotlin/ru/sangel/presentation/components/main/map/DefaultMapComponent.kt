@@ -1,9 +1,9 @@
 package ru.sangel.presentation.components.main.map
 
-import ru.sangel.app.data.map.MapKitRepository
+import ru.sangel.app.data.map.MapRepository
 
 class DefaultMapComponent(
-    private val mapKitRepository: MapKitRepository,
+    private val mapRepository: MapRepository,
 ) : MapComponent {
     override fun toProfile() {
 //        TODO("Not yet implemented")
@@ -16,7 +16,7 @@ class DefaultMapComponent(
     override fun cameraToUser() {
     }
 
-    override fun plusZoom() = mapKitRepository.plusZoom()
+    override fun plusZoom() = mapRepository.plusZoom()
 
-    override fun minusZoom() = mapKitRepository.minusZoom()
+    override fun minusZoom() = mapRepository.minusZoom()
 }

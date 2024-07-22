@@ -9,7 +9,7 @@ import com.arkivanov.decompose.router.stack.pushToFront
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import ru.sangel.MAIN_STACK
-import ru.sangel.app.data.map.MapKitRepository
+import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.device.DeviceRepository
 import ru.sangel.data.users.UsersRepository
 import ru.sangel.presentation.components.main.device.DefaultDeviceComponent
@@ -21,7 +21,7 @@ import ru.sangel.presentation.components.main.settings.DefaultSettingsComponent
 class DefaultMainComponent(
     private val componentContext: ComponentContext,
     private val usersRepository: UsersRepository,
-    private val mapKitRepository: MapKitRepository,
+    private val mapRepository: MapRepository,
     private val deviceRepository: DeviceRepository,
 ) : MainComponent,
     ComponentContext by componentContext {
@@ -83,7 +83,7 @@ class DefaultMainComponent(
             navigation.pushToFront(MainConfig.Device)
         }
 
-    private fun mapComponent() = DefaultMapComponent(mapKitRepository = mapKitRepository)
+    private fun mapComponent() = DefaultMapComponent(mapRepository = mapRepository)
 
     private fun deviceComponent(componentContext: ComponentContext) =
         DefaultDeviceComponent(

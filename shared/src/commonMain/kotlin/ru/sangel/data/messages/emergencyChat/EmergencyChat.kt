@@ -14,7 +14,7 @@ interface EmergencyChat {
         sealed class MessageType(
             val subtype: MessageSubtype,
         ) {
-            object RoomNumber : MessageType(MessageSubtype.LOCATION)
+            object HomeNumber : MessageType(MessageSubtype.LOCATION)
 
             object EntranceNumber : MessageType(MessageSubtype.LOCATION)
 

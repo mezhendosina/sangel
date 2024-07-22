@@ -25,7 +25,7 @@ class MessagesSourceTest {
         runBlocking {
             assertDoesNotThrow {
                 messagesRepo.sendSms(
-                    "",
+                    "+79120398681",
                     "test",
                 )
             }
