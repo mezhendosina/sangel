@@ -25,12 +25,9 @@ class AndroidEmergencyChat(
         val name = getName()
         val age = getAge()
         val location = getLocation() ?: return
-        val firstMassage =
-            location
-        val secondMessage = name.await() + " " + age.await() + " "
+        val firstMassage = "Нападение" + location + "\n" + name.await() + " " + age.await() + " "
         withContext(Dispatchers.Main) {
             messageSource.sendSms(emergencyNumber, firstMassage)
-            messageSource.sendSms(emergencyNumber, secondMessage)
         }
     }
 

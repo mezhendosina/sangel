@@ -15,10 +15,10 @@ class DefaultMessagesSource :
     ) {
         val context: Context = get()
         val smsManager = context.getSystemService(SmsManager::class.java)
-        smsManager.sendTextMessage(
+        smsManager.sendMultipartTextMessage(
             phoneNumber,
             null,
-            message,
+            smsManager.divideMessage(message),
             null,
             null,
         )
