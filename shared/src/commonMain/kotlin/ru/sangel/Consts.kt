@@ -7,8 +7,5 @@ const val MAIN_STACK = "main"
 const val LOGIN_STACK = "login"
 const val SETTINGS_STACK = "settings"
 
-const val EMERGENCY_NUMBMER = "+79020228864"
-const val INCOMING_EMERGENCY_NUMBER = "+79120398681"
-
 const val CLARIFYING_MESSAGE_START = "Здравствуйте! С вашего номера поступило СМС в систему  - 112. Уточните ответным СМС на номер 112: "
 const val REQUIRING_INFO_REGEX = "(.+,?)+"

@@ -1,16 +1,19 @@
 package ru.sangel.android
 
 import android.app.Application
-import com.google.firebase.Firebase
-import com.google.firebase.initialize
 import com.yandex.mapkit.MapKitFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.context.startKoin
+import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.di.commonModule
 import ru.sangel.di.platfromModule
 
-class App : Application() {
+class App :
+    Application(),
+    KoinComponent {
     override fun onCreate() {
         super.onCreate()
         startKoin {
@@ -21,7 +24,12 @@ class App : Application() {
                 platfromModule,
             )
         }
+
+        initFirebase()
         MapKitFactory.setApiKey("4cdc7740-5bcc-43cd-ad9a-517bf2143366")
-        Firebase.initialize(this)
+    }
+
+    private fun initFirebase() {
+        get<FirebaseRepository>().init()
     }
 }

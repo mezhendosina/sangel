@@ -19,6 +19,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 import ru.sangel.presentation.components.main.device.connect.ConnectDeviceComponent
 import ru.sangel.presentation.entities.ConnectDeviceEntity
@@ -30,7 +31,14 @@ fun ConnectDeviceScreen(
     component: ConnectDeviceComponent,
 ) {
     val model by component.model.subscribeAsState()
-    val smsPermission = rememberPermissionState(permission = Manifest.permission.SEND_SMS)
+    val smsPermission =
+        rememberMultiplePermissionsState(
+            permissions =
+                listOf(
+                    Manifest.permission.SEND_SMS,
+                    Manifest.permission.RECEIVE_SMS,
+                ),
+        )
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val bluetoothPermission =
@@ -50,7 +58,7 @@ fun ConnectDeviceScreen(
     LazyColumn(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
         items(model.list.toList()) {
             ConnectDeviceItem(connectDeviceEntity = it, {
-                component.connect(it, smsPermission::launchPermissionRequest)
+                component.connect(it, smsPermission::launchMultiplePermissionRequest)
             })
         }
     }

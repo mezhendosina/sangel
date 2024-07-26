@@ -101,6 +101,7 @@ android {
 
 dependencies {
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.config)
     add("kspCommonMainMetadata", "de.jensklingenberg.ktorfit:ktorfit-ksp:1.13.0")
     add("kspAndroid", "de.jensklingenberg.ktorfit:ktorfit-ksp:1.13.0")
 

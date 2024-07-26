@@ -1,9 +1,12 @@
 package ru.sangel.android
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.arkivanov.decompose.defaultComponentContext
 import com.yandex.mapkit.location.FilteringMode
@@ -22,7 +25,6 @@ import org.koin.core.parameter.parametersOf
 import ru.sangel.android.ui.root.RootScreen
 import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.app.domain.MapUseCase
-import ru.sangel.data.messages.emergencyChat.EmergencyChat
 import ru.sangel.presentation.MainViewModel
 import ru.sangel.presentation.components.root.DefaultRootComponent
 
@@ -35,7 +37,6 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         initMap()
         CoroutineScope(Dispatchers.Main).launch {
-            get<EmergencyChat>().sendInitMessage()
             val startScreen = (get() as Deferred<DefaultRootComponent.TopConfig>).await()
 
             val rootComponent =

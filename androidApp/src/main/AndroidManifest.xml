@@ -25,13 +25,16 @@
         android:maxSdkVersion="30" />
 
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.provider.Telephony.SMS_RECEIVED" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="false" />
+        android:required="true" />
 
 
     <application
@@ -65,6 +68,18 @@
             android:name=".DeviceService"
             android:enabled="true"
             android:foregroundServiceType="remoteMessaging|connectedDevice" />
+
+        <receiver
+            android:name="ru.sangel.presentation.IncomingEmergencyReciever"
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="999">
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

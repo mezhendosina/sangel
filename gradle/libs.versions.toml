@@ -41,6 +41,7 @@ firebaseAuth = "23.0.0"
 ktlint = "12.1.0"
 ksp = "1.9.23-1.0.20"
 junitKtxVersion = "1.2.1"
+firebaseConfig = "22.0.0"
 
 
 [libraries]
@@ -94,6 +95,7 @@ firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashly
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-perf = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerf" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config", version.ref = "firebaseConfig" }
 
 
 [plugins]
