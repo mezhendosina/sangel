@@ -17,18 +17,22 @@ actual class FirebaseRepositoryImpl :
         Firebase.initialize(get() as Application)
 
         val settings =
-            remoteConfigSettings {
-                fetchTimeoutInSeconds = 10
-            }
+            remoteConfigSettings {}
         val remoteConfig = Firebase.remoteConfig
         remoteConfig.setConfigSettingsAsync(settings)
         remoteConfig.setDefaultsAsync(FirebaseRepository.defaults)
+        remoteConfig.fetch()
     }
 
-    override suspend fun getEmergencyNumber(): String = Firebase.remoteConfig.getString(EMERGENCY_NUMBER)
+    override suspend fun getEmergencyNumber(): String {
+        Firebase.remoteConfig.activate()
 
-    override suspend fun getIncomingEmergencyNumber(): String =
-        Firebase.remoteConfig.getString(
-            INCOMING_EMERGENCY_NUMBER,
-        )
+        return Firebase.remoteConfig.getString(EMERGENCY_NUMBER)
+    }
+
+    override suspend fun getIncomingEmergencyNumber(): String {
+        Firebase.remoteConfig.activate()
+
+        return Firebase.remoteConfig.getString(INCOMING_EMERGENCY_NUMBER)
+    }
 }

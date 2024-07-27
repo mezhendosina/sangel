@@ -12,8 +12,8 @@ interface FirebaseRepository {
         const val INCOMING_EMERGENCY_NUMBER = "incomingEmergencyNumber"
         val defaults =
             mapOf(
-                EMERGENCY_NUMBER to "+79120398681",
-                INCOMING_EMERGENCY_NUMBER to "+",
+                EMERGENCY_NUMBER to "",
+                INCOMING_EMERGENCY_NUMBER to "",
             )
     }
 }
