@@ -14,14 +14,14 @@ import org.koin.core.component.inject
 import ru.sangel.CLARIFYING_MESSAGE_START
 import ru.sangel.REQUIRING_INFO_REGEX
 import ru.sangel.data.firebase.FirebaseRepository
-import ru.sangel.data.messages.emergencyChat.EmergencyChat
+import ru.sangel.data.messages.MessagesRepository
 
 class IncomingEmergencyReciever :
     BroadcastReceiver(),
     KoinComponent {
     private val clarrifyingMessageRegEx = Regex(CLARIFYING_MESSAGE_START + REQUIRING_INFO_REGEX)
 
-    private val emergencyChat by inject<EmergencyChat>()
+    private val emergencyChat by inject<MessagesRepository>()
     private val firebaseRepository by inject<FirebaseRepository>()
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
@@ -50,18 +50,18 @@ class IncomingEmergencyReciever :
                                 word.dropWhile { it == ' ' }.dropLastWhile { it != ' ' }
                             }.mapNotNull { it.toMessateType() }
                     coroutineScope.launch {
-                        emergencyChat.sendClaryfingMessage(*listOfRequiringInfo.toTypedArray())
+                        emergencyChat.sendClarifyingMessageToPolice(*listOfRequiringInfo.toTypedArray())
                     }
                 }
             }
         }
     }
 
-    private fun String.toMessateType(): EmergencyChat.Companion.MessageType? =
+    private fun String.toMessateType(): MessagesRepository.Companion.MessageType? =
         when (this) {
-            "номер телефона" -> EmergencyChat.Companion.MessageType.PhoneNumber
-            "отчество" -> EmergencyChat.Companion.MessageType.MiddleName
-            "возраст" -> EmergencyChat.Companion.MessageType.Age
+            "номер телефона" -> MessagesRepository.Companion.MessageType.PhoneNumber
+            "отчество" -> MessagesRepository.Companion.MessageType.MiddleName
+            "возраст" -> MessagesRepository.Companion.MessageType.Age
             else -> null
         }
 }
