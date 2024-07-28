@@ -17,12 +17,15 @@ import ru.sangel.SETTINGS_STACK
 import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.presentation.components.main.settings.contacts.DefaultContactsComponent
+import ru.sangel.presentation.components.main.settings.debug.DefaultDebugComponent
 import ru.sangel.presentation.components.main.settings.privacy.DefaultPrivacyComponent
 import ru.sangel.presentation.components.main.settings.root.DefaultSettingsRootComponent
 
 class DefaultSettingsComponent(
     private val componentContext: ComponentContext,
-) : SettingsComponent, ComponentContext by componentContext, KoinComponent {
+) : SettingsComponent,
+    ComponentContext by componentContext,
+    KoinComponent {
     private val contactsRepository: ContactsRepository by inject()
     private val appPrefs: AppPrefs by inject()
 
@@ -58,6 +61,8 @@ class DefaultSettingsComponent(
                 SettingsComponent.Child.Contacts(
                     contactsComponent(componentContext),
                 )
+
+            is Config.Debug -> SettingsComponent.Child.Debug(debugComponent(componentContext))
         }
 
     private fun contactsComponent(componentContext: ComponentContext) =
@@ -75,10 +80,11 @@ class DefaultSettingsComponent(
             { navigation.push(Config.Account) },
             { navigation.push(Config.Privacy) },
             { navigation.push(Config.About) },
-            {
-                navigation.push(Config.Contacts)
-            },
+            { navigation.push(Config.Contacts) },
+            { navigation.push(Config.Debug) },
         )
+
+    private fun debugComponent(componentContext: ComponentContext) = DefaultDebugComponent(componentContext)
 
     @Serializable
     private sealed interface Config {
@@ -96,5 +102,8 @@ class DefaultSettingsComponent(
 
         @Serializable
         data object Contacts : Config
+
+        @Serializable
+        data object Debug : Config
     }
 }

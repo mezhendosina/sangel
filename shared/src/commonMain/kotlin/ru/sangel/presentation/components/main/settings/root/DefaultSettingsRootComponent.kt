@@ -8,12 +8,15 @@ class DefaultSettingsRootComponent(
     private val toPrivacy: () -> Unit,
     private val toAbout: () -> Unit,
     private val toContact: () -> Unit,
-) : SettingsRootComponent, ComponentContext by componentContext {
+    private val toDebug: () -> Unit,
+) : SettingsRootComponent,
+    ComponentContext by componentContext {
     override val items: List<Pair<String, () -> Unit>> =
-        listOf(
+        mutableListOf(
             "Аккаунт" to toAccount,
             "Контакты" to toContact,
             "Приватность" to toPrivacy,
             "О приложении" to toAbout,
+            "Debug" to toDebug,
         )
 }

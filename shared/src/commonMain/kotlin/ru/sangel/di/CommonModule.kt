@@ -2,7 +2,6 @@ package ru.sangel.di
 
 import org.koin.dsl.module
 import ru.sangel.di.common.componentModule
-import ru.sangel.di.common.emergencyModule
 import ru.sangel.di.common.ktorfitModule
 import ru.sangel.di.common.repoModule
 import ru.sangel.di.common.settingsModule
@@ -16,6 +15,5 @@ fun commonModule() =
             stubSourceModule,
             repoModule,
             componentModule,
-            emergencyModule,
         )
     }

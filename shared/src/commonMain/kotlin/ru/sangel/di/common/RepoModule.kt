@@ -15,6 +15,8 @@ import ru.sangel.data.device.DeviceRepositoryImpl
 import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.data.firebase.FirebaseRepositoryImpl
 import ru.sangel.data.messages.DefaultMessagesSource
+import ru.sangel.data.messages.MessagesRepository
+import ru.sangel.data.messages.MessagesRepositoryImpl
 import ru.sangel.data.messages.MessagesSource
 import ru.sangel.data.users.KtorfitUsersSource
 import ru.sangel.data.users.StubUsersSource
@@ -29,6 +31,7 @@ val repoModule =
         singleOf(::ContactsRepositoryImpl) bind ContactsRepository::class
         singleOf(::DeviceRepositoryImpl) bind DeviceRepository::class
         singleOf(::FirebaseRepositoryImpl) bind FirebaseRepository::class
+        singleOf(::MessagesRepositoryImpl) bind MessagesRepository::class
     }
 
 val sourceModule =

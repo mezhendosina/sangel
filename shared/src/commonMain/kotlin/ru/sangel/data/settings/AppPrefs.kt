@@ -1,6 +1,7 @@
 package ru.sangel.data.settings
 
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
@@ -24,5 +25,10 @@ interface AppPrefs {
         val EMAIL = stringPreferencesKey("email")
         val PASSWORD = stringPreferencesKey("password")
         val SHOW_LOCATION_TO = stringPreferencesKey("show_location_to")
+
+        val EMERGENCY_PHONE_NUMBER = stringPreferencesKey("emergency_phone_number")
+        val EMERGENCY_INCOMING_PHONE_NUMBER =
+            stringPreferencesKey("emergency_incoming_phone_number")
+        val FETCH_EMERGENCY_NUMBERS = booleanPreferencesKey("fetch_emergency_numbers")
     }
 }

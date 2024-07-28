@@ -13,11 +13,13 @@ import ru.sangel.android.ui.theme.SangelTheme
 @Composable
 fun SettingsButton(
     text: String,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     OutlinedButton(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
+        enabled = enabled,
         colors =
             ButtonDefaults.outlinedButtonColors(
                 containerColor = MaterialTheme.colorScheme.background,

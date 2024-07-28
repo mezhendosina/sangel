@@ -78,6 +78,7 @@ fun SettingsContainer(component: SettingsComponent) {
                 is SettingsComponent.Child.Root -> SettingsScreen(config.component)
                 is SettingsComponent.Child.Privacy -> PrivacyScreen(config.component)
                 is SettingsComponent.Child.Contacts -> ContactsScreen(config.component)
+                is SettingsComponent.Child.Debug -> DebugScreen(config.component)
                 else -> {}
             }
         }
@@ -92,4 +93,5 @@ private fun ChildStack<*, SettingsComponent.Child>.getTopBarTitle() =
         is SettingsComponent.Child.Account -> stringResource(R.string.account)
         is SettingsComponent.Child.Privacy -> stringResource(R.string.privacy)
         is SettingsComponent.Child.Contacts -> stringResource(R.string.contacts)
+        is SettingsComponent.Child.Debug -> "Debug"
     }

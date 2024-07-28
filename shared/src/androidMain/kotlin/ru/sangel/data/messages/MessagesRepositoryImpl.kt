@@ -2,7 +2,6 @@ package ru.sangel.data.messages
 
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -33,9 +32,6 @@ actual class MessagesRepositoryImpl :
     private val userRepository by inject<UsersRepository>()
     private val firebaseRepository by inject<FirebaseRepository>()
 
-    val emergencyNumber =
-        coroutineScope.async(start = CoroutineStart.LAZY) { firebaseRepository.getEmergencyNumber() }
-
     override suspend fun sendMessageToFavorites() {
         val favs = contactsRepository.favorites.first()
         val context = get<Context>()
@@ -51,21 +47,22 @@ actual class MessagesRepositoryImpl :
     }
 
     override suspend fun sendMessageToPolice() {
-        emergencyNumber.start()
         val name = getName()
         val age = getAge()
         val location = getLocation() ?: return
-        val firstMassage = "Нападение" + location + "\n" + name.await() + " " + age.await() + " "
+        val firstMassage = "Нападение " + location + "\n" + name.await() + " " + age.await() + " "
+        val number = appPrefs.getValue(AppPrefs.EMERGENCY_PHONE_NUMBER).first() ?: return
         withContext(Dispatchers.Main) {
             messagesSource.sendSms(
-                emergencyNumber.await(),
+                number,
                 firstMassage,
             )
         }
     }
 
     override suspend fun sendClarifyingMessageToPolice(vararg type: MessagesRepository.Companion.MessageType) {
-        emergencyNumber.start()
+        val number = appPrefs.getValue(AppPrefs.EMERGENCY_PHONE_NUMBER).first() ?: return
+
         val message =
             type.mapNotNull {
                 when (it) {
@@ -86,7 +83,7 @@ actual class MessagesRepositoryImpl :
             }
         if (message.size > 0) {
             messagesSource.sendSms(
-                emergencyNumber.await(),
+                number,
                 message.joinToString(limit = message.size - 1),
             )
         }
