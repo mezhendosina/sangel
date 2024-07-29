@@ -2,6 +2,7 @@ package ru.sangel.android.ui.main.map
 
 import android.Manifest
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,14 +12,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -43,69 +47,91 @@ fun MapScreen(
     }
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidViewBinding(FragmentContainerBinding::inflate, modifier = Modifier) {
-            this.root.getFragment<MapFragment>()
+            root.getFragment<MapFragment>()
         }
 
         Row(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = padding.calculateTopPadding()),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = padding.calculateTopPadding()),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            IconButton(onClick = component::toProfile) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_avatar),
-                    contentDescription = stringResource(R.string.profile),
-                    modifier = Modifier.size(32.dp),
-                )
-            }
+            MapCornerButton(
+                image = painterResource(id = R.drawable.ic_avatar),
+                component::toProfile,
+            )
 
-            IconButton(onClick = component::toQuestion) {
+            MapCornerButton(
+                image = painterResource(id = R.drawable.ic_question),
+                component::toQuestion,
+            )
+        }
+        Column(
+            modifier =
+                Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(16.dp)
+                    .background(MaterialTheme.colorScheme.background, CircleShape)
+                    .width(42.dp)
+                    .padding(horizontal = 8.dp)
+                    .align(Alignment.Center),
+        ) {
+            IconButton(
+                onClick = component::plusZoom,
+                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+            ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_question),
+                    painter = painterResource(id = R.drawable.ic_map_plus),
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
-        }
-        Column(modifier = Modifier.align(Alignment.CenterEnd)) {
-            IconButton(onClick = component::plusZoom) {
-                Image(painter = painterResource(id = R.drawable.ic_plus), contentDescription = null)
-            }
-            IconButton(onClick = component::minusZoom) {
+            HorizontalDivider()
+            IconButton(
+                onClick = component::minusZoom,
+                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+            ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_minus),
                     contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
         }
         Row(
             modifier =
-            Modifier
-                .padding(horizontal = 16.dp)
-                .align(Alignment.BottomStart)
-                .fillMaxWidth(),
+                Modifier
+                    .padding(horizontal = 16.dp, vertical = 16.dp)
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-//            IconButton(onClick = {}) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.ic_avatar),
-//                    contentDescription = stringResource(R.string.profile),
-//                    modifier = Modifier.size(24.dp),
-//                )
-//            }
-
-            IconButton(onClick = component::cameraToUser) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_find_me),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier.size(48.dp),
-                )
+            MapCornerButton(image = painterResource(id = R.drawable.ic_find_contact)) {
             }
+
+            MapCornerButton(painterResource(id = R.drawable.ic_find_me), component::cameraToUser)
         }
+    }
+}
+
+@Composable
+private fun MapCornerButton(
+    image: Painter,
+    onClick: () -> Unit,
+) {
+    IconButton(
+        onClick = onClick,
+        modifier =
+            Modifier
+                .size(42.dp)
+                .background(MaterialTheme.colorScheme.background, CircleShape),
+    ) {
+        Image(
+            painter = image,
+            contentDescription = null,
+        )
     }
 }
