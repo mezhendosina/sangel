@@ -19,7 +19,7 @@ fun SettingsScreen(component: SettingsRootComponent) {
         modifier =
             Modifier
                 .fillMaxSize()
-                .padding(32.dp),
+                .padding(horizontal = 46.dp, vertical = 32.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(component.items) {

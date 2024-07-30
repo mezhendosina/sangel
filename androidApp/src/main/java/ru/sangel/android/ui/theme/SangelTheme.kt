@@ -14,6 +14,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 
@@ -287,7 +289,6 @@ fun SangelTheme(
         SideEffect {
             val window = (view.context as Activity).window
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
-
         }
     }
     val typography =
@@ -295,7 +296,10 @@ fun SangelTheme(
             bodyMedium = MaterialTheme.typography.bodyMedium.merge(fontFamily = sangelFontFamily),
             titleSmall = MaterialTheme.typography.titleSmall.merge(fontFamily = sangelFontFamily),
             labelSmall = MaterialTheme.typography.labelSmall.merge(fontFamily = sangelFontFamily),
-            titleLarge = MaterialTheme.typography.titleLarge.merge(fontFamily = sangelFontFamily),
+            titleLarge =
+                MaterialTheme.typography.titleLarge
+                    .merge(fontFamily = sangelFontFamily)
+                    .merge(TextStyle(fontWeight = FontWeight.Bold)),
             labelLarge = MaterialTheme.typography.labelLarge.merge(fontFamily = sangelFontFamily),
             titleMedium = MaterialTheme.typography.titleMedium.merge(fontFamily = sangelFontFamily),
             displayLarge = MaterialTheme.typography.displayLarge.merge(fontFamily = sangelFontFamily),

@@ -16,6 +16,7 @@ import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.SETTINGS_STACK
 import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.settings.AppPrefs
+import ru.sangel.presentation.components.main.settings.about.DefaultAboutAppComponent
 import ru.sangel.presentation.components.main.settings.contacts.DefaultContactsComponent
 import ru.sangel.presentation.components.main.settings.debug.DefaultDebugComponent
 import ru.sangel.presentation.components.main.settings.privacy.DefaultPrivacyComponent
@@ -55,7 +56,7 @@ class DefaultSettingsComponent(
                 SettingsComponent.Child.Root(settingsRootComponent(componentContext))
 
             is Config.Account -> SettingsComponent.Child.Account()
-            is Config.About -> SettingsComponent.Child.About()
+            is Config.About -> SettingsComponent.Child.About(aboutAppComponent())
             is Config.Privacy -> SettingsComponent.Child.Privacy(privacyComponent(componentContext))
             is Config.Contacts ->
                 SettingsComponent.Child.Contacts(
@@ -85,6 +86,8 @@ class DefaultSettingsComponent(
         )
 
     private fun debugComponent(componentContext: ComponentContext) = DefaultDebugComponent(componentContext)
+
+    private fun aboutAppComponent() = DefaultAboutAppComponent()
 
     @Serializable
     private sealed interface Config {

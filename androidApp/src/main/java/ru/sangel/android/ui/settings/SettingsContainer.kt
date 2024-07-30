@@ -5,8 +5,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -24,6 +26,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.stack.animation.plus
+import com.arkivanov.decompose.extensions.compose.stack.animation.slide
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.stack.ChildStack
 import ru.sangel.android.R
@@ -47,7 +53,7 @@ fun SettingsContainer(component: SettingsComponent) {
                         enter = fadeIn(),
                         exit = fadeOut(),
                     ) {
-                        IconButton(onClick = component::onBack) {
+                        IconButton(onClick = component::onBack, modifier = Modifier.padding(start = 24.dp)) {
                             Image(
                                 Icons.AutoMirrored.Default.KeyboardArrowLeft,
                                 stringResource(R.string.back),
@@ -61,7 +67,7 @@ fun SettingsContainer(component: SettingsComponent) {
                         null,
                         modifier =
                             Modifier
-                                .padding(end = 16.dp)
+                                .padding(end = 46.dp)
                                 .size(24.dp),
                     )
                 },
@@ -73,12 +79,17 @@ fun SettingsContainer(component: SettingsComponent) {
         },
         containerColor = Color.Transparent,
     ) { paddingValues ->
-        Children(stack = component.stack, modifier = Modifier.padding(paddingValues)) {
+        Children(
+            stack = component.stack,
+            modifier = Modifier.padding(paddingValues),
+            animation = stackAnimation(slide() + fade()),
+        ) {
             when (val config = it.instance) {
                 is SettingsComponent.Child.Root -> SettingsScreen(config.component)
                 is SettingsComponent.Child.Privacy -> PrivacyScreen(config.component)
                 is SettingsComponent.Child.Contacts -> ContactsScreen(config.component)
                 is SettingsComponent.Child.Debug -> DebugScreen(config.component)
+                is SettingsComponent.Child.About -> AboutAppScreen(config.component)
                 else -> {}
             }
         }

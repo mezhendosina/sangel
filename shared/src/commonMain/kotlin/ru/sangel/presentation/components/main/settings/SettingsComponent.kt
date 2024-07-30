@@ -2,6 +2,7 @@ package ru.sangel.presentation.components.main.settings
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
+import ru.sangel.presentation.components.main.settings.about.AboutAppComponent
 import ru.sangel.presentation.components.main.settings.contacts.ContactsComponent
 import ru.sangel.presentation.components.main.settings.debug.DebugComponent
 import ru.sangel.presentation.components.main.settings.privacy.PrivacyComponent
@@ -19,7 +20,9 @@ interface SettingsComponent {
 
         class Account : Child()
 
-        class About : Child()
+        class About(
+            val component: AboutAppComponent,
+        ) : Child()
 
         class Privacy(
             val component: PrivacyComponent,
