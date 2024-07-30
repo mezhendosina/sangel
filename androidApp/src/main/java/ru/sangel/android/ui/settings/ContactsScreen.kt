@@ -59,7 +59,7 @@ fun ContactsScreen(component: ContactsComponent) {
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 46.dp),
         ) {
             OutlinedTextField(
                 value = model.query,
@@ -70,9 +70,9 @@ fun ContactsScreen(component: ContactsComponent) {
                     Text(stringResource(R.string.find_contact))
                 },
             )
-            Spacer(modifier = Modifier.size(32.dp))
             LazyColumn {
                 item {
+                    Spacer(modifier = Modifier.size(32.dp))
                     if (model.favContacts.isNotEmpty()) {
                         ContactsTitle(
                             title = stringResource(R.string.fav_contacts),

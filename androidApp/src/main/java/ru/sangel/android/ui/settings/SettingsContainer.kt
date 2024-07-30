@@ -5,10 +5,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -53,7 +51,10 @@ fun SettingsContainer(component: SettingsComponent) {
                         enter = fadeIn(),
                         exit = fadeOut(),
                     ) {
-                        IconButton(onClick = component::onBack, modifier = Modifier.padding(start = 24.dp)) {
+                        IconButton(
+                            onClick = component::onBack,
+                            modifier = Modifier.padding(start = 24.dp),
+                        ) {
                             Image(
                                 Icons.AutoMirrored.Default.KeyboardArrowLeft,
                                 stringResource(R.string.back),
@@ -81,7 +82,7 @@ fun SettingsContainer(component: SettingsComponent) {
     ) { paddingValues ->
         Children(
             stack = component.stack,
-            modifier = Modifier.padding(paddingValues),
+            modifier = Modifier.padding(paddingValues).padding(top = 16.dp),
             animation = stackAnimation(slide() + fade()),
         ) {
             when (val config = it.instance) {

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +29,11 @@ fun PrivacyScreen(component: PrivacyComponent) {
     val model by component.model.subscribeAsState()
     LazyColumn {
         item {
-            Text("Кто может видеть вашу геопозицию?", modifier = Modifier.padding(start = 16.dp))
+            Text(
+                "Кто может видеть вашу геопозицию?",
+                modifier = Modifier.padding(start = 46.dp),
+                style = MaterialTheme.typography.titleLarge,
+            )
             PrivacyRadioButton(
                 model.selectedShowLocationTo == ShowLocationTo.FAVORITES,
                 { component.changeShowLocationTo(ShowLocationTo.FAVORITES) },
@@ -58,7 +63,7 @@ private fun PrivacyRadioButton(
             Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onClick)
-                .padding(16.dp),
+                .padding(horizontal = 46.dp),
     ) {
         RadioButton(
             selected = selected,
