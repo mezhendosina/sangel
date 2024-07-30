@@ -21,6 +21,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import ru.sangel.android.R
 import ru.sangel.android.ui.main.device.ConnectDeviceScreen
@@ -43,6 +45,7 @@ fun MainContainer(component: MainComponent) {
         Children(
             stack = component.stack,
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
+            animation = stackAnimation(fade()),
         ) {
             when (val config = it.instance) {
                 is MainComponent.Child.Device -> DeviceScreen(config.component)

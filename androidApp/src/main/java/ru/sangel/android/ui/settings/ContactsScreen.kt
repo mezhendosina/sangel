@@ -1,6 +1,7 @@
 package ru.sangel.android.ui.settings
 
 import android.content.pm.PackageManager
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -73,7 +74,7 @@ fun ContactsScreen(component: ContactsComponent) {
             LazyColumn {
                 item {
                     Spacer(modifier = Modifier.size(32.dp))
-                    if (model.favContacts.isNotEmpty()) {
+                    AnimatedVisibility(visible = model.favContacts.isNotEmpty()) {
                         ContactsTitle(
                             title = stringResource(R.string.fav_contacts),
                         )
@@ -82,7 +83,7 @@ fun ContactsScreen(component: ContactsComponent) {
                 items(model.favContacts) {
                     ContactCard(
                         name = it.name,
-                        checked = it.favorite,
+                        checked = true,
                         onClick = { component.deleteContact(it) },
                     )
                 }
