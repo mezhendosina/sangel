@@ -39,9 +39,9 @@ fun AboutAppScreen(
     val context = LocalContext.current
     LazyColumn(
         modifier =
-            modifier
-                .fillMaxSize()
-                .padding(horizontal = 46.dp),
+        modifier
+            .fillMaxSize()
+            .padding(horizontal = 46.dp),
     ) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -80,7 +80,7 @@ fun AboutAppScreen(
                 leadingImage = painterResource(id = R.drawable.ic_mail),
                 text = stringResource(R.string.mail_us),
             ) {
-                uriHandler.openUri("")
+                uriHandler.openUri(context.getString(R.string.contact_us_email))
             }
         }
     }
