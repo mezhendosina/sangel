@@ -1,15 +1,29 @@
 package ru.sangel.data.auth
 
-class StubAuthSource : AuthSource {
+import ru.sangel.app.data.entities.SignInResponseEntity
 
+class StubAuthSource : AuthSource {
     override suspend fun signUp(
         email: String,
         password: String,
-        name: String,
-        surname: String
-    ): Int = 1
+        firstName: String,
+        secondName: String,
+        middleName: String,
+        phone: String,
+    ) {
+    }
 
-    override suspend fun signIn(email: String, password: String): String = "auth_token"
+    override suspend fun signIn(
+        fcmToken: String,
+        email: String,
+        password: String,
+    ): SignInResponseEntity = SignInResponseEntity("", "")
 
-    override suspend fun checkCode(id: Int, code: String): String = "auth_token"
+    override suspend fun otp(
+        email: String,
+        code: String,
+    ) {
+    }
+
+    override suspend fun refreshToken(refreshToken: String): String = ""
 }

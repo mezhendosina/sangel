@@ -18,5 +18,5 @@ interface AuthRepository {
 
     suspend fun otp(code: String)
 
-    suspend fun refreshToken()
+    suspend fun refreshToken(): String
 }

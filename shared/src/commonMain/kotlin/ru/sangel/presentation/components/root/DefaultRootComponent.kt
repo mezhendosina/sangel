@@ -13,6 +13,7 @@ import ru.sangel.ROOT_STACK
 import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.auth.AuthRepository
 import ru.sangel.data.device.DeviceRepository
+import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.data.users.UsersRepository
 import ru.sangel.presentation.components.login.DefaultLoginComponent
@@ -32,6 +33,7 @@ class DefaultRootComponent(
     private val usersRepository: UsersRepository by inject(UsersRepository::class.java)
     private val mapRepository: MapRepository by inject(MapRepository::class.java)
     private val deviceRepository: DeviceRepository by inject(DeviceRepository::class.java)
+    private val firebaseRepository: FirebaseRepository by inject(FirebaseRepository::class.java)
 
     override val stack: Value<ChildStack<*, RootComponent.Child>> =
         childStack(
@@ -57,7 +59,12 @@ class DefaultRootComponent(
         }
 
     private fun loginComponent(componentContext: ComponentContext): LoginComponent =
-        DefaultLoginComponent(authRepository, appPrefs = appPrefs, componentContext) {
+        DefaultLoginComponent(
+            authRepository,
+            firebaseRepository = firebaseRepository,
+            appPrefs = appPrefs,
+            componentContext,
+        ) {
             navigation.push(TopConfig.Main)
         }
 

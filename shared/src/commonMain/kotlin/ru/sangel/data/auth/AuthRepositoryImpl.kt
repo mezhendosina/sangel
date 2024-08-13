@@ -38,11 +38,13 @@ class AuthRepositoryImpl(
         authSource.otp(email, code)
     }
 
-    override suspend fun refreshToken() {
+    override suspend fun refreshToken(): String {
         val refreshToken =
             appPrefs.getValue(AppPrefs.REFRESH_TOKEN, null).first()
                 ?: throw TokenNotFoundException()
-        authSource.refreshToken(refreshToken)
+        val token = authSource.refreshToken(refreshToken)
+        appPrefs.setValue(AppPrefs.ACCESS_TOKEN, token)
+        return token
     }
 
     private suspend fun saveLoginData(
