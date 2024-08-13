@@ -1,20 +1,21 @@
 package ru.sangel.data.contacts
 
-import android.app.Application
 import android.content.Context
 import android.provider.ContactsContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import org.koin.core.context.GlobalContext.get
 import ru.sangel.data.AppDatabase
+import ru.sangel.data.contacts.api.FavoritesSource
+import ru.sangel.data.contacts.db.ContactsDao
 import ru.sangel.presentation.components.main.settings.contacts.ContactUiEntity
 
 actual class ContactsRepositoryImpl(
     private val database: AppDatabase,
-    private val context: Application,
-) : ContactsRepository, KoinComponent {
+    private val favoritesSource: FavoritesSource,
+) : ContactsRepository,
+    KoinComponent {
     val contactsDao: ContactsDao by lazy {
         database.getContactsDao()
     }
@@ -60,11 +61,13 @@ actual class ContactsRepositoryImpl(
         return out
     }
 
-    override suspend fun addFavContact(contactUiEntity: ContactUiEntity) {
+    override suspend fun addFavorite(contactUiEntity: ContactUiEntity) {
         contactsDao.addFavContact(contactUiEntity.toDbEntity())
+        favoritesSource.addFavorite(contactUiEntity.phoneNumber)
     }
 
-    override suspend fun deleteFavContact(contactUiEntity: ContactUiEntity) {
+    override suspend fun deleteFavorite(contactUiEntity: ContactUiEntity) {
         contactsDao.deleteFavContact(contactUiEntity.toDbEntity())
+        favoritesSource.delteFavorite(contactUiEntity.phoneNumber)
     }
 }
