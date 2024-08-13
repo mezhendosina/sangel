@@ -6,15 +6,16 @@ import ru.sangel.data.map.entities.LocationEntity
 import ru.sangel.data.users.entities.UserEntity
 import ru.sangel.data.users.entities.UserStatusRequestEntity
 
-class KtorfitUsersSource(private val ktorfit: Ktorfit) : BaseKtorfitSource(), UsersSource {
+class KtorfitUsersSource(
+    private val ktorfit: Ktorfit,
+) : BaseKtorfitSource(),
+    UsersSource {
     private val userApi = ktorfit.createUsersApi()
 
-    override suspend fun getNearUsers(): List<UserEntity> {
-        return listOf(
-            UserEntity.nearUser(59.927500, 30.337167),
-            UserEntity.nearUser(59.927103, 30.336529),
-        )
-    }
+    override suspend fun getNearUsers(): List<UserEntity> =
+        wrapKtorfitExceptions {
+            userApi.getNearestUser()
+        }
 
     override suspend fun setLocation(
         longtitude: Double,

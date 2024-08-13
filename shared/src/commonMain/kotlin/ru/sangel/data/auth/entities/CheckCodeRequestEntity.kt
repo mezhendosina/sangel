@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CheckCodeRequestEntity(
-    @SerialName("id")
-    val id: Int,
+    @SerialName("email")
+    val email: String,
     @SerialName("code")
     val code: String,
 )

@@ -38,7 +38,6 @@ import ru.sangel.android.ui.components.ErrorState
 import ru.sangel.android.ui.components.LoginButton
 import ru.sangel.android.ui.theme.SangelTheme
 import ru.sangel.presentation.components.login.signUp.SignUpComponent
-import ru.sangel.presentation.entities.States
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,9 +50,9 @@ fun SignUpScreen(component: SignUpComponent) {
         topBar = {
             CenterAlignedTopAppBar(
                 colors =
-                TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                ),
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                    ),
                 title = { Text(text = stringResource(R.string.sign_up)) },
                 navigationIcon = {
                     IconButton(onClick = component::onBack) {
@@ -68,9 +67,9 @@ fun SignUpScreen(component: SignUpComponent) {
                         painterResource(id = R.drawable.ic_logo),
                         null,
                         modifier =
-                        Modifier
-                            .padding(end = 16.dp)
-                            .size(24.dp),
+                            Modifier
+                                .padding(end = 16.dp)
+                                .size(24.dp),
                     )
                 },
             )
@@ -85,17 +84,17 @@ fun SignUpScreen(component: SignUpComponent) {
     ) {
         LazyColumn(
             modifier =
-            Modifier
-                .padding(top = it.calculateTopPadding())
-                .fillMaxWidth()
-                .navigationBarsPadding()
-                .padding(32.dp),
+                Modifier
+                    .padding(top = it.calculateTopPadding())
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .padding(32.dp),
             verticalArrangement = Arrangement.spacedBy(26.dp),
         ) {
             item {
                 SignUpTextField(
                     title = stringResource(R.string.name),
-                    value = model.name,
+                    value = model.firstName,
                     onValueChange = component::changeName,
                     placeholder = stringResource(R.string.your_name),
                 )
@@ -103,7 +102,7 @@ fun SignUpScreen(component: SignUpComponent) {
             item {
                 SignUpTextField(
                     title = stringResource(R.string.phone_number),
-                    value = model.phone,
+                    value = model.phoneNumber,
                     onValueChange = component::changePhone,
                     placeholder = stringResource(R.string._7_952_812_751_82),
                 )
@@ -160,7 +159,7 @@ private fun PreviewSignUpScreen() {
         SignUpScreen(
             object : SignUpComponent {
                 override val model: Value<SignUpComponent.Model>
-                    get() = MutableValue(SignUpComponent.Model("", "", "", "", States.Loaded))
+                    get() = MutableValue(SignUpComponent.Model.init())
 
                 override fun changeName(name: String) {
                     TODO("Not yet implemented")

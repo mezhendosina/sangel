@@ -1,14 +1,22 @@
 package ru.sangel.data.auth
 
 interface AuthRepository {
-    suspend fun signIn(email: String, password: String)
+    suspend fun signIn(
+        fcmToken: String,
+        email: String,
+        password: String,
+    )
 
     suspend fun signUp(
         email: String,
         password: String,
-        name: String,
-        surname: String,
+        firstName: String,
+        secondName: String,
+        middleName: String,
+        phone: String,
     )
 
-    suspend fun checkCode(code: String)
+    suspend fun otp(code: String)
+
+    suspend fun refreshToken()
 }

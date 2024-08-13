@@ -5,6 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SignInRequestEntity(
+    @SerialName("fcm_token")
+    val fcmToken: String,
     @SerialName("email")
     val email: String,
     @SerialName("password")

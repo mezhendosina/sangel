@@ -46,7 +46,7 @@ val ktorfitModule =
                             loadTokens {
                                 val appPrefs = get() as AppPrefs
                                 val token =
-                                    appPrefs.getValue(AppPrefs.TOKEN).first()
+                                    appPrefs.getValue(AppPrefs.ACCESS_TOKEN).first()
                                         ?: return@loadTokens null
 
                                 BearerTokens(token, "")
@@ -55,12 +55,12 @@ val ktorfitModule =
                                 val authRepository = get() as AuthRepository
                                 val appPrefs = get() as AppPrefs
                                 authRepository.signIn(
-                                    appPrefs.getValue(AppPrefs.EMAIL).first()?: return@refreshTokens null,
-                                    appPrefs.getValue(AppPrefs.PASSWORD).first()?: return@refreshTokens null,
+                                    appPrefs.getValue(AppPrefs.EMAIL).first() ?: return@refreshTokens null,
+                                    appPrefs.getValue(AppPrefs.PASSWORD).first() ?: return@refreshTokens null,
                                 )
 
                                 BearerTokens(
-                                    appPrefs.getValue(AppPrefs.TOKEN).first { it != null }
+                                    appPrefs.getValue(AppPrefs.ACCESS_TOKEN).first { it != null }
                                         ?: "",
                                     "",
                                 )
@@ -82,7 +82,8 @@ val ktorfitModule =
                     expectSuccess = true
                     followRedirects = true
                 }
-            Ktorfit.Builder()
+            Ktorfit
+                .Builder()
                 .baseUrl(BASE_URL)
                 .httpClient(ktorfitClient)
                 .build()

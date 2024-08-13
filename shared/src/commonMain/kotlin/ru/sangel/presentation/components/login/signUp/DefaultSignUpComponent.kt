@@ -19,13 +19,7 @@ class DefaultSignUpComponent(
 ) : SignUpComponent {
     private val _model =
         MutableValue(
-            SignUpComponent.Model(
-                name = "",
-                phone = "",
-                email = email,
-                password = "",
-                state = States.Loaded,
-            ),
+            SignUpComponent.Model.init(),
         )
     private val exceptionHandler =
         coroutineExceptionHandler { errorMessage ->
@@ -39,9 +33,9 @@ class DefaultSignUpComponent(
         }
     override val model: Value<SignUpComponent.Model> = _model
 
-    override fun changeName(name: String) = _model.update { it.copy(name = name) }
+    override fun changeName(name: String) = _model.update { it.copy(firstName = name) }
 
-    override fun changePhone(phone: String) = _model.update { it.copy(phone = phone) }
+    override fun changePhone(phone: String) = _model.update { it.copy(phoneNumber = phone) }
 
     override fun changeMail(mail: String) = _model.update { it.copy(email = mail) }
 
@@ -57,8 +51,10 @@ class DefaultSignUpComponent(
                     authRepository.signUp(
                         email = email,
                         password = password,
-                        name = name,
-                        surname = "Deprecated",
+                        firstName = firstName,
+                        secondName = secondName,
+                        middleName = middleName,
+                        phone = phoneNumber,
                     )
                     withContext(Dispatchers.Main) {
                         toCheckCode.invoke()

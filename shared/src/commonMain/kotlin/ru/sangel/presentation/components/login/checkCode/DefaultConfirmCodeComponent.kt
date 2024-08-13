@@ -45,8 +45,8 @@ class DefaultConfirmCodeComponent(
     }
 
     override fun toMain() {
-        CoroutineScope(Dispatchers.IO).launch {
-            authRepository.checkCode(_model.value.code)
+        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+            authRepository.otp(_model.value.code)
             withContext(Dispatchers.Main) {
                 toMain.invoke()
             }

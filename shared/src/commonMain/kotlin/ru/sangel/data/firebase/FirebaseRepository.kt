@@ -7,6 +7,8 @@ interface FirebaseRepository {
 
     suspend fun getIncomingEmergencyNumber(): String
 
+    fun getMessagingToken(): String
+
     companion object {
         const val EMERGENCY_NUMBER = "emergencyNumber"
         const val INCOMING_EMERGENCY_NUMBER = "incomingEmergencyNumber"
