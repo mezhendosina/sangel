@@ -82,7 +82,10 @@ fun SettingsContainer(component: SettingsComponent) {
     ) { paddingValues ->
         Children(
             stack = component.stack,
-            modifier = Modifier.padding(paddingValues).padding(top = 16.dp),
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .padding(top = 16.dp),
             animation = stackAnimation(slide() + fade()),
         ) {
             when (val config = it.instance) {
@@ -91,6 +94,7 @@ fun SettingsContainer(component: SettingsComponent) {
                 is SettingsComponent.Child.Contacts -> ContactsScreen(config.component)
                 is SettingsComponent.Child.Debug -> DebugScreen(config.component)
                 is SettingsComponent.Child.About -> AboutAppScreen(config.component)
+                is SettingsComponent.Child.Account -> AccountScreen(component = config.component)
                 else -> {}
             }
         }
