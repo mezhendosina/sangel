@@ -3,8 +3,8 @@ package ru.sangel.data.users
 import de.jensklingenberg.ktorfit.Ktorfit
 import ru.sangel.data.BaseKtorfitSource
 import ru.sangel.data.map.entities.LocationEntity
+import ru.sangel.data.users.entities.NearUserEntity
 import ru.sangel.data.users.entities.UserEntity
-import ru.sangel.data.users.entities.UserStatusRequestEntity
 
 class KtorfitUsersSource(
     private val ktorfit: Ktorfit,
@@ -12,27 +12,20 @@ class KtorfitUsersSource(
     UsersSource {
     private val userApi = ktorfit.createUsersApi()
 
-    override suspend fun getNearUsers(): List<UserEntity> =
+    override suspend fun getNearUsers(): List<NearUserEntity> =
         wrapKtorfitExceptions {
             userApi.getNearestUser()
         }
 
     override suspend fun setLocation(
-        longtitude: Double,
+        longitude: Double,
         latitude: Double,
     ) = wrapKtorfitExceptions {
-        userApi.updateCoordinates(LocationEntity(latitude, longtitude))
+        userApi.updateCoordinates(LocationEntity(latitude, longitude))
     }
-
-    override suspend fun setStatus(statusId: Int) =
+ц
+    override suspend fun getMine(): ru.sangel.data.entities.UserEntity =
         wrapKtorfitExceptions {
-            userApi.setUserStatus(UserStatusRequestEntity(-1, statusId))
-            return@wrapKtorfitExceptions
-        }
-
-    override suspend fun getMine(): UserEntity =
-        wrapKtorfitExceptions {
-            val resp = userApi.getMyUser()
-            resp
+            userApi.getMyUser()
         }
 }

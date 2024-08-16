@@ -14,7 +14,6 @@ interface UsersRepository {
         longtitude: Double,
     )
 
-    suspend fun sendStatus(statusCode: Int)
 
     suspend fun getMine(): UserEntity
 }

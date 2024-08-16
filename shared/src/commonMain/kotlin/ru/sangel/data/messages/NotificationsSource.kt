@@ -1,3 +1,11 @@
 package ru.sangel.data.messages
 
-interface NotificationsSource
+
+interface NotificationsSource {
+
+    suspend fun sendInDanger()
+
+    suspend fun sendSaving()
+
+    suspend fun sendOk()
+}

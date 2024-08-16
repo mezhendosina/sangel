@@ -21,14 +21,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import ru.sangel.data.AppDatabase
+import ru.sangel.data.device.api.DeviceSource
 import ru.sangel.data.device.db.DeviceDao
 import ru.sangel.data.device.db.DeviceEntity
 import ru.sangel.presentation.entities.DeviceUiEntity
 
 class DeviceRepositoryImpl(
     private val database: AppDatabase,
+    private val deviceSource: DeviceSource
 ) : DeviceRepository {
-    val deviceDao: DeviceDao by lazy {
+    private val deviceDao: DeviceDao by lazy {
         database.getDeviceDao()
     }
 
@@ -100,6 +102,7 @@ class DeviceRepositoryImpl(
                             ),
                         )
                         onConnected()
+                        deviceSource.addDevice(address)
                     }
                 }
             }.connect()
