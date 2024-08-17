@@ -6,6 +6,7 @@ import ru.sangel.presentation.components.main.settings.about.AboutAppComponent
 import ru.sangel.presentation.components.main.settings.contacts.ContactsComponent
 import ru.sangel.presentation.components.main.settings.debug.DebugComponent
 import ru.sangel.presentation.components.main.settings.privacy.PrivacyComponent
+import ru.sangel.presentation.components.main.settings.profile.ProfileComponent
 import ru.sangel.presentation.components.main.settings.root.SettingsRootComponent
 
 interface SettingsComponent {
@@ -18,7 +19,9 @@ interface SettingsComponent {
             val component: SettingsRootComponent,
         ) : Child()
 
-        class Account : Child()
+        class Account(
+            val component: ProfileComponent,
+        ) : Child()
 
         class About(
             val component: AboutAppComponent,
