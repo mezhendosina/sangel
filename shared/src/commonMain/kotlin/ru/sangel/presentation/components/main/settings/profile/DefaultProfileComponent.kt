@@ -1,11 +1,14 @@
 package ru.sangel.presentation.components.main.settings.profile
 
+import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import ru.sangel.presentation.entities.States
 
-class DefaultProfileComponent : ProfileComponent {
+class DefaultProfileComponent(
+    private val componentContext: ComponentContext,
+) : ProfileComponent, ComponentContext by componentContext {
     private val settingsFields =
         listOf(
             ProfileComponent.ProfileSettingEntity(
@@ -13,36 +16,31 @@ class DefaultProfileComponent : ProfileComponent {
                 "Фамилия",
                 "Иванова",
                 "",
-                { editField(ProfileComponent.SettingType.LastName, it) },
-            ),
+            ) { editField(ProfileComponent.SettingType.LastName, it) },
             ProfileComponent.ProfileSettingEntity(
                 ProfileComponent.SettingType.LastName,
-                "Фамилия",
-                "Иванова",
+                "Имя",
+                "Алина",
                 "",
-                { editField(ProfileComponent.SettingType.LastName, it) },
-            ),
+            ) { editField(ProfileComponent.SettingType.LastName, it) },
             ProfileComponent.ProfileSettingEntity(
                 ProfileComponent.SettingType.LastName,
-                "Фамилия",
-                "Иванова",
+                "Отчество",
+                "Вячеславовна",
                 "",
-                { editField(ProfileComponent.SettingType.LastName, it) },
-            ),
+            ) { editField(ProfileComponent.SettingType.LastName, it) },
             ProfileComponent.ProfileSettingEntity(
                 ProfileComponent.SettingType.LastName,
-                "Фамилия",
-                "Иванова",
+                "Номер телефона",
+                "+7 (952) 812-75-74",
                 "",
-                { editField(ProfileComponent.SettingType.LastName, it) },
-            ),
+            ) { editField(ProfileComponent.SettingType.LastName, it) },
             ProfileComponent.ProfileSettingEntity(
                 ProfileComponent.SettingType.LastName,
-                "Фамилия",
-                "Иванова",
+                "Электронная почта",
+                "den.levshin.007@mail.ru",
                 "",
-                { editField(ProfileComponent.SettingType.LastName, it) },
-            ),
+            ) { editField(ProfileComponent.SettingType.LastName, it) },
         )
 
     private val _model = MutableValue(ProfileComponent.Model(null, settingsFields, States.Loading))

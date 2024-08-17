@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -38,7 +39,9 @@ fun AccountScreen(
     val model by component.model.subscribeAsState()
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 46.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
@@ -59,15 +62,24 @@ fun AccountScreen(
         }
 
         item {
-            LegalButton(label = "123", onClick = component::getPrivacyPolicy)
+            LegalButton(
+                label = "Пользовательское соглашение",
+                onClick = component::getPrivacyPolicy
+            )
         }
 
         item {
-            LegalButton(label = "123", onClick = component::getDataAgreegment)
+            LegalButton(
+                label = "Согласие на обработку персональных данных",
+                onClick = component::getDataAgreegment
+            )
         }
 
         item {
-            LegalButton(label = "123", onClick = component::getUserAgreegment)
+            LegalButton(
+                label = "Правила пользования устройством",
+                onClick = component::getUserAgreegment
+            )
         }
     }
 }
@@ -78,9 +90,18 @@ fun LegalButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    TextButton(onClick = onClick) {
-        Image(painter = painterResource(id = R.drawable.ic_document), contentDescription = null)
-        Text(text = label)
+    TextButton(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.Top
+        ) {
+            Image(painter = painterResource(id = R.drawable.ic_document), contentDescription = null)
+            Spacer(modifier = modifier.size(10.dp))
+            Text(text = label, color = MaterialTheme.colorScheme.outline)
+        }
     }
 }
 
