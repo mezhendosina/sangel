@@ -31,6 +31,7 @@ actual class MessagesRepositoryImpl :
     private val contactsRepository by inject<ContactsRepository>()
     private val userRepository by inject<UsersRepository>()
     private val firebaseRepository by inject<FirebaseRepository>()
+    private val notificationsSource by inject<NotificationsSource>()
 
     override suspend fun sendMessageToFavorites() {
         val favs = contactsRepository.favorites.first()
@@ -81,7 +82,7 @@ actual class MessagesRepositoryImpl :
                     else -> null
                 }
             }
-        if (message.size > 0) {
+        if (message.isNotEmpty()) {
             messagesSource.sendSms(
                 number,
                 message.joinToString(limit = message.size - 1),
@@ -90,6 +91,7 @@ actual class MessagesRepositoryImpl :
     }
 
     override suspend fun sendMessagesToNearUsers() {
+        notificationsSource.sendInDanger()
     }
 
     private suspend fun getLocation(): String? = mapRepository.getLinkLocation()

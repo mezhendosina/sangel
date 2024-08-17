@@ -2,43 +2,59 @@ package ru.sangel.data.auth
 
 import de.jensklingenberg.ktorfit.Ktorfit
 import ru.sangel.app.data.entities.SignInRequestEntity
+import ru.sangel.app.data.entities.SignInResponseEntity
 import ru.sangel.app.data.entities.SignUpRequestEntity
 import ru.sangel.data.BaseKtorfitSource
 import ru.sangel.data.auth.entities.CheckCodeRequestEntity
+import ru.sangel.data.auth.entities.RefreshTokenRequestEntity
 
-class KtorfitAuthSource(private val ktorfit: Ktorfit) : BaseKtorfitSource(), AuthSource {
+class KtorfitAuthSource(
+    private val ktorfit: Ktorfit,
+) : BaseKtorfitSource(),
+    AuthSource {
     private val authApi = ktorfit.createAuthApi()
 
     override suspend fun signUp(
         email: String,
         password: String,
-        name: String,
-        surname: String,
-    ): Int =
+        firstName: String,
+        secondName: String,
+        middleName: String,
+        phone: String,
+    ) = wrapKtorfitExceptions {
+        authApi.signUp(
+            SignUpRequestEntity(
+                email = email,
+                password = password,
+                name = firstName,
+                surname = secondName,
+                middleName = middleName,
+                phoneNumber = phone,
+            ),
+        )
+    }
+
+    override suspend fun signIn(
+        fcmToken: String,
+        email: String,
+        password: String,
+    ): SignInResponseEntity =
         wrapKtorfitExceptions {
-            authApi.signUp(
-                SignUpRequestEntity(
-                    email,
-                    password,
-                    name,
-                    surname,
-                ),
-            ).id
+            authApi.signIn(
+                SignInRequestEntity(fcmToken, email, password),
+            )
         }
 
-    override suspend fun signIn(email: String, password: String): String =
-        wrapKtorfitExceptions {
-            return@wrapKtorfitExceptions authApi.signIn(
-                SignInRequestEntity(email, password = password),
-            ).accessToken
-        }
-
-    override suspend fun checkCode(
-        id: Int,
+    override suspend fun otp(
+        email: String,
         code: String,
-    ): String =
+    ): Unit =
         wrapKtorfitExceptions {
-            val resp = authApi.checkCode(CheckCodeRequestEntity(id, code))
-            return@wrapKtorfitExceptions resp.accessToken
+            authApi.otp(CheckCodeRequestEntity(email, code))
+        }
+
+    override suspend fun refreshToken(refreshToken: String): String =
+        wrapKtorfitExceptions {
+            authApi.refreshToken(RefreshTokenRequestEntity(refreshToken)).accessToken
         }
 }

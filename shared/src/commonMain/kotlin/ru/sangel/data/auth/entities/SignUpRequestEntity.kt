@@ -9,8 +9,12 @@ data class SignUpRequestEntity(
     val email: String,
     @SerialName("password")
     val password: String,
-    @SerialName("name")
+    @SerialName("first_name")
     val name: String,
-    @SerialName("surname")
+    @SerialName("second_name")
     val surname: String,
+    @SerialName("middle_name")
+    val middleName: String,
+    @SerialName("phone")
+    val phoneNumber: String,
 )

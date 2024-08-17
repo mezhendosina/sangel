@@ -29,9 +29,6 @@ class UsersRepositoryImpl(
         usersSource.setLocation(latitude, longtitude)
     }
 
-    override suspend fun sendStatus(statusCode: Int) {
-        usersSource.setStatus(statusCode)
-    }
 
     override suspend fun getMine(): UserEntity {
         return usersSource.getMine()

@@ -8,7 +8,7 @@ interface ContactsRepository {
 
     suspend fun getContacts(): List<ContactUiEntity>
 
-    suspend fun addFavContact(contactUiEntity: ContactUiEntity)
+    suspend fun addFavorite(contactUiEntity: ContactUiEntity)
 
-    suspend fun deleteFavContact(contactUiEntity: ContactUiEntity)
+    suspend fun deleteFavorite(contactUiEntity: ContactUiEntity)
 }

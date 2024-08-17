@@ -8,11 +8,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.sangel.data.auth.AuthRepository
+import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.presentation.entities.States
 import ru.sangel.presentation.utils.coroutineExceptionHandler
 
 class DefaultSignInComponent(
     private val authRepository: AuthRepository,
+    private val firebaseRepository: FirebaseRepository,
     private val componentContext: ComponentContext,
     private val toCheckCode: () -> Unit,
     private val toSignUp: (email: String) -> Unit,
@@ -50,7 +52,11 @@ class DefaultSignInComponent(
     override fun signIn() {
         CoroutineScope(Dispatchers.Main).launch(exceptionHandler) {
             _model.update { it.copy(state = States.Loading) }
-            authRepository.signIn(_model.value.email, _model.value.password)
+            authRepository.signIn(
+                firebaseRepository.getMessagingToken(),
+                _model.value.email,
+                _model.value.password,
+            )
             toCheckCode.invoke()
         }
     }

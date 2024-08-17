@@ -46,23 +46,19 @@ val ktorfitModule =
                             loadTokens {
                                 val appPrefs = get() as AppPrefs
                                 val token =
-                                    appPrefs.getValue(AppPrefs.TOKEN).first()
+                                    appPrefs.getValue(AppPrefs.ACCESS_TOKEN).first()
                                         ?: return@loadTokens null
-
-                                BearerTokens(token, "")
+                                val refreshToken =
+                                    appPrefs.getValue(AppPrefs.REFRESH_TOKEN).first()
+                                        ?: return@loadTokens null
+                                BearerTokens(token, refreshToken)
                             }
                             refreshTokens {
                                 val authRepository = get() as AuthRepository
-                                val appPrefs = get() as AppPrefs
-                                authRepository.signIn(
-                                    appPrefs.getValue(AppPrefs.EMAIL).first()?: return@refreshTokens null,
-                                    appPrefs.getValue(AppPrefs.PASSWORD).first()?: return@refreshTokens null,
-                                )
-
+                                val token = authRepository.refreshToken()
                                 BearerTokens(
-                                    appPrefs.getValue(AppPrefs.TOKEN).first { it != null }
-                                        ?: "",
-                                    "",
+                                    token,
+                                    oldTokens?.refreshToken ?: return@refreshTokens null,
                                 )
                             }
                         }
@@ -82,7 +78,8 @@ val ktorfitModule =
                     expectSuccess = true
                     followRedirects = true
                 }
-            Ktorfit.Builder()
+            Ktorfit
+                .Builder()
                 .baseUrl(BASE_URL)
                 .httpClient(ktorfitClient)
                 .build()

@@ -30,8 +30,10 @@ val settingsModule =
         single {
             val appPrefs = get() as AppPrefs
             return@single CoroutineScope(Dispatchers.IO).async {
-                if (appPrefs.getValue(AppPrefs.TOKEN)
-                        .first().isNullOrEmpty()
+                if (appPrefs
+                        .getValue(AppPrefs.ACCESS_TOKEN)
+                        .first()
+                        .isNullOrEmpty()
                 ) {
                     DefaultRootComponent.TopConfig.Login
                 } else {
