@@ -26,62 +26,63 @@ import ru.sangel.data.settings.AppPrefs
 val ktorfitModule =
     module {
         single {
-            val ktorfitClient =
-                HttpClient {
-                    install(ContentNegotiation) {
-                        json(
-                            Json {
-                                isLenient = true
-                                ignoreUnknownKeys = true
-                            },
-                        )
-                    }
-                    install(Logging) {
-                        logger = Logger.SIMPLE
-                        level = LogLevel.ALL
-                    }
-
-                    install(Auth) {
-                        bearer {
-                            loadTokens {
-                                val appPrefs = get() as AppPrefs
-                                val token =
-                                    appPrefs.getValue(AppPrefs.ACCESS_TOKEN).first()
-                                        ?: return@loadTokens null
-                                val refreshToken =
-                                    appPrefs.getValue(AppPrefs.REFRESH_TOKEN).first()
-                                        ?: return@loadTokens null
-                                BearerTokens(token, refreshToken)
-                            }
-                            refreshTokens {
-                                val authRepository = get() as AuthRepository
-                                val token = authRepository.refreshToken()
-                                BearerTokens(
-                                    token,
-                                    oldTokens?.refreshToken ?: return@refreshTokens null,
-                                )
-                            }
-                        }
-                    }
-                    install(HttpRequestRetry) {
-                        retryOnException(2)
-                        retryOnServerErrors(maxRetries = 5)
-                        exponentialDelay()
-                    }
-                    HttpResponseValidator {
-                        handleResponseExceptionWithRequest { exception, request ->
-                        }
-                    }
-                    defaultRequest {
-                        contentType(ContentType.Application.Json)
-                    }
-                    expectSuccess = true
-                    followRedirects = true
+            HttpClient {
+                install(ContentNegotiation) {
+                    json(
+                        Json {
+                            isLenient = true
+                            ignoreUnknownKeys = true
+                        },
+                    )
                 }
+                install(Logging) {
+                    logger = Logger.SIMPLE
+                    level = LogLevel.ALL
+                }
+
+                install(Auth) {
+                    bearer {
+                        loadTokens {
+                            val appPrefs = get() as AppPrefs
+                            val token =
+                                appPrefs.getValue(AppPrefs.ACCESS_TOKEN).first()
+                                    ?: return@loadTokens null
+                            val refreshToken =
+                                appPrefs.getValue(AppPrefs.REFRESH_TOKEN).first()
+                                    ?: return@loadTokens null
+                            BearerTokens(token, refreshToken)
+                        }
+                        refreshTokens {
+                            val authRepository = get() as AuthRepository
+                            val token = authRepository.refreshToken()
+                            BearerTokens(
+                                token,
+                                oldTokens?.refreshToken ?: return@refreshTokens null,
+                            )
+                        }
+                    }
+                }
+                install(HttpRequestRetry) {
+                    retryOnException(2)
+                    retryOnServerErrors(maxRetries = 5)
+                    exponentialDelay()
+                }
+                HttpResponseValidator {
+                    handleResponseExceptionWithRequest { exception, request ->
+                    }
+                }
+                defaultRequest {
+                    contentType(ContentType.Application.Json)
+                }
+                expectSuccess = true
+                followRedirects = true
+            }
+        }
+        single {
             Ktorfit
                 .Builder()
                 .baseUrl(BASE_URL)
-                .httpClient(ktorfitClient)
+                .httpClient(get<HttpClient>())
                 .build()
         }
     }

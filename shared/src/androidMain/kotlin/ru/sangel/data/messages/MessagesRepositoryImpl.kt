@@ -15,6 +15,7 @@ import ru.sangel.R
 import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.firebase.FirebaseRepository
+import ru.sangel.data.messages.source.NotificationsSource
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.data.users.UsersRepository
 

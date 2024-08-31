@@ -9,6 +9,8 @@ class AuthRepositoryImpl(
     private val authSource: AuthSource,
     private val appPrefs: AppPrefs,
 ) : AuthRepository {
+    private var _email: String? = null
+
     override suspend fun signIn(
         fcmToken: String,
         email: String,
@@ -30,12 +32,11 @@ class AuthRepositoryImpl(
         phone: String,
     ) {
         authSource.signUp(email, password, firstName, secondName, middleName, phone)
-        appPrefs.setValue(AppPrefs.EMAIL, email)
+        _email = email
     }
 
     override suspend fun otp(code: String) {
-        val email = appPrefs.getValue(AppPrefs.EMAIL, null).first() ?: throw UserNotFoundException()
-        authSource.otp(email, code)
+        authSource.otp(_email ?: throw UserNotFoundException(), code)
     }
 
     override suspend fun refreshToken(): String {
