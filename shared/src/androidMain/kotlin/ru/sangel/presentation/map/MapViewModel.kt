@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.yandex.mapkit.map.CameraPosition
 import kotlinx.coroutines.launch
 import ru.sangel.app.data.map.MapRepository
-import ru.sangel.app.domain.MapUseCase
+import ru.sangel.domain.MapUseCase
 
 class MapViewModel(
     private val mapUseCase: MapUseCase,

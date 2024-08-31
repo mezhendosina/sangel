@@ -2,17 +2,16 @@ package ru.sangel.data.users
 
 import de.jensklingenberg.ktorfit.Ktorfit
 import ru.sangel.data.BaseKtorfitSource
+import ru.sangel.data.entities.UserEntity
 import ru.sangel.data.map.entities.LocationEntity
-import ru.sangel.data.users.entities.NearUserEntity
-import ru.sangel.data.users.entities.UserEntity
 
 class KtorfitUsersSource(
     private val ktorfit: Ktorfit,
 ) : BaseKtorfitSource(),
     UsersSource {
-    private val userApi = ktorfit.createUsersApi()
+    private val userApi = ktorfit.createUserApi()
 
-    override suspend fun getNearUsers(): List<NearUserEntity> =
+    override suspend fun getNearUsers(): List<UserEntity> =
         wrapKtorfitExceptions {
             userApi.getNearestUser()
         }
@@ -23,8 +22,8 @@ class KtorfitUsersSource(
     ) = wrapKtorfitExceptions {
         userApi.updateCoordinates(LocationEntity(latitude, longitude))
     }
-ц
-    override suspend fun getMine(): ru.sangel.data.entities.UserEntity =
+
+    override suspend fun getMine(): UserEntity =
         wrapKtorfitExceptions {
             userApi.getMyUser()
         }

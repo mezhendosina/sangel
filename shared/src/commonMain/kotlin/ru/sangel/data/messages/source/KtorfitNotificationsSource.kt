@@ -2,6 +2,7 @@ package ru.sangel.data.messages.source
 
 import de.jensklingenberg.ktorfit.Ktorfit
 import ru.sangel.data.BaseKtorfitSource
+import ru.sangel.data.messages.createNotificationsApi
 
 class KtorfitNotificationsSource(
     private val ktorfit: Ktorfit

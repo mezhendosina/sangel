@@ -8,7 +8,7 @@ data class UserEntity(
     @SerialName("email")
     val email: String,
     @SerialName("photo")
-    val photo: String,
+    val photo: String?,
     @SerialName("first_name")
     val firstName: String,
     @SerialName("second_name")

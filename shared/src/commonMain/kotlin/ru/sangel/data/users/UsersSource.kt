@@ -5,7 +5,7 @@ import ru.sangel.data.users.entities.NearUserEntity
 
 
 interface UsersSource {
-    suspend fun getNearUsers(): List<NearUserEntity>
+    suspend fun getNearUsers(): List<UserEntity>
 
     suspend fun setLocation(
         longitude: Double,
