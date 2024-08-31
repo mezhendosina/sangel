@@ -10,7 +10,7 @@ import kotlin.test.assertNotEquals
 
 class SignInComponentTest : KoinTest {
     private val defaultLoginComponent =
-        DefaultSignInComponent(get(), DefaultComponentContext(LifecycleRegistry()), {}) {}
+        DefaultSignInComponent(get(), get(), DefaultComponentContext(LifecycleRegistry()), {}) {}
 
     @Test
     fun testEmailChange() {
