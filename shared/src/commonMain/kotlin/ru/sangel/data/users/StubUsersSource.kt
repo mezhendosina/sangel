@@ -4,7 +4,7 @@ import ru.sangel.data.entities.UserEntity
 import ru.sangel.data.users.entities.NearUserEntity
 
 class StubUsersSource : UsersSource {
-    override suspend fun getNearUsers(): List<NearUserEntity> = emptyList()
+    override suspend fun getNearUsers(): List<UserEntity> = emptyList()
     override suspend fun setLocation(longitude: Double, latitude: Double) {
     }
 

@@ -77,7 +77,7 @@ actual class MessagesRepositoryImpl :
                     }
 
                     MessagesRepository.Companion.MessageType.PhoneNumber -> {
-                        userRepository.getMine().id
+                        userRepository.getMine().phone
                     }
 
                     else -> null

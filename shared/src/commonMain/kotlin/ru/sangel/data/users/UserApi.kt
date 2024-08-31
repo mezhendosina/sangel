@@ -19,5 +19,5 @@ interface UserApi {
     )
 
     @POST("api/$API_VERSION/location/near-users")
-    suspend fun getNearestUser(): List<NearUserEntity>
+    suspend fun getNearestUser(): List<UserEntity>
 }

@@ -1,4 +1,4 @@
-package ru.sangel.app.domain
+package ru.sangel.domain
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -20,15 +20,15 @@ class MapUseCase(
             userEntities.mapNotNull {
                 if (it.latitude == null || it.longitude == null) return@mapNotNull null
                 val avatar =
-                    if (it.image != null) {
-                        val decodeAvatar = Base64.decode(it.image.decodeBase64Bytes(), 0)
+                    if (it.photo != null) {
+                        val decodeAvatar = Base64.decode(it.photo.decodeBase64Bytes(), 0)
                         BitmapFactory.decodeByteArray(decodeAvatar, 0, 0)
                     } else {
                         null
                     }
                 MapPointUiEntity(
-                    it.id,
-                    it.status.id,
+                    it.email,
+                    it.status,
                     avatar,
                     it.email,
                     Point(it.latitude.toDouble(), it.longitude.toDouble()),
