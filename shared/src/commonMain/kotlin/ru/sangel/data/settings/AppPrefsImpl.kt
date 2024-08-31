@@ -24,5 +24,5 @@ class AppPrefsImpl(
         }
     }
 
-    override suspend fun isAuthtorized(): Boolean = getValue(AppPrefs.ACCESS_TOKEN).first()?.isNotEmpty() == true
+    override suspend fun isAuthorized(): Boolean = getValue(AppPrefs.ACCESS_TOKEN).first()?.isNotEmpty() == true
 }

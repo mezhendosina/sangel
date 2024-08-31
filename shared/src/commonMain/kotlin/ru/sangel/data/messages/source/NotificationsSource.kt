@@ -1,4 +1,4 @@
-package ru.sangel.data.messages
+package ru.sangel.data.messages.source
 
 
 interface NotificationsSource {
