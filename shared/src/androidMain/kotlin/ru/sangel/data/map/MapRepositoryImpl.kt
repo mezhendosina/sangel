@@ -1,12 +1,13 @@
 package ru.sangel.data.map
 
+import com.yandex.mapkit.location.FilteringMode
 import com.yandex.mapkit.location.Location
 import com.yandex.mapkit.location.LocationListener
+import com.yandex.mapkit.location.LocationManager
 import com.yandex.mapkit.location.LocationStatus
 import com.yandex.mapkit.map.CameraPosition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -15,6 +16,8 @@ import org.koin.core.component.get
 import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.map.entities.LocationEntity
 import ru.sangel.data.users.UsersRepository
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class MapRepositoryImpl(
     private val usersRepository: UsersRepository,
@@ -52,27 +55,10 @@ class MapRepositoryImpl(
     }
 
     override suspend fun getLinkLocation(): String? {
-        val locationManager = get<com.yandex.mapkit.location.LocationManager>()
-        var location: LocationEntity? = LocationEntity.initValue()
-        locationManager.requestSingleUpdate(
-            object : LocationListener {
-                override fun onLocationUpdated(p0: Location) {
-                    location = LocationEntity(p0.position.latitude, p0.position.longitude)
-                }
+        val locationManager = get<LocationManager>()
+        val location = getLocationCoarse(locationManager)
 
-                override fun onLocationStatusUpdated(p0: LocationStatus) {
-                    if (p0 == LocationStatus.NOT_AVAILABLE) {
-                        location = null
-                    }
-                }
-            },
-        )
-
-        while (location == LocationEntity.initValue()) {
-            delay(1)
-        }
-
-        return if (location != null) "https://yandex.ru/maps/?pt=${location!!.longitude},${location!!.latitude}&l=map" else null
+        return location?.let { "https://yandex.ru/maps/?pt=${it.longitude},${it.latitude}&l=map" }
     }
 
     override suspend fun updateLocation(
@@ -81,4 +67,39 @@ class MapRepositoryImpl(
     ) {
         usersRepository.setMineLocation(latitude, longtitude)
     }
+
+    private suspend fun getLocationCoarse(
+        locationManager: LocationManager
+    ): LocationEntity? = suspendCoroutine { continuation ->
+        val locationListener = object : LocationListener {
+            override fun onLocationUpdated(p0: Location) {
+                val locationEntity = LocationEntity(p0.position.latitude, p0.position.longitude)
+                locationManager.unsubscribe(this)
+                continuation.resume(locationEntity)
+            }
+
+            override fun onLocationStatusUpdated(p0: LocationStatus) {
+                if (p0 == LocationStatus.NOT_AVAILABLE) {
+                    locationManager.unsubscribe(this)
+                    continuation.resume(null)
+                }
+            }
+        }
+        locationManager.subscribeForLocationUpdates(
+            ACCURACY_METERS,
+            MIN_UPDATE_TIME_MILLIS,
+            MIN_UPDATE_DISTANCE_METERS,
+            ALLOW_USE_IN_BACKGROUND,
+            FilteringMode.ON,
+            locationListener
+        )
+    }
+
+    companion object {
+        const val ACCURACY_METERS = 10.0
+        const val MIN_UPDATE_TIME_MILLIS = 1_000L
+        const val MIN_UPDATE_DISTANCE_METERS = 10.0
+        const val ALLOW_USE_IN_BACKGROUND = false
+    }
+
 }

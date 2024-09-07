@@ -11,7 +11,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.koin.java.KoinJavaComponent.inject
-import ru.sangel.EmergencyNumberNotFountException
+import ru.sangel.EmergencyNumberNotFoundException
 import ru.sangel.R
 import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.contacts.ContactsRepository
@@ -54,7 +54,7 @@ actual class MessagesRepositoryImpl :
 //        val firstMassage = "Нападение " + "location" + "\n" + name.await() + " " + age.await() + " "
         val number =
             appPrefs.getValue(AppPrefs.EMERGENCY_PHONE_NUMBER).first()
-                ?: throw EmergencyNumberNotFountException()
+                ?: throw EmergencyNumberNotFoundException()
 //        if (isDebug) get<Context>().showLogToast("Отправка\n\n" + firstMassage + "\n" + "На номер: $number")
         withContext(Dispatchers.Main) {
             messagesSource.sendSms(
