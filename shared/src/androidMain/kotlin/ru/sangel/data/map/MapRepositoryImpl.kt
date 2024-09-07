@@ -85,19 +85,21 @@ class MapRepositoryImpl(
                 }
             }
         }
-        val accuracyMeters = 10.0
-        val minUpdateTimeMillis = 1_000L
-        val minUpdateDistanceMeters = 10.0
-        val allowUseInBackground = false
-        val filteringMode = FilteringMode.ON
         locationManager.subscribeForLocationUpdates(
-            accuracyMeters,
-            minUpdateTimeMillis,
-            minUpdateDistanceMeters,
-            allowUseInBackground,
-            filteringMode,
+            ACCURACY_METERS,
+            MIN_UPDATE_TIME_MILLIS,
+            MIN_UPDATE_DISTANCE_METERS,
+            ALLOW_USE_IN_BACKGROUND,
+            FilteringMode.ON,
             locationListener
         )
+    }
+
+    companion object {
+        const val ACCURACY_METERS = 10.0
+        const val MIN_UPDATE_TIME_MILLIS = 1_000L
+        const val MIN_UPDATE_DISTANCE_METERS = 10.0
+        const val ALLOW_USE_IN_BACKGROUND = false
     }
 
 }

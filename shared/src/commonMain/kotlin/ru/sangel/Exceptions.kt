@@ -1,9 +1,7 @@
 package ru.sangel
 
-import android.content.res.Resources.NotFoundException
-
-class UserNotFoundException() : NotFoundException("user_id")
+class UserNotFoundException() : NullPointerException("user_id")
 
 class TokenNotFoundException() : NullPointerException()
 
-class EmergencyNumberNotFountException : NotFoundException("Emergence Number Not Found")
+class EmergencyNumberNotFoundException : NullPointerException("Emergency Number Not Found")
