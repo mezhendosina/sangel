@@ -6,4 +6,3 @@ class UserNotFoundException : NotFoundException("user_id")
 
 class TokenNotFoundException : NullPointerException()
 
-class TokenNotFoundException() : NullPointerException()

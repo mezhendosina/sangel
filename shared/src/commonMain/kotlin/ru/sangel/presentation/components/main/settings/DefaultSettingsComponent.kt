@@ -89,7 +89,7 @@ class DefaultSettingsComponent(
 
     private fun aboutAppComponent() = DefaultAboutAppComponent()
 
-    private fun profileComponent() = DefaultProfileComponent()
+    private fun profileComponent() = DefaultProfileComponent(componentContext)
 
     @Serializable
     private sealed interface Config {
