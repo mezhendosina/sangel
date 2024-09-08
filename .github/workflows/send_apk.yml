@@ -67,5 +67,5 @@ jobs:
         run: mv /home/runner/work/sangel/sangel/androidApp-release-unsigned.apk /home/runner/work/sangel/sangel/app-debug.apk
 
       - name: Send file to Telegram channel
-        run: curl -F document=@"/home/runner/work/sangel/sangel/app-release.apk" https://api.telegram.org/bot${{ secrets.TELEGRAM_API_TOKEN }}/sendDocument?chat_id=-1002003867686
+        run: curl -F document=@"/home/runner/work/sangel/sangel/app-debug.apk" https://api.telegram.org/bot${{ secrets.TELEGRAM_API_TOKEN }}/sendDocument?chat_id=-1002003867686
 
