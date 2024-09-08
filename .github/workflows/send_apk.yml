@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: SGO app.apk
-          path: /home/runner/work/sangel/sangel/androidApp/build/outputs/apk/release/app-release.apk
+          path: /home/runner/work/sangel/sangel/androidApp/build/outputs/apk/release/androidApp-release.apk
 
   send-to-channel:
     needs: [ build-apk ]
@@ -64,7 +64,7 @@ jobs:
           path: ./
 
       - name: rename APK
-        run: mv /home/runner/work/sangel/sangel/app-release.apk /home/runner/work/sangel/sangel/app-debug.apk
+        run: mv /home/runner/work/sangel/sangel/androidApp-release.apk /home/runner/work/sangel/sangel/app-debug.apk
 
       - name: Send file to Telegram channel
         run: curl -F document=@"/home/runner/work/sangel/sangel/app-release.apk" https://api.telegram.org/bot${{ secrets.TELEGRAM_API_TOKEN }}/sendDocument?chat_id=-1002003867686
