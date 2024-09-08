@@ -1,5 +1,6 @@
 package ru.sangel.presentation.components.main.settings.debug
 
+import android.content.Context
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
@@ -10,11 +11,13 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.component.inject
 import ru.sangel.data.messages.MessagesRepository
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.presentation.entities.States
 import ru.sangel.presentation.utils.coroutineExceptionHandler
+import ru.sangel.presentation.utils.showLogToast
 
 class DefaultDebugComponent(
     val componentContext: ComponentContext,
@@ -50,6 +53,7 @@ class DefaultDebugComponent(
                     states = States.Error(it.toString()),
                 )
             }
+            get<Context>().showLogToast(it ?: "")
         }
 
     override fun smsTofavorites() {
@@ -61,8 +65,8 @@ class DefaultDebugComponent(
     }
 
     override fun smsTo112() {
-        coroutineScope.launch(coroutineExceptionHandler) {
-            messagesRepository.sendMessageToPolice()
+        coroutineScope.launch {
+            messagesRepository.sendMessageToPolice(true)
             setLoaded()
         }
     }

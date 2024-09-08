@@ -64,6 +64,10 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name="ru.sangel.SmsResultReciever"
+            android:exported="false"></receiver>
+
         <service
             android:name=".DeviceService"
             android:enabled="true"

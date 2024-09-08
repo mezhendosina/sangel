@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp")
     alias(libs.plugins.googleGmsGoogleServices)
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.googleFirebaseCrashlytics)
     alias(libs.plugins.googleFirebaseFirebasePerf)
 }
@@ -15,8 +15,8 @@ android {
         applicationId = "ru.sangel.android"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
-        versionName = "0.1.2"
+        versionCode = 4
+        versionName = "0.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {

@@ -4,13 +4,13 @@ import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.PlacemarkMapObject
 
 interface MapPoints {
-    fun addPoint(id: Int, placemark: PlacemarkMapObject)
+    fun addPoint(id: String, placemark: PlacemarkMapObject)
 
-    fun getPoint(id: Int): PlacemarkMapObject?
+    fun getPoint(id: String): PlacemarkMapObject?
 
-    fun deletePoint(id: Int)
+    fun deletePoint(id: String)
 
-    fun updatePoint(id: Int, location: Point)
+    fun updatePoint(id: String, location: Point)
 
-    fun isPointExist(id: Int): Boolean
+    fun isPointExist(id: String): Boolean
 }
