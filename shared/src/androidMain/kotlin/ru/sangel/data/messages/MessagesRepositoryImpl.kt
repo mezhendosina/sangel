@@ -12,12 +12,14 @@ import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.EmergencyNumberNotFoundException
+import ru.sangel.LocationNotFoundException
 import ru.sangel.R
 import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.data.users.UsersRepository
+import ru.sangel.presentation.utils.showLogToast
 
 actual class MessagesRepositoryImpl :
     MessagesRepository,
@@ -48,18 +50,18 @@ actual class MessagesRepositoryImpl :
     }
 
     override suspend fun sendMessageToPolice(isDebug: Boolean) {
-//        val name = getName()
-//        val age = getAge()
-//        val location = getLocation() ?: throw LocationNotFoundException()
-//        val firstMassage = "Нападение " + "location" + "\n" + name.await() + " " + age.await() + " "
+        val name = getName()
+        val age = getAge()
+        val location = getLocation() ?: throw LocationNotFoundException()
+        val firstMassage = "Нападение " + location + "\n" + name.await() + " " + age.await() + " "
         val number =
             appPrefs.getValue(AppPrefs.EMERGENCY_PHONE_NUMBER).first()
                 ?: throw EmergencyNumberNotFoundException()
-//        if (isDebug) get<Context>().showLogToast("Отправка\n\n" + firstMassage + "\n" + "На номер: $number")
+        if (isDebug) get<Context>().showLogToast("Отправка на номер: $number")
         withContext(Dispatchers.Main) {
             messagesSource.sendSms(
                 number,
-                "firstMassage",
+                firstMassage,
             )
         }
     }
