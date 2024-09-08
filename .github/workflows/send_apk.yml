@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: SGO app.apk
-          path: /home/runner/work/sangel/sangel/androidApp/build/outputs/apk/release/androidApp-release.apk
+          path: /home/runner/work/sangel/sangel/androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk
 
   send-to-channel:
     needs: [ build-apk ]
