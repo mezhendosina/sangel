@@ -28,18 +28,18 @@ jobs:
           cache: gradle
 
       - name: Create google-services.json
-        run: cat /home/runner/work/sangel/sangel/app/google-services.json | base64
+        run: touch /home/runner/work/sangel/sangel/androidApp/google-services.json
 
       - name: Putting data into google-services.json
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $DATA > /home/runner/work/sangel/sangel/app/google-services.json
+        run: echo $DATA > /home/runner/work/sangel/sangel/androidApp/google-services.json
 
       # - name: Decode Keystore
       #   env:
       #     ENCODED_STRING: ${{ secrets.KEYSTORE_FILE }}
       #   run: |
-      #     TMP_KEYSTORE_FILE_PATH=/home/runner/work/sangel/sangel/app/keystore
+      #     TMP_KEYSTORE_FILE_PATH=/home/runner/work/sangel/sangel/androidApp/keystore
       #     mkdir "${TMP_KEYSTORE_FILE_PATH}"
       #     echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/mezhendosina_key.jks
       - name: Grant execute permission for gradlew
@@ -51,9 +51,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: SGO app.apk
-          path: /home/runner/work/sangel/sangel/app/build/outputs/apk/release/app-release.apk
+          path: /home/runner/work/sangel/sangel/androidApp/build/outputs/apk/release/app-release.apk
 
   send-to-channel:
+    needs: [ build-apk ]
     runs-on: ubuntu-latest
     steps:
       - name: Get APK
