@@ -5,16 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import ru.sangel.CLARIFYING_MESSAGE_START
 import ru.sangel.REQUIRING_INFO_REGEX
-import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.data.messages.MessagesRepository
+import ru.sangel.data.settings.AppPrefs
 
 class IncomingEmergencyReciever :
     BroadcastReceiver(),
@@ -22,19 +21,17 @@ class IncomingEmergencyReciever :
     private val clarrifyingMessageRegEx = Regex(CLARIFYING_MESSAGE_START + REQUIRING_INFO_REGEX)
 
     private val emergencyChat by inject<MessagesRepository>()
-    private val firebaseRepository by inject<FirebaseRepository>()
+    private val appPrefs by inject<AppPrefs>()
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-
-    private val incomingEmergencyNumber =
-        coroutineScope.async(start = CoroutineStart.LAZY) { firebaseRepository.getIncomingEmergencyNumber() }
 
     override fun onReceive(
         context: Context?,
         intent: Intent?,
     ) {
         coroutineScope.launch(Dispatchers.Main) {
-            val number = incomingEmergencyNumber.await()
+            val number =
+                appPrefs.getValue(AppPrefs.EMERGENCY_INCOMING_PHONE_NUMBER).first() ?: return@launch
             val message =
                 Telephony.Sms.Intents
                     .getMessagesFromIntent(intent)

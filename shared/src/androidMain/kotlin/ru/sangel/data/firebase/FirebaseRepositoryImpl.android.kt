@@ -81,7 +81,7 @@ actual class FirebaseRepositoryImpl :
     }
 
     private suspend fun setIncomingEmergencyNumber() {
-        val value = Firebase.remoteConfig.getString(EMERGENCY_NUMBER)
-        appPrefs.setValue(AppPrefs.EMERGENCY_PHONE_NUMBER, value)
+        val value = Firebase.remoteConfig.getString(INCOMING_EMERGENCY_NUMBER)
+        appPrefs.setValue(AppPrefs.EMERGENCY_INCOMING_PHONE_NUMBER, value)
     }
 }
