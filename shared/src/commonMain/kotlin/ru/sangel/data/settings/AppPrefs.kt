@@ -2,7 +2,6 @@ package ru.sangel.data.settings
 
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 
@@ -17,13 +16,11 @@ interface AppPrefs {
         value: T,
     )
 
-    suspend fun isAuthtorized(): Boolean
+    suspend fun isAuthorized(): Boolean
 
     companion object {
-        val USER_ID = intPreferencesKey("user_id")
-        val TOKEN = stringPreferencesKey("token")
-        val EMAIL = stringPreferencesKey("email")
-        val PASSWORD = stringPreferencesKey("password")
+        val ACCESS_TOKEN = stringPreferencesKey("access_token")
+        val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
         val SHOW_LOCATION_TO = stringPreferencesKey("show_location_to")
 
         val EMERGENCY_PHONE_NUMBER = stringPreferencesKey("emergency_phone_number")

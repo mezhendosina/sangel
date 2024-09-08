@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.sangel.data.users.entities.UserEntity
 
 interface UsersRepository {
-    val nearUsers: Flow<List<UserEntity>>
+    val nearUsers: Flow<List<ru.sangel.data.entities.UserEntity>>
 
     /**
      * Отправляет на сервер местоположение пользователя
@@ -14,7 +14,6 @@ interface UsersRepository {
         longtitude: Double,
     )
 
-    suspend fun sendStatus(statusCode: Int)
 
-    suspend fun getMine(): UserEntity
+    suspend fun getMine(): ru.sangel.data.entities.UserEntity
 }

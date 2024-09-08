@@ -1,29 +1,27 @@
 package ru.sangel.data.auth
 
+import ru.sangel.app.data.entities.SignInResponseEntity
+
 interface AuthSource {
-    /**
-     * Регистрирует юзера
-     * @return id юзера
-     */
     suspend fun signUp(
         email: String,
         password: String,
-        name: String,
-        surname: String,
-    ): Int
+        firstName: String,
+        secondName: String,
+        middleName: String,
+        phone: String,
+    )
 
-    /**
-     * Авторизовывает
-     * @return Токен авторизации
-     */
-    suspend fun signIn(email: String, password: String): String
+    suspend fun signIn(
+        fcmToken: String,
+        email: String,
+        password: String,
+    ): SignInResponseEntity
 
-    /**
-     * Проверяет код подверждения
-     * @return Токен авторизации
-     */
-    suspend fun checkCode(
-        id: Int,
+    suspend fun otp(
+        email: String,
         code: String,
-    ): String
+    )
+
+    suspend fun refreshToken(refreshToken: String): String
 }

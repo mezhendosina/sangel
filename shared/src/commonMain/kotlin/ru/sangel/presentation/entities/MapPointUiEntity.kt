@@ -3,10 +3,11 @@ package ru.sangel.app.ui.uiEntities
 import android.graphics.Bitmap
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.PlacemarkMapObject
+import ru.sangel.data.entities.UserStatus
 
 data class MapPointUiEntity(
-    val userId: Int,
-    val type: Int,
+    val userId: String,
+    val type:UserStatus,
     val avatar: Bitmap?,
     val name: String,
     val location: Point,

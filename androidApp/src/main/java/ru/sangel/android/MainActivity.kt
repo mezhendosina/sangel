@@ -21,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.sangel.android.ui.root.RootScreen
 import ru.sangel.android.ui.theme.SangelTheme
-import ru.sangel.app.domain.MapUseCase
+import ru.sangel.domain.MapUseCase
 import ru.sangel.presentation.MainViewModel
 import ru.sangel.presentation.components.root.DefaultRootComponent
 

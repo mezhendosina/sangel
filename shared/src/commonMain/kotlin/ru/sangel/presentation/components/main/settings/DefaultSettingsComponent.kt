@@ -11,7 +11,6 @@ import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.core.context.GlobalContext.get
 import org.koin.java.KoinJavaComponent.inject
 import ru.sangel.SETTINGS_STACK
 import ru.sangel.data.contacts.ContactsRepository
@@ -20,6 +19,7 @@ import ru.sangel.presentation.components.main.settings.about.DefaultAboutAppComp
 import ru.sangel.presentation.components.main.settings.contacts.DefaultContactsComponent
 import ru.sangel.presentation.components.main.settings.debug.DefaultDebugComponent
 import ru.sangel.presentation.components.main.settings.privacy.DefaultPrivacyComponent
+import ru.sangel.presentation.components.main.settings.profile.DefaultProfileComponent
 import ru.sangel.presentation.components.main.settings.root.DefaultSettingsRootComponent
 
 class DefaultSettingsComponent(
@@ -55,7 +55,7 @@ class DefaultSettingsComponent(
             is Config.Root ->
                 SettingsComponent.Child.Root(settingsRootComponent(componentContext))
 
-            is Config.Account -> SettingsComponent.Child.Account()
+            is Config.Account -> SettingsComponent.Child.Account(profileComponent())
             is Config.About -> SettingsComponent.Child.About(aboutAppComponent())
             is Config.Privacy -> SettingsComponent.Child.Privacy(privacyComponent(componentContext))
             is Config.Contacts ->
@@ -88,6 +88,8 @@ class DefaultSettingsComponent(
     private fun debugComponent(componentContext: ComponentContext) = DefaultDebugComponent(componentContext)
 
     private fun aboutAppComponent() = DefaultAboutAppComponent()
+
+    private fun profileComponent() = DefaultProfileComponent()
 
     @Serializable
     private sealed interface Config {

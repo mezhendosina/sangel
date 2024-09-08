@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp")
     alias(libs.plugins.googleGmsGoogleServices)
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.googleFirebaseCrashlytics)
     alias(libs.plugins.googleFirebaseFirebasePerf)
 }

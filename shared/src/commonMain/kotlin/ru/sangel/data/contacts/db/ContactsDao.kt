@@ -1,4 +1,4 @@
-package ru.sangel.data.contacts
+package ru.sangel.data.contacts.db
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import ru.sangel.data.contacts.ContactEntity
 
 @Dao
 interface ContactsDao {

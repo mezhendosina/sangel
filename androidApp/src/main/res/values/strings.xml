@@ -39,4 +39,7 @@
     <string name="mail_us">Написать нам…</string>
     <string name="uri_vk_group">https://vk.com/sangel_78</string>
     <string name="contact_us_email">mailto:den.levshin.007@mail.ru</string>
+    <string name="change_photo">Изменить фото</string>
+    <string name="second_name">Фамилия</string>
+    <string name="last_name_example">Иванова</string>
 </resources>

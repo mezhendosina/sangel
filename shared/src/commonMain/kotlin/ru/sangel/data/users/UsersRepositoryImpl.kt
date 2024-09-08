@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
-import ru.sangel.data.users.entities.UserEntity
+import ru.sangel.data.entities.UserEntity
 
 class UsersRepositoryImpl(
     private val usersSource: UsersSource,
@@ -29,9 +29,6 @@ class UsersRepositoryImpl(
         usersSource.setLocation(latitude, longtitude)
     }
 
-    override suspend fun sendStatus(statusCode: Int) {
-        usersSource.setStatus(statusCode)
-    }
 
     override suspend fun getMine(): UserEntity {
         return usersSource.getMine()

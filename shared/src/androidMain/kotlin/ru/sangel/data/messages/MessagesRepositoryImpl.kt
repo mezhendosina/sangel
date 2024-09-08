@@ -16,6 +16,7 @@ import ru.sangel.R
 import ru.sangel.app.data.map.MapRepository
 import ru.sangel.data.contacts.ContactsRepository
 import ru.sangel.data.firebase.FirebaseRepository
+import ru.sangel.data.messages.source.NotificationsSource
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.data.users.UsersRepository
 
@@ -32,6 +33,7 @@ actual class MessagesRepositoryImpl :
     private val contactsRepository by inject<ContactsRepository>()
     private val userRepository by inject<UsersRepository>()
     private val firebaseRepository by inject<FirebaseRepository>()
+    private val notificationsSource by inject<NotificationsSource>()
 
     override suspend fun sendMessageToFavorites() {
         val favs = contactsRepository.favorites.first()
@@ -79,13 +81,13 @@ actual class MessagesRepositoryImpl :
                     }
 
                     MessagesRepository.Companion.MessageType.PhoneNumber -> {
-                        userRepository.getMine().id
+                        userRepository.getMine().phone
                     }
 
                     else -> null
                 }
             }
-        if (message.size > 0) {
+        if (message.isNotEmpty()) {
             messagesSource.sendSms(
                 number,
                 message.joinToString(limit = message.size - 1),
@@ -94,6 +96,7 @@ actual class MessagesRepositoryImpl :
     }
 
     override suspend fun sendMessagesToNearUsers() {
+        notificationsSource.sendInDanger()
     }
 
     private suspend fun getLocation(): String? = mapRepository.getLinkLocation()

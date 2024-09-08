@@ -13,7 +13,8 @@ import ru.sangel.data.contacts.ContactsRepository
 class DefaultContactsComponent(
     private val componentContext: ComponentContext,
     private val contactsRepository: ContactsRepository,
-) : ContactsComponent, ComponentContext by componentContext {
+) : ContactsComponent,
+    ComponentContext by componentContext {
     private val _model =
         MutableValue(
             ContactsComponent.Model(
@@ -67,13 +68,13 @@ class DefaultContactsComponent(
 
     override fun addContact(contact: ContactUiEntity) {
         CoroutineScope(Dispatchers.IO).launch {
-            contactsRepository.addFavContact(contact)
+            contactsRepository.addFavorite(contact)
         }
     }
 
     override fun deleteContact(contact: ContactUiEntity) {
         CoroutineScope(Dispatchers.IO).launch {
-            contactsRepository.deleteFavContact(contact)
+            contactsRepository.deleteFavorite(contact)
         }
     }
 

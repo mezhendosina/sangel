@@ -15,7 +15,7 @@ class MainViewModel(
         longtude: Double,
     ) {
         viewModelScope.launch {
-            if (appPrefs.isAuthtorized()) {
+            if (appPrefs.isAuthorized()) {
                 mapRepository.updateLocation(
                     latitude,
                     longtude,

@@ -2,7 +2,7 @@ package ru.sangel.unit
 
 import kotlin.test.Test
 
-class UsersApiTest {
+class UserApiTest {
     @Test
     fun testUsers() {
         TODO()

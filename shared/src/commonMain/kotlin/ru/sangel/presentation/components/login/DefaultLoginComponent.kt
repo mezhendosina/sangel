@@ -10,6 +10,7 @@ import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import ru.sangel.LOGIN_STACK
 import ru.sangel.data.auth.AuthRepository
+import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.data.settings.AppPrefs
 import ru.sangel.presentation.components.login.checkCode.DefaultConfirmCodeComponent
 import ru.sangel.presentation.components.login.onboarding.DefaultOnboardingComponent
@@ -18,6 +19,7 @@ import ru.sangel.presentation.components.login.signUp.DefaultSignUpComponent
 
 class DefaultLoginComponent(
     private val authRepository: AuthRepository,
+    private val firebaseRepository: FirebaseRepository,
     private val appPrefs: AppPrefs,
     private val componentContext: ComponentContext,
     private val toMain: () -> Unit,
@@ -70,6 +72,7 @@ class DefaultLoginComponent(
 
     private fun signInComponent(componentContext: ComponentContext) =
         DefaultSignInComponent(
+            firebaseRepository = firebaseRepository,
             authRepository = authRepository,
             componentContext = componentContext,
             toCheckCode = {

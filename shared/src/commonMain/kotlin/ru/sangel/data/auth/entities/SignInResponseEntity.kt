@@ -7,6 +7,6 @@ import kotlinx.serialization.Serializable
 data class SignInResponseEntity(
     @SerialName("access_token")
     val accessToken: String,
-    @SerialName("token_type")
-    val tokenType: String,
+    @SerialName("refresh_token")
+    val refreshToken: String,
 )
