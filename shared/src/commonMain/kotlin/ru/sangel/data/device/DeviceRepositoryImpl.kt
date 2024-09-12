@@ -65,7 +65,7 @@ class DeviceRepositoryImpl(
 
     @OptIn(ObsoleteKableApi::class)
     override suspend fun getAvaliableDevices(): Flow<Advertisement> =
-        scanner.advertisements.catch { if (it !is SecurityException || it !is BluetoothDisabledException) throw it }
+        scanner.advertisements.catch { if (it !is SecurityException && it !is BluetoothDisabledException) throw it }
 
     override suspend fun getDeviceFromDb(address: String): DeviceEntity? = deviceDao.getDevice(address)
 
