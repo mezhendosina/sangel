@@ -68,9 +68,7 @@ jobs:
 
       - name: get upload json
         id: get_upload_json
-        env:
-          YNDX_API_KEY: ${{ secrets.YNDX_DISK_API_KEY }}
-        run: echo json=$(curl -H "Authtorization:\ OAuth $YNDX_API_KEY" https://cloud-api.yandex.net/v1/disk/resources/upload?path=/zaya/zaya-debug.apk&overwrite=true) >> "$GITHUB_OUTPUT"
+        run: echo json=$(curl --oauth2-bearer ${{ secrets.YNDX_DISK_API_KEY }} https://cloud-api.yandex.net/v1/disk/resources/upload?path=/zaya/zaya-debug.apk&overwrite=true) >> "$GITHUB_OUTPUT"
 
       - name: print json
         run: echo "${{steps.get_upload_json.outputs.json}}"
@@ -94,4 +92,3 @@ jobs:
     steps:
       - name: Send file to Telegram channel
         run: curl https://api.telegram.org/bot${{ secrets.TELEGRAM_API_TOKEN }}/sendMessage?chat_id=-1002003867686&text="https://disk.yandex.ru/d/o28zQZ909jAqGw"
-
