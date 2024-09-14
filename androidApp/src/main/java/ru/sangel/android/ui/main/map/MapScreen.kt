@@ -50,24 +50,6 @@ fun MapScreen(
             root.getFragment<MapFragment>()
         }
 
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = padding.calculateTopPadding()),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            MapCornerButton(
-                image = painterResource(id = R.drawable.ic_avatar),
-                component::toProfile,
-            )
-
-            MapCornerButton(
-                image = painterResource(id = R.drawable.ic_question),
-                component::toQuestion,
-            )
-        }
         Column(
             modifier =
                 Modifier
@@ -104,14 +86,11 @@ fun MapScreen(
             modifier =
                 Modifier
                     .padding(horizontal = 16.dp, vertical = 16.dp)
-                    .align(Alignment.BottomStart)
+                    .align(Alignment.BottomEnd)
                     .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.End,
         ) {
-            MapCornerButton(image = painterResource(id = R.drawable.ic_find_contact)) {
-            }
-
             MapCornerButton(painterResource(id = R.drawable.ic_find_me), component::cameraToUser)
         }
     }
