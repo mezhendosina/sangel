@@ -84,7 +84,7 @@ jobs:
 
       - name: upload apk
         id: upload_apk
-        run: curl -X "${{steps.get_upload_method.outputs.method}}" -T /home/runner/work/sangel/sangel/app-debug.apk "${{steps.get_upload_url.outputs.url}}" 
+        run: curl -X ${{steps.get_upload_method.outputs.method}} -T /home/runner/work/sangel/sangel/app-debug.apk "${{steps.get_upload_url.outputs.url}}" 
 
   
   send-url-to-chat:
