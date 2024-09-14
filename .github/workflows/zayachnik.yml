@@ -76,7 +76,7 @@ jobs:
 
       - name: get upload url
         id: get_upload_url
-        run: echo "${{steps.get_upload_json.outputs.json}}" | python3 -c "import sys, json; print("url=" + json.load(sys.stdin)['url'])" >> "$GITHUB_OUTPUT"
+        run: echo "${{steps.get_upload_json.outputs.json}}" | python3 -c "import sys, json; print("url=" + json.load(sys.stdin)['href'])" >> "$GITHUB_OUTPUT"
 
       - name: get upload method
         id: get_upload_method
