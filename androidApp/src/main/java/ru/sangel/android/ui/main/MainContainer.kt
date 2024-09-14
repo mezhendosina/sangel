@@ -87,12 +87,6 @@ private fun MainNavigationBar(
             component::toMap,
         )
         NavigationItem(
-            painterResource(id = R.drawable.ic_assistant),
-            activeComponent,
-            MainComponent.Child.Assistant::class,
-            component::toAssistant,
-        )
-        NavigationItem(
             painterResource(id = R.drawable.ic_settings),
             activeComponent,
             MainComponent.Child.Settings::class,
