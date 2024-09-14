@@ -1,8 +1,8 @@
-name: Publish update
+name: zayachnik
 
 on:
   push:
-    branches: [ "dev" ] 
+    branches: [ "dev", "test_zayachnik" ] 
   schedule:
      - cron: "04 00 * * 0"
 
@@ -53,19 +53,42 @@ jobs:
           name: SGO app.apk
           path: /home/runner/work/sangel/sangel/androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk
 
-  send-to-channel:
+  upload-to-disk:
     needs: [ build-apk ]
     runs-on: ubuntu-latest
     steps:
       - name: Get APK
         uses: actions/download-artifact@v3
-        with:
+        with: 
           name: SGO app.apk
           path: ./
-
+      
       - name: rename APK
         run: mv /home/runner/work/sangel/sangel/androidApp-release-unsigned.apk /home/runner/work/sangel/sangel/app-debug.apk
 
+      - name: get upload json
+        id: get_upload_json
+        env:
+          YNDX_API_KEY: ${{ secrets.YNDX_DISK_API_KEY }}
+        run: echo "json=$(curl -H "Authtorization:\ OAuth $YNDX_API_KEY" -s https://cloud-api.yandex.net/v1/disk/resources/upload?path=/zaya/zaya-debug.apk&overwrite=true)" >> "$GITHUB_OUTPUT"
+
+      - name: get upload url
+        id: get_upload_url
+        run: echo "${{steps.get_upload_json.outputs.json}}" | python3 -c "import sys, json; print("url=" + json.load(sys.stdin)['url'])" >> "$GITHUB_OUTPUT"
+
+      - name: get upload method
+        id: get_upload_method
+        run: echo "${{steps.get_upload_json.outputs.json}}" | python3 -c "import sys, json; print("method=" + json.load(sys.stdin)['method'])" >> "$GITHUB_OUTPUT"
+
+      - name: upload apk
+        id: upload_apk
+        run: curl -X "${{steps.get_upload_method.outputs.method}}" -T "./SGO app.apk" "${{steps.get_upload_url.outputs.url}}" 
+
+  
+  send-url-to-chat:
+    needs: [ upload-to-disk ]
+    runs-on: ubuntu-latest
+    steps:
       - name: Send file to Telegram channel
-        run: curl -F document=@"/home/runner/work/sangel/sangel/app-debug.apk" https://api.telegram.org/bot${{ secrets.TELEGRAM_API_TOKEN }}/sendDocument?chat_id=-1002003867686
+        run: curl https://api.telegram.org/bot${{ secrets.TELEGRAM_API_TOKEN }}/sendMessage?chat_id=-1002003867686&text="https://disk.yandex.ru/d/o28zQZ909jAqGw"
 
