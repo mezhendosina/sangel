@@ -18,8 +18,6 @@ interface MainComponent {
 
     fun toMap()
 
-    fun toAssistant()
-
     sealed class Child {
         class Device(val component: DeviceComponent) : Child()
 
@@ -28,7 +26,5 @@ interface MainComponent {
         class Settings(val component: SettingsComponent) : Child()
 
         class Map(val component: MapComponent) : Child()
-
-        class Assistant() : Child()
     }
 }

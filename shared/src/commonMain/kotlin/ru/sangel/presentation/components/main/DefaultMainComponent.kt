@@ -51,10 +51,6 @@ class DefaultMainComponent(
         navigation.pushToFront(MainConfig.Map)
     }
 
-    override fun toAssistant() {
-        navigation.pushToFront(MainConfig.Assistant)
-    }
-
     private fun child(
         mainConfig: MainConfig,
         componentContext: ComponentContext,
@@ -71,7 +67,6 @@ class DefaultMainComponent(
                 )
 
             is MainConfig.Map -> MainComponent.Child.Map(mapComponent())
-            is MainConfig.Assistant -> MainComponent.Child.Assistant()
             is MainConfig.AddDevice ->
                 MainComponent.Child.AddDevice(
                     connectDeviceComponent(),
@@ -108,8 +103,5 @@ class DefaultMainComponent(
 
         @Serializable
         data object Map : MainConfig
-
-        @Serializable
-        data object Assistant : MainConfig
     }
 }
