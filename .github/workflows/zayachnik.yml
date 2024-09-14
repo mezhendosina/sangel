@@ -70,7 +70,7 @@ jobs:
         id: get_upload_json
         env:
           YNDX_API_KEY: ${{ secrets.YNDX_DISK_API_KEY }}
-        run: echo 'json=$(curl -H "Authtorization:\ OAuth $YNDX_API_KEY" https://cloud-api.yandex.net/v1/disk/resources/upload?path=/zaya/zaya-debug.apk&overwrite=true)' >> "$GITHUB_OUTPUT"
+        run: echo json=$(curl -H "Authtorization:\ OAuth $YNDX_API_KEY" https://cloud-api.yandex.net/v1/disk/resources/upload?path=/zaya/zaya-debug.apk&overwrite=true) >> "$GITHUB_OUTPUT"
 
       - name: print json
         run: echo "${{steps.get_upload_json.outputs.json}}"
