@@ -73,7 +73,15 @@ actual class FirebaseRepositoryImpl :
         return Firebase.remoteConfig.getString(INCOMING_EMERGENCY_NUMBER)
     }
 
-    override fun getMessagingToken(): String = Firebase.messaging.token.result
+    override fun getMessagingToken(): String {
+        var token: String? = null
+        Firebase.messaging.token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                token = task.result
+            }
+        }
+        return token ?: ""
+    }
 
     private suspend fun setEmergencyNumber() {
         val value = Firebase.remoteConfig.getString(EMERGENCY_NUMBER)
