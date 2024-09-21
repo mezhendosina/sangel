@@ -1,6 +1,7 @@
 package ru.sangel.data.firebase
 
 import android.app.Application
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Firebase
 import com.google.firebase.initialize
 import com.google.firebase.messaging.messaging
@@ -40,6 +41,8 @@ actual class FirebaseRepositoryImpl :
             override fun onError(error: FirebaseRemoteConfigException) {}
         }
 
+
+
     override fun init() {
         Firebase.initialize(get() as Application)
 
@@ -74,13 +77,11 @@ actual class FirebaseRepositoryImpl :
     }
 
     override fun getMessagingToken(): String {
-        var token: String? = null
-        Firebase.messaging.token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                token = task.result
-            }
+        return try {
+            Tasks.await(Firebase.messaging.token)
+        } catch (e: Exception) {
+            ""
         }
-        return token ?: ""
     }
 
     private suspend fun setEmergencyNumber() {
