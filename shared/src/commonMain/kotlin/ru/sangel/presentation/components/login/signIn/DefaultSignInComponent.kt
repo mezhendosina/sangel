@@ -53,8 +53,9 @@ class DefaultSignInComponent(
 
     override fun signIn() {
         _model.update { it.copy(state = States.Loading) }
-        firebaseRepository.getMessagingToken().addOnSuccessListener { token ->
-            CoroutineScope(Dispatchers.IO).launch {
+        val messagingToken = firebaseRepository.getMessagingToken()
+        messagingToken.addOnSuccessListener { token ->
+            CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
                 authRepository.signIn(
                     token,
                     _model.value.email,
@@ -64,6 +65,9 @@ class DefaultSignInComponent(
                     toCheckCode.invoke()
                 }
             }
+        }
+        messagingToken.addOnFailureListener { exception ->
+            _model.update { it.copy(state = States.Error(exception.localizedMessage ?: "")) }
         }
     }
 
