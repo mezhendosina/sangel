@@ -28,9 +28,7 @@ import ru.sangel.android.databinding.FragmentMapBinding
 import ru.sangel.data.map.MapPoints
 import ru.sangel.presentation.map.MapViewModel
 
-class MapFragment :
-    Fragment(R.layout.fragment_map),
-    UserLocationObjectListener {
+class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener {
     private var mapView: MapView? = null
     private val viewModel: MapViewModel by viewModel()
     private var binding: FragmentMapBinding? = null
