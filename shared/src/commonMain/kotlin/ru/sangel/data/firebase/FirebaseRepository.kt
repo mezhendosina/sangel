@@ -1,5 +1,7 @@
 package ru.sangel.data.firebase
 
+import com.google.android.gms.tasks.Task
+
 interface FirebaseRepository {
     fun init()
 
@@ -7,7 +9,7 @@ interface FirebaseRepository {
 
     suspend fun getIncomingEmergencyNumber(): String
 
-    fun getMessagingToken(): String
+    fun getMessagingToken(): Task<String>
 
     companion object {
         const val EMERGENCY_NUMBER = "emergencyNumber"
