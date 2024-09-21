@@ -17,7 +17,7 @@ class StubAuthSource : AuthSource {
         fcmToken: String,
         email: String,
         password: String,
-    ): SignInResponseEntity = SignInResponseEntity("", "")
+    ): SignInResponseEntity = SignInResponseEntity("123", "123")
 
     override suspend fun otp(
         email: String,
@@ -25,5 +25,5 @@ class StubAuthSource : AuthSource {
     ) {
     }
 
-    override suspend fun refreshToken(refreshToken: String): String = ""
+    override suspend fun refreshToken(refreshToken: String): String = "123"
 }
