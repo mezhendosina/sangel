@@ -6,7 +6,9 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.sangel.data.auth.AuthRepository
 import ru.sangel.data.firebase.FirebaseRepository
 import ru.sangel.presentation.entities.States
@@ -50,14 +52,22 @@ class DefaultSignInComponent(
     }
 
     override fun signIn() {
-        CoroutineScope(Dispatchers.Main).launch(exceptionHandler) {
-            _model.update { it.copy(state = States.Loading) }
-            authRepository.signIn(
-                firebaseRepository.getMessagingToken(),
-                _model.value.email,
-                _model.value.password,
-            )
-            toCheckCode.invoke()
+        _model.update { it.copy(state = States.Loading) }
+        val messagingToken = firebaseRepository.getMessagingToken()
+        messagingToken.addOnSuccessListener { token ->
+            CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+                authRepository.signIn(
+                    token,
+                    _model.value.email,
+                    _model.value.password,
+                )
+                withContext(Dispatchers.Main) {
+                    toCheckCode.invoke()
+                }
+            }
+        }
+        messagingToken.addOnFailureListener { exception ->
+            _model.update { it.copy(state = States.Error(exception.localizedMessage ?: "")) }
         }
     }
 

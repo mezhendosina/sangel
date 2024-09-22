@@ -1,6 +1,7 @@
 package ru.sangel.data.firebase
 
 import android.app.Application
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Firebase
 import com.google.firebase.initialize
 import com.google.firebase.messaging.messaging
@@ -73,7 +74,7 @@ actual class FirebaseRepositoryImpl :
         return Firebase.remoteConfig.getString(INCOMING_EMERGENCY_NUMBER)
     }
 
-    override fun getMessagingToken(): String = Firebase.messaging.token.result
+    override fun getMessagingToken(): Task<String> = Firebase.messaging.token
 
     private suspend fun setEmergencyNumber() {
         val value = Firebase.remoteConfig.getString(EMERGENCY_NUMBER)
