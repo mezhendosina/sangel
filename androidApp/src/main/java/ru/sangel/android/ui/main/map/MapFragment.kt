@@ -26,7 +26,6 @@ import org.koin.core.context.GlobalContext.get
 import ru.sangel.android.R
 import ru.sangel.android.databinding.FragmentMapBinding
 import ru.sangel.data.map.MapPoints
-import ru.sangel.data.map.MapPointsImpl
 import ru.sangel.presentation.map.MapViewModel
 
 class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener {
@@ -38,6 +37,7 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
                 setupUserLocationLayer()
+                observeMapPoints()
             }
         }
 
@@ -61,7 +61,6 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
         }
 
         setupUserLocationLayer()
-        observeMapPoints()
         observeMapZoom()
         observeMapCameraPosition()
     }
@@ -82,8 +81,9 @@ class MapFragment : Fragment(R.layout.fragment_map), UserLocationObjectListener 
                     if (!mapPoints.isPointExist(it.userId)) {
                         mapPoints.addPoint(
                             it.userId,
-                            map.mapObjects.addPlacemark()
-                                .setupNearUser(requireContext(), it.location, null, it.name)
+                            map.mapObjects
+                                .addPlacemark()
+                                .setupNearUser(requireContext(), it.location, null, it.name),
                         )
                     } else {
                         mapPoints.updatePoint(it.userId, it.location)
