@@ -28,30 +28,30 @@ jobs:
           cache: gradle
 
       - name: Create google-services.json
-        run: touch /home/runner/work/sangel/sangel/androidApp/google-services.json
+        run: touch /home/runner/work/sangel/sangel/zaya/google-services.json
 
       - name: Putting data into google-services.json
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $DATA > /home/runner/work/sangel/sangel/androidApp/google-services.json
+        run: echo $DATA > /home/runner/work/sangel/sangel/zaya/google-services.json
 
       # - name: Decode Keystore
       #   env:
       #     ENCODED_STRING: ${{ secrets.KEYSTORE_FILE }}
       #   run: |
-      #     TMP_KEYSTORE_FILE_PATH=/home/runner/work/sangel/sangel/androidApp/keystore
+      #     TMP_KEYSTORE_FILE_PATH=/home/runner/work/sangel/sangel/zaya/keystore
       #     mkdir "${TMP_KEYSTORE_FILE_PATH}"
       #     echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/mezhendosina_key.jks
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew :androidApp:assembleRelease --stacktrace
+        run: ./gradlew :zaya:assembleRelease --stacktrace
 
       - name: Get built APK
         uses: actions/upload-artifact@v3
         with:
           name: SGO app.apk
-          path: /home/runner/work/sangel/sangel/androidApp/build/outputs/apk/release/androidApp-release-unsigned.apk
+          path: /home/runner/work/sangel/sangel/zaya/build/outputs/apk/release/zaya-release-unsigned.apk
 
   upload-to-disk:
     needs: [ build-apk ]
@@ -64,7 +64,7 @@ jobs:
           path: ./
       
       - name: rename APK
-        run: mv /home/runner/work/sangel/sangel/androidApp-release-unsigned.apk /home/runner/work/sangel/sangel/app-debug.apk
+        run: mv /home/runner/work/sangel/sangel/zaya-release-unsigned.apk /home/runner/work/sangel/sangel/app-debug.apk
 
       - name: get upload json
         id: get_upload_json
