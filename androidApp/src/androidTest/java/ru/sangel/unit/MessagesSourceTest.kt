@@ -9,8 +9,8 @@ import org.junit.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.runner.RunWith
 import org.koin.java.KoinJavaComponent.inject
-import ru.sangel.data.messages.DefaultMessagesSource
-import ru.sangel.data.messages.MessagesSource
+import ru.sangel.zaya.data.messages.DefaultMessagesSource
+import ru.sangel.zaya.data.messages.MessagesSource
 
 @RunWith(AndroidJUnit4::class)
 class MessagesSourceTest {

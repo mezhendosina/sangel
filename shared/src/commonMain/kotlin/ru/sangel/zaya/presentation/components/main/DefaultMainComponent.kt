@@ -1,0 +1,107 @@
+package ru.sangel.zaya.presentation.components.main
+
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pushToFront
+import com.arkivanov.decompose.value.Value
+import kotlinx.serialization.Serializable
+import ru.sangel.zaya.MAIN_STACK
+import ru.sangel.zaya.data.map.MapRepository
+import ru.sangel.zaya.data.device.DeviceRepository
+import ru.sangel.zaya.data.users.UsersRepository
+import ru.sangel.zaya.presentation.components.main.device.DefaultDeviceComponent
+import ru.sangel.zaya.presentation.components.main.device.connect.DefaultConnectDeviceComponent
+import ru.sangel.zaya.presentation.components.main.map.DefaultMapComponent
+import ru.sangel.zaya.presentation.components.main.settings.DefaultSettingsComponent
+
+@OptIn(ExperimentalDecomposeApi::class)
+class DefaultMainComponent(
+    private val componentContext: ComponentContext,
+    private val usersRepository: UsersRepository,
+    private val mapRepository: MapRepository,
+    private val deviceRepository: DeviceRepository,
+) : MainComponent,
+    ComponentContext by componentContext {
+    private val navigation = StackNavigation<MainConfig>()
+    override val stack: Value<ChildStack<*, MainComponent.Child>> =
+        childStack(
+            source = navigation,
+            key = MAIN_STACK,
+            serializer = MainConfig.serializer(),
+            initialConfiguration = MainConfig.Device,
+            handleBackButton = true,
+            childFactory = ::child,
+        )
+
+    override fun onBack() {
+    }
+
+    override fun toDevice() {
+        navigation.pushToFront(MainConfig.Device)
+    }
+
+    override fun toSettings() {
+        navigation.pushToFront(MainConfig.Settings)
+    }
+
+    override fun toMap() {
+        navigation.pushToFront(MainConfig.Map)
+    }
+
+    private fun child(
+        mainConfig: MainConfig,
+        componentContext: ComponentContext,
+    ): MainComponent.Child =
+        when (mainConfig) {
+            is MainConfig.Device ->
+                MainComponent.Child.Device(deviceComponent(componentContext))
+
+            is MainConfig.Settings ->
+                MainComponent.Child.Settings(
+                    defaultSettingsComponent(
+                        componentContext,
+                    ),
+                )
+
+            is MainConfig.Map -> MainComponent.Child.Map(mapComponent())
+            is MainConfig.AddDevice ->
+                MainComponent.Child.AddDevice(
+                    connectDeviceComponent(),
+                )
+        }
+
+    private fun connectDeviceComponent() =
+        DefaultConnectDeviceComponent(componentContext, deviceRepository) {
+            navigation.pushToFront(MainConfig.Device)
+        }
+
+    private fun mapComponent() = DefaultMapComponent(mapRepository = mapRepository)
+
+    private fun deviceComponent(componentContext: ComponentContext) =
+        DefaultDeviceComponent(
+            componentContext,
+            deviceRepository,
+        ) {
+            navigation.pushToFront(MainConfig.AddDevice)
+        }
+
+    private fun defaultSettingsComponent(componentContext: ComponentContext) = DefaultSettingsComponent(componentContext)
+
+    @Serializable
+    private sealed interface MainConfig {
+        @Serializable
+        data object Device : MainConfig
+
+        @Serializable
+        data object AddDevice : MainConfig
+
+        @Serializable
+        data object Settings : MainConfig
+
+        @Serializable
+        data object Map : MainConfig
+    }
+}

@@ -65,8 +65,8 @@
         </activity>
 
         <receiver
-            android:name="ru.sangel.SmsResultReciever"
-            android:exported="false"></receiver>
+            android:name="ru.sangel.zaya.SmsResultReciever"
+            android:exported="false" />
 
         <service
             android:name=".DeviceService"
@@ -74,7 +74,7 @@
             android:foregroundServiceType="remoteMessaging|connectedDevice" />
 
         <receiver
-            android:name="ru.sangel.presentation.IncomingEmergencyReciever"
+            android:name="ru.sangel.zaya.presentation.IncomingEmergencyReciever"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="999">

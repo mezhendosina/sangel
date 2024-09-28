@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.koin.java.KoinJavaComponent
-import ru.sangel.data.contacts.ContactsRepository
+import ru.sangel.zaya.data.contacts.ContactsRepository
 
 class ContactsRepositoryTest {
     @get:Rule

@@ -87,7 +87,7 @@ kotlin {
 }
 
 android {
-    namespace = "ru.sangel"
+    namespace = "ru.sangel.zaya.common"
     compileSdk = 34
     defaultConfig {
         minSdk = 26

@@ -5,7 +5,7 @@ import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.junit.Test
 import org.koin.core.component.get
 import org.koin.test.KoinTest
-import ru.sangel.presentation.components.login.signIn.DefaultSignInComponent
+import ru.sangel.zaya.presentation.components.login.signIn.DefaultSignInComponent
 import kotlin.test.assertNotEquals
 
 class SignInComponentTest : KoinTest {
