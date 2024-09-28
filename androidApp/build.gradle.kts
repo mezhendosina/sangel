@@ -9,10 +9,10 @@ plugins {
 }
 
 android {
-    namespace = "ru.sangel.android"
+    namespace = "ru.sangel.zaya"
     compileSdk = 34
     defaultConfig {
-        applicationId = "ru.sangel.android"
+        applicationId = "ru.sangel.zaya"
         minSdk = 26
         targetSdk = 34
         versionCode = 4
