@@ -1,4 +1,4 @@
-package ru.sangel.zaya.ui.theme
+package ru.sangel.common.ui.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

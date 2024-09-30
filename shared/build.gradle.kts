@@ -74,6 +74,7 @@ kotlin {
                 implementation(libs.koin.test.junit5)
                 implementation(libs.koin.test)
                 implementation(libs.koin.test.junit4)
+                implementation(libs.mockito.core)
             }
         }
         androidNativeTest.dependencies {

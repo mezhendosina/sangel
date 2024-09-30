@@ -7,6 +7,9 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.Serializable
 import ru.sangel.zaya.LOGIN_STACK
 import ru.sangel.zaya.data.auth.AuthRepository
@@ -26,6 +29,8 @@ class DefaultLoginComponent(
 ) : LoginComponent,
     ComponentContext by componentContext {
     private val navigation = StackNavigation<LoginConfig>()
+
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override val stack: Value<ChildStack<*, LoginComponent.Child>> =
         childStack(
@@ -61,7 +66,7 @@ class DefaultLoginComponent(
         }
 
     private fun signUpComponent(email: String) =
-        DefaultSignUpComponent(email, authRepository, { navigation.pop() }) {
+        DefaultSignUpComponent(email, authRepository, componentContext, { navigation.pop() }) {
             navigation.push(LoginConfig.ConfirmCode)
         }
 

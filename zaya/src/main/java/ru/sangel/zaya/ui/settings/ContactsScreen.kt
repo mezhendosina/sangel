@@ -32,7 +32,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import ru.sangel.zaya.R
 import ru.sangel.zaya.ui.components.ContactCard
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 import ru.sangel.zaya.presentation.components.main.settings.contacts.ContactUiEntity
 import ru.sangel.zaya.presentation.components.main.settings.contacts.ContactsComponent
 

@@ -15,5 +15,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Sangel"
-include(":androidApp")
+include(":zaya")
 include(":shared")
+include(":auth")
+include(":map")
+include(":common")

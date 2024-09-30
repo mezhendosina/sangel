@@ -24,7 +24,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import kotlinx.coroutines.launch
 import ru.sangel.zaya.ui.components.SettingsButton
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 import ru.sangel.zaya.presentation.components.main.settings.debug.DebugComponent
 
 @OptIn(ExperimentalPermissionsApi::class)

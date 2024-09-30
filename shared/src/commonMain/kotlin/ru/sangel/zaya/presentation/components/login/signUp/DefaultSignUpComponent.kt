@@ -1,36 +1,39 @@
 package ru.sangel.zaya.presentation.components.login.signUp
 
+import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
+import com.arkivanov.essenty.lifecycle.Lifecycle
+import com.arkivanov.essenty.lifecycle.doOnDestroy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.sangel.zaya.data.auth.AuthRepository
+import ru.sangel.zaya.presentation.components.BaseComponent
 import ru.sangel.zaya.presentation.entities.States
 import ru.sangel.zaya.presentation.utils.coroutineExceptionHandler
+import kotlin.coroutines.CoroutineContext
 
 class DefaultSignUpComponent(
     private val email: String,
     private val authRepository: AuthRepository,
+    componentContext: ComponentContext,
     private val onBack: () -> Unit,
+    coroutineContext: CoroutineContext = Dispatchers.IO,
     private val toCheckCode: () -> Unit,
-) : SignUpComponent {
+) : SignUpComponent, BaseComponent(componentContext, coroutineContext) {
     private val _model =
         MutableValue(
             SignUpComponent.Model.init(),
         )
-    private val exceptionHandler =
-        coroutineExceptionHandler { errorMessage ->
-            if (errorMessage == null) return@coroutineExceptionHandler
 
-            _model.update {
-                it.copy(
-                    state = States.Error(errorMessage),
-                )
-            }
-        }
+    override fun onException(error: String?) {
+        TODO("Not yet implemented")
+    }
+
     override val model: Value<SignUpComponent.Model> = _model
 
     override fun changeName(name: String) = _model.update { it.copy(firstName = name) }
@@ -42,7 +45,7 @@ class DefaultSignUpComponent(
     override fun changePassword(password: String) = _model.update { it.copy(password = password) }
 
     override fun singUp() {
-        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+        coroutineScope.launchWithExceptionHandler {
             with(model.value) {
                 _model.update {
                     it.copy(state = States.Loading)

@@ -16,12 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.sangel.zaya.R
-import ru.sangel.zaya.ui.theme.SangelTheme
 
 @Composable
 fun AboutAppButton(
@@ -48,18 +43,6 @@ fun AboutAppButton(
             Image(leadingImage, null, modifier = Modifier.size(30.dp))
             Text(text, style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.size(30.dp))
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewAboutAppButton() {
-    SangelTheme {
-        AboutAppButton(
-            leadingImage = painterResource(id = R.drawable.ic_avatar),
-            text = stringResource(R.string.we_in_vk),
-        ) {
         }
     }
 }

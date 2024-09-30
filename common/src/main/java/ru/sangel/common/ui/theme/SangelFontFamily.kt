@@ -1,9 +1,9 @@
-package ru.sangel.zaya.ui.theme
+package ru.sangel.common.ui.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import ru.sangel.zaya.R
+import ru.sangel.common.R
 
 val sangelFontFamily =
     FontFamily(

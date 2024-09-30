@@ -20,7 +20,7 @@ import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.sangel.zaya.ui.root.RootScreen
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 import ru.sangel.zaya.domain.MapUseCase
 import ru.sangel.zaya.presentation.MainViewModel
 import ru.sangel.zaya.presentation.components.root.DefaultRootComponent

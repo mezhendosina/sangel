@@ -23,6 +23,7 @@ logbackCore = "1.5.6"
 lottieCompose = "6.4.0"
 lottieComposeVersion = "6.4.0"
 mapsMobile = "4.5.1-lite"
+mockitoCore = "5.14.0"
 secretsGradlePlugin = "1.3.0"
 androidx-startup = "1.1.1"
 material = "1.12.0"
@@ -42,6 +43,10 @@ ktlint = "12.1.0"
 ksp = "1.9.23-1.0.20"
 junitKtxVersion = "1.2.1"
 firebaseConfig = "22.0.0"
+jetbrainsKotlinJvm = "1.9.23"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+appcompat = "1.7.0"
 
 
 [libraries]
@@ -83,6 +88,7 @@ ktorfit-lib = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref =
 logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logbackCore" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieComposeVersion" }
 maps-mobile = { module = "com.yandex.android:maps.mobile", version.ref = "mapsMobile" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
@@ -96,6 +102,9 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 firebase-perf = { group = "com.google.firebase", name = "firebase-perf", version.ref = "firebasePerf" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-config = { group = "com.google.firebase", name = "firebase-config", version.ref = "firebaseConfig" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 
 [plugins]
@@ -112,3 +121,4 @@ ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfitLib" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

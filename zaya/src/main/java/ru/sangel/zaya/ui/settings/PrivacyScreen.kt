@@ -21,7 +21,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import ru.sangel.zaya.ShowLocationTo
 import ru.sangel.zaya.R
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 import ru.sangel.zaya.presentation.components.main.settings.privacy.PrivacyComponent
 
 @Composable

@@ -1,4 +1,4 @@
-package ru.sangel.zaya.ui.theme
+package ru.sangel.common.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

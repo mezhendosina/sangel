@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.sangel.zaya.ui.components.SettingsButton
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 import ru.sangel.zaya.presentation.components.main.settings.root.SettingsRootComponent
 
 @Composable

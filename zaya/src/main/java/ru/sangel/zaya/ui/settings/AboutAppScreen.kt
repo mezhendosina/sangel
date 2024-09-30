@@ -26,7 +26,7 @@ import ru.sangel.zaya.BuildConfig
 import ru.sangel.zaya.R
 import ru.sangel.zaya.ui.components.AboutAppButton
 import ru.sangel.zaya.ui.components.AboutTeamItem
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 import ru.sangel.zaya.presentation.components.main.settings.about.AboutAppComponent
 
 @Composable

@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.googleGmsGoogleServices) apply false
     alias(libs.plugins.googleFirebaseCrashlytics) apply false
     alias(libs.plugins.googleFirebaseFirebasePerf) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
 }
 
 buildscript {

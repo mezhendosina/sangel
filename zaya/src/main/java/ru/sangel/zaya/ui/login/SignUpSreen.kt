@@ -36,7 +36,7 @@ import com.arkivanov.decompose.value.Value
 import ru.sangel.zaya.R
 import ru.sangel.zaya.ui.components.ErrorState
 import ru.sangel.zaya.ui.components.LoginButton
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 import ru.sangel.zaya.presentation.components.login.signUp.SignUpComponent
 
 @OptIn(ExperimentalMaterial3Api::class)

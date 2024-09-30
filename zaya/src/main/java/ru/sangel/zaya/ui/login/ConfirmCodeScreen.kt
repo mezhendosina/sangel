@@ -31,7 +31,7 @@ import ru.sangel.zaya.presentation.entities.States
 import ru.sangel.zaya.ui.components.CodeField
 import ru.sangel.zaya.ui.components.ErrorState
 import ru.sangel.zaya.ui.components.LoginButton
-import ru.sangel.zaya.ui.theme.SangelTheme
+import ru.sangel.common.ui.theme.SangelTheme
 
 @Composable
 fun ConfirmCodeScreen(component: ConfirmCodeComponent) {

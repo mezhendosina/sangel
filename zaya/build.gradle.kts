@@ -53,6 +53,8 @@ android {
     }
     dependencies {
         implementation(projects.shared)
+        implementation(projects.map)
+        implementation(projects.common)
         implementation(platform(libs.androidx.compose.bom))
 
         implementation(libs.compose.ui)
