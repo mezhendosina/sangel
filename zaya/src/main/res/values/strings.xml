@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start">НАЧАТЬ</string>
+    <string name="login">Войдите в свой аккаунт</string>
+    <string name="enter_code">Введите код из письма</string>
+    <string name="my_devices">Мои устройства</string>
+    <string name="braclet_s">Браслет S</string>
+    <string name="account">Аккаунт</string>
+    <string name="send_code">ОТПРАВИТЬ КОД</string>
+    <string name="back">Назад</string>
+    <string name="favorites">Избранные контакты и экстренные службы</string>
+    <string name="settings">Настройки</string>
+    <string name="about_app">О приложении</string>
+    <string name="privacy">Приватность</string>
+    <string name="contacts">Контакты</string>
+    <string name="all_around">Все поблизости</string>
+    <string name="all_around_caption">Все пользователи смогу увидеть вашу геолокацию</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="name">Имя</string>
+    <string name="your_name">Ваше имя…</string>
+    <string name="_7_952_812_751_82">+7 (952) 812 75–12</string>
+    <string name="your_mail">mail@example.ru</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="e_mail">E-mail</string>
+    <string name="next">Продолжить</string>
+    <string name="fav_contacts">Избранные контакты</string>
+    <string name="all_contacts">Все контакты</string>
+    <string name="find_contact">Найти нужный контакт</string>
+    <string name="profile">Профиль</string>
+    <string name="sangel">Sangel</string>
+    <string name="or_sign_up">Или зарегистрируйте новый</string>
+    <string name="sangel_its">SANGEL - это…</string>
+    <string name="go_home_without_stress">Дойти до дома\nбез нервов и стресса</string>
+    <string name="bluetooth_is_not_available">Bluetooth недоступен на Вашем устройстве</string>
+    <string name="password">Пароль</string>
+    <string name="version">version %1$s</string>
+    <string name="team">Команда</string>
+    <string name="we_in_vk">Мы во ВКонтакте!</string>
+    <string name="mail_us">Написать нам…</string>
+    <string name="uri_vk_group">https://vk.com/sangel_78</string>
+    <string name="contact_us_email">mailto:den.levshin.007@mail.ru</string>
+    <string name="change_photo">Изменить фото</string>
+    <string name="second_name">Фамилия</string>
+    <string name="last_name_example">Иванова</string>
+</resources>
